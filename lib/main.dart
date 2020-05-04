@@ -10,7 +10,7 @@ class DiarySchoolApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Дневник',
+      title: 'Title',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: Colors.white),
       home: SafeArea(
