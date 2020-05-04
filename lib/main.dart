@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 
+// Чисто моя ветка
 void main() {
   InAppPurchaseConnection.enablePendingPurchases();
   runApp(DiarySchoolApp());
