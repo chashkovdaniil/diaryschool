@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 
-// Чисто моя ветка
-// Так
 void main() {
   InAppPurchaseConnection.enablePendingPurchases();
   runApp(DiarySchoolApp());
@@ -15,7 +13,7 @@ class DiarySchoolApp extends StatelessWidget {
       title: 'Дневник',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: Colors.white),
-      home: SafeArea(
+      home: const SafeArea(
         child: Scaffold(
           body: Center(child: Text("home")),
         ),
