@@ -13,7 +13,7 @@ class DiarySchoolApp extends StatelessWidget {
       title: 'Дневник',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: Colors.white),
-      home: SafeArea(
+      home: const SafeArea(
         child: Scaffold(
           body: Center(child: Text("home")),
         ),
