@@ -334,40 +334,40 @@ class DLocalizations {
   String get youhavedoneeverything {
     return _localizedValues[locale.languageCode]['youhavedoneeverything'];
   }
-  String get January {
+  String get january {
     return _localizedValues[locale.languageCode]['January'];
   }
-  String get February {
+  String get february {
     return _localizedValues[locale.languageCode]['February'];
   }
-  String get March {
+  String get march {
     return _localizedValues[locale.languageCode]['March'];
   }
-  String get April {
+  String get april {
     return _localizedValues[locale.languageCode]['April'];
   }
-  String get May {
+  String get may {
     return _localizedValues[locale.languageCode]['May'];
   }
-  String get June {
+  String get june {
     return _localizedValues[locale.languageCode]['June'];
   }
-  String get July {
+  String get july {
     return _localizedValues[locale.languageCode]['July'];
   }
-  String get August {
+  String get august {
     return _localizedValues[locale.languageCode]['August'];
   }
-  String get September {
+  String get september {
     return _localizedValues[locale.languageCode]['September'];
   }
-  String get October {
+  String get october {
     return _localizedValues[locale.languageCode]['October'];
   }
-  String get November {
+  String get november {
     return _localizedValues[locale.languageCode]['November'];
   }
-  String get December {
+  String get december {
     return _localizedValues[locale.languageCode]['December'];
   }
   String get nogrades {
@@ -439,49 +439,49 @@ class DLocalizations {
   String get textNotification {
     return _localizedValues[locale.languageCode]['textNotification'];
   }
-  String get jan {
+  String get shortJanuary {
     return _localizedValues[locale.languageCode]['jan'];
   }
-  String get feb {
+  String get shortFebruary {
     return _localizedValues[locale.languageCode]['feb'];
   }
-  String get mar {
+  String get shortMarch {
     return _localizedValues[locale.languageCode]['mar'];
   }
-  String get apr {
+  String get shortApril {
     return _localizedValues[locale.languageCode]['apr'];
   }
-  String get may {
+  String get shortMay {
     return _localizedValues[locale.languageCode]['may'];
   }
-  String get jun {
+  String get shortJune {
     return _localizedValues[locale.languageCode]['jun'];
   }
-  String get jul {
+  String get shortJuly {
     return _localizedValues[locale.languageCode]['jul'];
   }
-  String get aug {
+  String get shortAugust {
     return _localizedValues[locale.languageCode]['aug'];
   }
-  String get sep {
+  String get shortSeptember {
     return _localizedValues[locale.languageCode]['sep'];
   }
-  String get oct {
+  String get shortOctober {
     return _localizedValues[locale.languageCode]['oct'];
   }
-  String get nov {
+  String get shortNovember {
     return _localizedValues[locale.languageCode]['nov'];
   }
-  String get dec {
+  String get shortDecember {
     return _localizedValues[locale.languageCode]['dec'];
   }
-  String get Done {
+  String get done {
     return _localizedValues[locale.languageCode]['Done'];
   }
-  String get HomeworkNotDone {
+  String get homeworkNotDone {
     return _localizedValues[locale.languageCode]['HomeworkNotDone'];
   }
-  String get HomeworkDone {
+  String get homeworkDone {
     return _localizedValues[locale.languageCode]['HomeworkDone'];
   }
   String get homeworktooltip {
