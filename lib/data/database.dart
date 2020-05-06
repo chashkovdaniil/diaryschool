@@ -7,9 +7,11 @@ import 'package:sqflite/sqflite.dart';
 import 'package:ext_storage/ext_storage.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import 'package:diaryschool/Models/Subject.dart';
-import 'package:diaryschool/Models/Homework.dart';
-import 'package:diaryschool/Models/Timetable.dart';
+
+import './models/homework.dart';
+import './models/subject.dart';
+import './models/timetable.dart';
+
 class DBProvider {
   static final DBProvider db = DBProvider._();
   DBProvider._();
