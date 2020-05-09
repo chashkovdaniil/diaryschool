@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
+  HomePage({Key key}) : super(key: key);
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -22,7 +23,7 @@ class _HomePageState extends State<HomePage> {
             // ToDo: переход на страницу несделанного
           },
         ),
-        title: Text('27 Сентября 2020'),
+        title: const Text('27 Сентября 2020'),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.calendar_today),
@@ -43,14 +44,15 @@ class _HomePageState extends State<HomePage> {
   }
 }
 class CustomTabBar extends StatefulWidget {
+  CustomTabBar({Key key}) : super(key: key);
   @override 
   _CustomTabBarState createState() => _CustomTabBarState();
 }
 class _CustomTabBarState extends State<CustomTabBar> with TickerProviderStateMixin {
-  ScrollPhysics _physics = ClampingScrollPhysics();
   Animation<double> _animation;
   ScrollController _scrollController;
-  double _prevIconSize = 0.0;
+  double _prevIconSize = 0;
+  double _nextIconSize = 0;
 
   AnimationController controller;
   @override 
@@ -58,19 +60,19 @@ class _CustomTabBarState extends State<CustomTabBar> with TickerProviderStateMix
     _animation = AnimationController(
       value: _prevIconSize,
       vsync: this,
-      upperBound: 50.0
+      upperBound: 30.0
     );
     _scrollController = ScrollController(
       initialScrollOffset: 0.5
     );
     _scrollController.addListener(() {
-      if (_scrollController.offset > 0 && _physics is BouncingScrollPhysics) {
-        _physics = const ClampingScrollPhysics();
-        setState((){});
-      }
-      if (_scrollController.offset <= 0 && _scrollController.offset > -30) {
-        _physics = const BouncingScrollPhysics();
+      if (_scrollController.offset < 0 && _scrollController.offset > -30) {
         _prevIconSize = _scrollController.offset.abs();
+        setState(() {});
+      }
+      if (_scrollController.offset >= _scrollController.position.maxScrollExtent 
+      && _scrollController.offset < _scrollController.position.maxScrollExtent + 30) {
+          _nextIconSize = _scrollController.offset - _scrollController.position.maxScrollExtent;
         setState(() {});
       }
     });
@@ -85,10 +87,15 @@ class _CustomTabBarState extends State<CustomTabBar> with TickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(onPanDown: (d) => print(_scrollController.offset), child: SingleChildScrollView(
+    return NotificationListener<ScrollEndNotification>(
+      onNotification: (notification) {
+        print(notification);
+        return true;
+      },
+      child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         controller: _scrollController,
-        physics: _physics,
+        physics: const BouncingScrollPhysics(),
         child: Row(
           children: <Widget>[
             AnimatedBuilder(
@@ -107,7 +114,20 @@ class _CustomTabBarState extends State<CustomTabBar> with TickerProviderStateMix
             TabBarItem(title: 'Четверг'),
             TabBarItem(title: 'Пятница'),
             TabBarItem(title: 'Суббота'),
-            TabBarItem(title: 'Воскресенье')
+            TabBarItem(title: 'Воскресенье'),
+            SizedBox(
+              width: 30,
+              child: AnimatedBuilder(
+                animation: _animation,
+                builder: (BuildContext context, Widget child) {
+                  return Icon(
+                    Icons.arrow_forward,
+                    color: Colors.black,
+                    size: _nextIconSize,
+                  );
+                }
+              )
+            )
           ]
         ),
     ));
