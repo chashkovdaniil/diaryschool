@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
+import './pages/home.dart';
 
 
 void main() {
@@ -10,7 +11,6 @@ void main() {
 }
 
 class DiarySchoolApp extends StatefulWidget {
-
   @override
   _DiarySchoolAppState createState() => _DiarySchoolAppState();
 }
@@ -41,9 +41,7 @@ class _DiarySchoolAppState extends State<DiarySchoolApp> {
             physics: const NeverScrollableScrollPhysics(),
             controller: pageController,
             children: <Widget>[
-              const Center(
-                child: Text('Timetable'),
-              ),
+              HomePage(),
               const Center(
                 child: Text('Grades'),
               ),
@@ -107,8 +105,7 @@ class CustomBottomNavigationBar extends StatefulWidget {
   }
 
   @override 
-  _CustomBottomNavigationBarState createState() {
-    return _CustomBottomNavigationBarState(
+  _CustomBottomNavigationBarState createState() => _CustomBottomNavigationBarState(
       items: items,
       onItemSelected: onItemSelected,
       activeColor: activeColor,
@@ -117,7 +114,6 @@ class CustomBottomNavigationBar extends StatefulWidget {
       iconSize: iconSize,
       currentIndex: currentIndex
     );
-  }
 }
 
 class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
