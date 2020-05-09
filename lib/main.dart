@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:diaryschool/pages/timetable_page.dart';
 import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 
@@ -41,8 +42,9 @@ class _DiarySchoolAppState extends State<DiarySchoolApp> {
             physics: const NeverScrollableScrollPhysics(),
             controller: pageController,
             children: <Widget>[
-              const Center(
-                child: Text('Timetable'),
+              Center(
+//                child: Text('Timetable'),
+              child: TimetablePage(),
               ),
               const Center(
                 child: Text('Grades'),
