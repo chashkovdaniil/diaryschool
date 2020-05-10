@@ -32,12 +32,13 @@ class _DiarySchoolAppState extends State<DiarySchoolApp> {
       title: 'Дневник',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: Colors.white),
-      home: SafeArea(
+      home:
+      SafeArea(
         child: Scaffold(
           body: PageView(
             onPageChanged: (index) {
               indexController.add(index);
-            }, 
+            },
             physics: const NeverScrollableScrollPhysics(),
             controller: pageController,
             children: <Widget>[
