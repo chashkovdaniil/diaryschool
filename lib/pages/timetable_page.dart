@@ -1,88 +1,101 @@
-//import 'package:carousel_slider/carousel_slider.dart';
-import 'package:diaryschool/pages/timetable_page/widgets/day_week_carousel_widget.dart';
+// import 'package:diaryschool/data/models/timetable.dart';
 import 'package:flutter/material.dart';
 
 class TimetablePage extends StatefulWidget {
-//  static String kKey = "TimetablePage";
-
-  TimetablePage({Key key}) : super(key: key);
-
   @override
   _TimetablePageState createState() => _TimetablePageState();
 }
 
-class _TimetablePageState extends State<TimetablePage>
-    with SingleTickerProviderStateMixin {
-  DateTime dt = DateTime.now();
+class _TimetablePageState extends State<TimetablePage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        elevation: 0,
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.check_circle_outline),
+          tooltip: 'Показать невыполненное',
+          onPressed: () {
+            // ToDo: переход на страницу несделанного
+          },
+        ),
+        title: Text('27 Сентября 2020'),
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.calendar_today),
+              tooltip: 'Выбрать дату',
+              onPressed: () {
+                // ToDo: выбор даты
+              }),
+        ],
+      ),
+      body: Column(
+        children: <Widget>[
+          CustomTabBar(),
+        ],
+      ),
+    );
+  }
+}
+
+class CustomTabBar extends StatefulWidget {
+  @override
+  _CustomTabBarState createState() => _CustomTabBarState();
+}
+
+class _CustomTabBarState extends State<CustomTabBar>
+    with TickerProviderStateMixin {
+//  ScrollPhysics _physics = ClampingScrollPhysics();
   Animation<double> _animation;
-//  TabController _controller;
-//  PageController _pageController;
   ScrollController _scrollController;
-  double previousIconSize = 0.0;
-  double nextIconSize = 0.0;
-  final List<String> _carouselItems = [
+//  ScrollPhysics _scrollPhysics;
+  double _prevIconSize = 0.0;
+  bool transitionInThisScrollSession = false;
+  Color iconColor = Colors.black;
+  DateTime dateTime = DateTime.now().add(Duration(days: - DateTime.now().weekday+1));
+  final List<String> daysOfWeek = [
     "Понедельник",
     "Вторник",
     "Среда",
     "Четверг",
     "Пятница",
     "Суббота",
-    "Воскресенье"
+    "Воскресенье",
   ];
+
+  AnimationController controller;
   @override
   void initState() {
-//    _carouselItemsWidgets = _carouselItems
-//        .map(
-//          (e) => Container(
-//            padding: const EdgeInsets.all(8.0),
-//            child: Text(
-//              e,
-//              style: const TextStyle(fontSize: 25.0),
-//            ),
-//          ),
-//        )
-//        .toList();
-//    _carouselItemsWidgets.insert(
-//      0,
-//      AnimatedContainer(
-//        color: Colors.black,
-//        height: previousIconSize,
-//        width: previousIconSize,
-//        duration: const Duration(milliseconds: 200),
-//        child: Icon(
-//          Icons.arrow_forward_ios,
-//          color: Colors.black,
-//          size: nextIconSize,
-//        ),
-//      ),
-//    );
-//    _carouselItemsWidgets.add(
-//      AnimatedContainer(
-//        color: Colors.black,
-//        height: previousIconSize,
-//        width: previousIconSize,
-//        duration: const Duration(milliseconds: 200),
-//        child: Icon(
-//          Icons.arrow_forward_ios,
-//          color: Colors.black,
-//          size: nextIconSize,
-//        ),
-//      ),
-//    );
     _animation = AnimationController(
-        value: previousIconSize, vsync: this, upperBound: 100.0);
-    _scrollController = ScrollController();
+        value: _prevIconSize, vsync: this, upperBound: 50.0);
+    _scrollController = ScrollController(initialScrollOffset: 0.5);
     _scrollController.addListener(() {
-      if (_scrollController.offset < 0 && _scrollController.offset > -30) {
-        previousIconSize = _scrollController.offset.abs();
+//      if (_scrollController.offset > 0 && _physics is BouncingScrollPhysics) {
+//        _physics = const ClampingScrollPhysics();
+//        setState(() {});
+//      }
+      if (_scrollController.offset <= 0 && _scrollController.offset >= -30) {
+        if (_scrollController.offset.toInt() == -29) {
+          iconColor = Colors.blueAccent;
+          transitionInThisScrollSession = true;
+          setState(() {});
+        }
+        if (_scrollController.offset == 0) {
+          if (transitionInThisScrollSession) {
+            iconColor = Colors.black;
+            dateTime = dateTime.add(const Duration(days: -7));
+            setState(() {});
+          }
+          transitionInThisScrollSession = false;
+          setState(() {});
+        }
+//        print(_scrollController.offset);
+//        _physics = const BouncingScrollPhysics();
+        _prevIconSize = _scrollController.offset.abs();
         setState(() {});
       }
-      if (_scrollController.offset < -50) {
-//        print(previousIconSize);
-//        print(_scrollController.offset.abs());
-        setState(() {});
-      }
-//      print(_scrollController.position);
     });
     super.initState();
   }
@@ -90,78 +103,86 @@ class _TimetablePageState extends State<TimetablePage>
   @override
   void dispose() {
     _scrollController.dispose();
-//    _controller.dispose();
-//    _pageController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Container(
-            height: 50.0,
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                AnimatedBuilder(
-                    animation: _animation,
-                    builder: (BuildContext context, Widget w) {
-                      return Material(
-                        elevation: 10.0,
-                        borderRadius: BorderRadius.circular(100.0),
-                        child: Icon(
-                          Icons.arrow_back,
-                          color: Colors.black,
-                          size: previousIconSize,
+    return Container(
+      child: NotificationListener(
+        onNotification: (not) {
+//            print(not.runtimeType);
+          if (not is ScrollEndNotification && !transitionInThisScrollSession) {
+//            print(transitionInThisScrollSession);
+//            print(_scrollController.offset);
+          }
+        },
+        child: SingleChildScrollView(
+          controller: _scrollController,
+          physics: CustomScrollPhysics(),
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: <Widget>[
+              AnimatedBuilder(
+                  animation: _animation,
+                  builder: (BuildContext context, Widget w) {
+                    return Icon(
+                      Icons.arrow_back,
+                      color: iconColor,
+                      size: _prevIconSize,
+                    );
+                  }),
+            ] +
+                daysOfWeek.map((e) {
+                  DateTime d =
+                  dateTime.add(Duration(days: daysOfWeek.indexOf(e)));
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Column(
+                      children: <Widget>[
+                        Text(
+                          e,
+                          style: const TextStyle(fontSize: 25.0),
                         ),
-                      );
-                    }),
-//                AnimatedIcon(
-//                  icon: AnimatedIcons.arrow_menu,
-//                  progress: _animation,
-//                  size: previousIconSize,
-//                ),
-                Expanded(
-                  child: ListView.separated(
-                    itemCount: _carouselItems.length,
-                    physics: const BouncingScrollPhysics(),
-                    controller: _scrollController,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Text(
-                        _carouselItems[index],
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                            fontSize: 25.0, fontWeight: FontWeight.bold),
-                      );
-                    },
-                    separatorBuilder: (BuildContext context, int index) =>
-                        const SizedBox(
-                      width: 8.0,
+                        Text(
+                            "${d.day < 10 ? "0" + d.day.toString() : d.day}.${d.month < 10 ? "0" + d.month.toString() : d.month}"),
+                      ],
                     ),
-//              shrinkWrap: true,
-//              children: _carouselItemsWidgets,
-//              children: _carouselItems
-//                  .map(
-//                    (e) => Container(
-//                      padding: const EdgeInsets.all(8.0),
-//                      child: Text(
-//                        e,
-//                        style: const TextStyle(fontSize: 25.0),
-//                      ),
-//                    ),
-//                  )
-//                  .toList(),
-                  ),
-                ),
-              ],
-            ),
+                  );
+                }).toList(),
           ),
-        ],
+        ),
       ),
     );
+  }
+}
+
+class TabBarItem extends StatelessWidget {
+  final String title;
+  final int index;
+  TabBarItem({Key key, this.title, this.index}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      child: Text(
+        title,
+        style: const TextStyle(fontSize: 20),
+      ),
+    );
+  }
+}
+
+class CustomScrollPhysics extends BouncingScrollPhysics {
+  const CustomScrollPhysics({ScrollPhysics parent}) : super(parent: parent);
+
+  @override
+  BouncingScrollPhysics applyTo(ScrollPhysics ancestor) {
+    return CustomScrollPhysics(parent: buildParent(ancestor));
+  }
+
+  @override
+  double frictionFactor(double overscrollFraction) {
+    return super.frictionFactor(overscrollFraction * 10);
   }
 }
