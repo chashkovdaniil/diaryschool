@@ -1,8 +1,8 @@
 import 'dart:async';
 
+import 'package:diaryschool/pages/timetable_page.dart';
 import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
-import './pages/home.dart';
 
 
 void main() {
@@ -11,6 +11,7 @@ void main() {
 }
 
 class DiarySchoolApp extends StatefulWidget {
+
   @override
   _DiarySchoolAppState createState() => _DiarySchoolAppState();
 }
@@ -32,17 +33,19 @@ class _DiarySchoolAppState extends State<DiarySchoolApp> {
       title: 'Дневник',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: Colors.white),
-      home:
-      SafeArea(
+      home: SafeArea(
         child: Scaffold(
           body: PageView(
             onPageChanged: (index) {
               indexController.add(index);
-            },
+            }, 
             physics: const NeverScrollableScrollPhysics(),
             controller: pageController,
             children: <Widget>[
-              HomePage(),
+              Center(
+//                child: Text('Timetable'),
+              child: TimetablePage(),
+              ),
               const Center(
                 child: Text('Grades'),
               ),
@@ -106,7 +109,8 @@ class CustomBottomNavigationBar extends StatefulWidget {
   }
 
   @override 
-  _CustomBottomNavigationBarState createState() => _CustomBottomNavigationBarState(
+  _CustomBottomNavigationBarState createState() {
+    return _CustomBottomNavigationBarState(
       items: items,
       onItemSelected: onItemSelected,
       activeColor: activeColor,
@@ -115,6 +119,7 @@ class CustomBottomNavigationBar extends StatefulWidget {
       iconSize: iconSize,
       currentIndex: currentIndex
     );
+  }
 }
 
 class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
