@@ -1,8 +1,9 @@
 import 'dart:async';
 
-import 'package:diaryschool/pages/timetable_page.dart';
+import 'package:diaryschool/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:diaryschool/pages/timetable_page.dart';
 
 
 void main() {
@@ -11,21 +12,55 @@ void main() {
 }
 
 class DiarySchoolApp extends StatefulWidget {
+  DiarySchoolApp({Key key}) : super(key: key);
 
   @override
   _DiarySchoolAppState createState() => _DiarySchoolAppState();
 }
 
 class _DiarySchoolAppState extends State<DiarySchoolApp> {
+  final List<Widget> pages = [
+    const Center(
+      child: Text('Home'),
+    ),
+    const Center(
+      child: Text('Grades'),
+    ),
+    const Center(
+      child: Text('Not done'),
+    ),
+    TimetablePage(),
+    const Center(
+      child: Text('Profile'),
+    )
+  ];
+  final List<BottomNavigationBarItem> bottomNavigationBarItems = [
+    BottomNavigationBarItem(
+      icon: Icon(Icons.home), title: const Text('')
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.trending_up), title: const Text('')
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.check_circle_outline), title: const Text('')
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.calendar_today), title: const Text('')
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.account_circle), title: const Text('')
+    )
+  ];
+
+  PageController pageController = PageController(initialPage: 3);
+  StreamController<int> indexController = StreamController<int>.broadcast();
+
+
   @override
   void dispose() {
     indexController.close();
     super.dispose();
   }
-
-  PageController pageController = PageController(initialPage: 0);
-  StreamController<int> indexController = StreamController<int>.broadcast();
-  int index = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -35,210 +70,36 @@ class _DiarySchoolAppState extends State<DiarySchoolApp> {
       theme: ThemeData(primaryColor: Colors.white),
       home: SafeArea(
         child: Scaffold(
+          backgroundColor: backgroundColor,
           body: PageView(
-            onPageChanged: (index) {
-              indexController.add(index);
-            }, 
             physics: const NeverScrollableScrollPhysics(),
             controller: pageController,
-            children: <Widget>[
-              Center(
-//                child: Text('Timetable'),
-              child: TimetablePage(),
-              ),
-              const Center(
-                child: Text('Grades'),
-              ),
-              const Center(
-                child: Text('Profile'),
-              ),
-            ],
+            children: pages,
           ),
           bottomNavigationBar: StreamBuilder<Object>(
-            initialData: 0,
+            initialData: 3,
             stream: indexController.stream,
             builder: (BuildContext context, AsyncSnapshot<Object> snapshot) {
               int cIndex = snapshot.data as int;
-              return CustomBottomNavigationBar(
+              return BottomNavigationBar(
+                showSelectedLabels: false,
+                showUnselectedLabels: false,
+                elevation: 0,
+                type: BottomNavigationBarType.fixed,
+                selectedItemColor: selectedItemColorOnBNB,
+                unselectedItemColor: unselectedItemColorOnBNB ,
+                backgroundColor: Colors.transparent,
                 currentIndex: cIndex,
-                onItemSelected: (int value) {
+                onTap: (int value) {
                   indexController.add(value);
                   pageController.jumpToPage(value);
                 },
-                items: <CustomBottomNavigationBarItem>[
-                  CustomBottomNavigationBarItem(
-                    icon: Icon(Icons.calendar_today), title: const Text('Timetable')
-                  ),
-                  CustomBottomNavigationBarItem(
-                    icon: Icon(Icons.trending_up), title: const Text('Grades')
-                  ),
-                  CustomBottomNavigationBarItem(
-                    icon: Icon(Icons.account_circle), title: const Text('Profile')
-                  )
-                ]
+                items: bottomNavigationBarItems
               );
             },
           ),
         ),
       ),
     );
-  }
-}
-
-class CustomBottomNavigationBar extends StatefulWidget {
-  final int currentIndex;
-  final double iconSize;
-  final Color activeColor;
-  final Color inactiveColor;
-  final Color backgroundColor;
-  final List<CustomBottomNavigationBarItem> items;
-  final ValueChanged<int> onItemSelected;
-
-  CustomBottomNavigationBar({
-    Key key,
-    this.currentIndex = 0,
-    this.iconSize = 24,
-    this.activeColor,
-    this.inactiveColor = Colors.black,
-    this.backgroundColor,
-    @required this.items,
-    @required this.onItemSelected
-  }) {
-    assert(items != null);
-    assert(onItemSelected != null);
-  }
-
-  @override 
-  _CustomBottomNavigationBarState createState() {
-    return _CustomBottomNavigationBarState(
-      items: items,
-      onItemSelected: onItemSelected,
-      activeColor: activeColor,
-      inactiveColor: inactiveColor,
-      backgroundColor: backgroundColor,
-      iconSize: iconSize,
-      currentIndex: currentIndex
-    );
-  }
-}
-
-class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
-  final double iconSize;
-  Color activeColor;
-  Color inactiveColor;
-  Color backgroundColor;
-  int currentIndex;
-  List<CustomBottomNavigationBarItem> items;
-  ValueChanged<int> onItemSelected;
-
-  _CustomBottomNavigationBarState({
-    Key key,
-    this.currentIndex = 0,
-    this.iconSize = 24,
-    this.activeColor,
-    this.inactiveColor,
-    this.backgroundColor,
-    @required this.items,
-    @required this.onItemSelected
-  }) {
-    assert(items != null);
-    assert(onItemSelected != null);
-  }
-
-  Widget _buildItem(CustomBottomNavigationBarItem item, bool isSelected) {
-    return AnimatedContainer(
-      width: isSelected ? null : 50,
-      height: 35,
-      constraints: const BoxConstraints(
-        maxWidth: 150
-      ),
-      duration: const Duration(milliseconds: 250),
-      padding: isSelected ? 
-        const EdgeInsets.only(left: 10, right: 20) : 
-        const EdgeInsets.symmetric(horizontal: 10),
-      decoration: !isSelected ?
-        null :
-        BoxDecoration(
-          color: activeColor,
-          borderRadius: const BorderRadius.all(Radius.circular(50)),
-        ),
-      child: ListView(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        scrollDirection: Axis.horizontal,
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              IconTheme(
-                data: IconThemeData(
-                    size: iconSize,
-                    color: isSelected ? backgroundColor : inactiveColor),
-                child: item.icon,
-              ),
-              isSelected ? 
-                Padding(
-                  padding: const EdgeInsets.only(left: 8),
-                  child: DefaultTextStyle.merge(
-                    style: TextStyle(color: backgroundColor),
-                    child: item.title,
-                  )
-                ) :
-                const SizedBox.shrink()
-            ],
-          )
-        ],
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    activeColor =
-        (activeColor == null) ? Theme.of(context).accentColor : activeColor;
-
-    backgroundColor = (backgroundColor == null)
-        ? Theme.of(context).bottomAppBarColor
-        : backgroundColor;
-
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: 56,
-      padding: const EdgeInsets.symmetric(horizontal: 30),
-      decoration: BoxDecoration(
-          color: backgroundColor,
-          boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 2)]),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: items.map((item) {
-          var index = items.indexOf(item);
-          return GestureDetector(
-            onTap: () {
-              onItemSelected(index);
-
-              setState(() {
-                currentIndex = index;
-              });
-            },
-            child: _buildItem(item, currentIndex == index),
-          );
-        }).toList(),
-      ),
-    );
-  }
-}
-
-class CustomBottomNavigationBarItem {
-  final Icon icon;
-  final Text title;
-
-  CustomBottomNavigationBarItem ({
-    @required this.icon,
-    @required this.title,
-  }) {
-    assert(icon != null);
-    assert(title != null);
   }
 }
