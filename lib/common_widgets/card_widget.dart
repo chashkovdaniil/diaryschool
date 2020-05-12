@@ -1,3 +1,4 @@
+import 'package:diaryschool/utilities/constants.dart';
 import 'package:flutter/material.dart';
 
 class CardWidget extends StatelessWidget {
@@ -32,7 +33,7 @@ class CardWidget extends StatelessWidget {
                   child: Text(
                     '8:00',
                     style: TextStyle(
-                      color: const Color.fromARGB(255, 255, 32, 40),
+                      color: const Color.fromARGB(255, 37, 46, 101),
                       fontWeight: FontWeight.w800
                     ),
                   )
@@ -50,6 +51,7 @@ class CardWidget extends StatelessWidget {
                   child: const Text(
                     '40 минут',
                     style: TextStyle(
+                      color: Color.fromARGB(255, 139, 139, 148),
                       fontWeight: FontWeight.w300
                     ),
                   )
@@ -92,6 +94,7 @@ class CardWidget extends StatelessWidget {
                             lesson,
                             maxLines: 1,
                             style: TextStyle(
+                              color: const Color.fromARGB(255, 37, 46, 101),
                               fontWeight: FontWeight.w700
                             ),
                           ),
@@ -118,8 +121,8 @@ class CardWidget extends StatelessWidget {
                             Text(
                               homework,
                               maxLines: 10,
-                              style: TextStyle(
-                                color: Colors.grey
+                              style: const TextStyle(
+                                color: Color.fromARGB(255, 139, 139, 148),
                               ),
                             ),
                           ],
