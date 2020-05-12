@@ -39,8 +39,9 @@ dependencies:
       ref: dart2
       path: sqflite_porter
     version: '>=0.2.0'
-#  carousel_slider: ^2.1.0
-#  flutter_mobile_carousel: ^1.0.3
+  equatable: ^1.1.1
+  flutter_bloc: ^4.0.0
+  bloc: ^4.0.0
 
 dev_dependencies:
   flutter_test:
