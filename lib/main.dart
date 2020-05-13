@@ -29,6 +29,7 @@ class _DiarySchoolAppState extends State<DiarySchoolApp> {
     const Center(
       child: Text('Not done'),
     ),
+    // const Center(child: Text("qqq")),
     TimetablePage(),
     const Center(
       child: Text('Profile'),
