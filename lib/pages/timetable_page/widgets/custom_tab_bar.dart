@@ -95,11 +95,12 @@ class _CustomTabBarState extends State<CustomTabBar> {
                                   .inDays
                                   .abs() >
                               0 ||
-                          currentState.activeDay
-                                  .difference(prevState.activeDay)
-                                  .inDays
-                                  .abs() >
-                              0);
+                          (currentState.activeDay.day !=
+                                  prevState.activeDay.day ||
+                              currentState.activeDay.month !=
+                                  prevState.activeDay.month ||
+                              currentState.activeDay.year !=
+                                  prevState.activeDay.year));
             },
             builder: (BuildContext context, state) {
               if (state is WeekNavigationBarState) {
@@ -124,7 +125,6 @@ class _CustomTabBarState extends State<CustomTabBar> {
                           prevState.nextIcon.iconSize);
             },
             builder: (BuildContext context, state) {
-//                  print("nrxt");
               if (state is WeekNavigationBarState) {
                 wasActivated = state.nextIcon.isActive ? IconType.next : null;
                 return buildIcon(Icons.arrow_forward, state.nextIcon.iconSize,
@@ -155,34 +155,35 @@ class _CustomTabBarState extends State<CustomTabBar> {
     );
   }
 
-
   Widget buildWeekWidget(DateTime firstDayOfCurrentWeek, DateTime activeDay) {
     return Row(
-      children: daysOfWeek.map((e) {
-        DateTime d =
-            firstDayOfCurrentWeek.add(Duration(days: daysOfWeek.indexOf(e)));
-        return InkWell(
-          onTap: () {
-            selectedDay = d;
-            widget.bloc.add(
-              WeekNavigationBarEvent(
-                wasActivated: wasActivated,
-                offset: offset,
-                maxScrollOffset: maxScrollOffset,
-                activeDay: d,
-                firstDayOfCurrentWeek: firstDayOfCurrentWeek,
-              ),
-            );
-          },
-          child: CustomTabBarItem(
-            isCurrently: activeDay.day == d.day &&
-                activeDay.month == d.month &&
-                activeDay.year == d.year,
-            title: e,
-            date: d,
-          ),
-        );
-      }).toList(),
+      children: daysOfWeek.map(
+        (e) {
+          DateTime d =
+              firstDayOfCurrentWeek.add(Duration(days: daysOfWeek.indexOf(e)));
+          return InkWell(
+            onTap: () {
+              selectedDay = d;
+              widget.bloc.add(
+                WeekNavigationBarEvent(
+                  wasActivated: wasActivated,
+                  offset: offset,
+                  maxScrollOffset: maxScrollOffset,
+                  activeDay: d,
+                  firstDayOfCurrentWeek: firstDayOfCurrentWeek,
+                ),
+              );
+            },
+            child: CustomTabBarItem(
+              isCurrently: activeDay.day == d.day &&
+                  activeDay.month == d.month &&
+                  activeDay.year == d.year,
+              title: e,
+              date: d,
+            ),
+          );
+        },
+      ).toList(),
     );
   }
 }

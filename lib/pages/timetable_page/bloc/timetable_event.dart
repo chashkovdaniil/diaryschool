@@ -9,8 +9,6 @@ abstract class TimetableEvent extends Equatable {
 // ======================== WeekNavigationBar ========================
 
 class WeekNavigationBarEvent extends TimetableEvent {
-//  final WeekNavigationBarIconModel prevIcon;
-//  final WeekNavigationBarIconModel nextIcon;
   final double offset;
   final double maxScrollOffset;
   final IconType wasActivated;
@@ -21,15 +19,11 @@ class WeekNavigationBarEvent extends TimetableEvent {
     this.wasActivated,
     this.maxScrollOffset,
     this.offset,
-//    @required this.nextIcon,
-//    @required this.prevIcon,
     @required this.activeDay,
     @required this.firstDayOfCurrentWeek,
   });
   @override
   List<Object> get props => [
-//        nextIcon,
-//        prevIcon,
         wasActivated,
         maxScrollOffset,
         offset,

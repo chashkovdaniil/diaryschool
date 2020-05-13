@@ -4,14 +4,12 @@ class CustomTabBarItem extends StatelessWidget {
   final String title;
   final DateTime date;
   final bool isCurrently;
-//  final Function onPressed;
 
   CustomTabBarItem({
     Key key,
     @required this.isCurrently,
     @required this.title,
     @required this.date,
-//    this.onPressed,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
