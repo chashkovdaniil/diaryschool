@@ -17,6 +17,7 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  
   package_info: ^0.4.0
   flutter:
     sdk: flutter
@@ -39,6 +40,8 @@ dependencies:
       ref: dart2
       path: sqflite_porter
     version: '>=0.2.0'
+  equatable: ^1.1.1
+  flutter_bloc: ^4.0.0
 
 dev_dependencies:
   flutter_test:
@@ -51,7 +54,10 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
   uses-material-design: true
-
+  fonts:
+    - family:  Linearicons
+      fonts:
+        - asset: res/fonts/Linearicons.ttf
   assets:
     - res/images/ic_launcher.png
     - res/images/logo1024x512.png

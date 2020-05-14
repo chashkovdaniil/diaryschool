@@ -1,13 +1,14 @@
 # https://dart.dev/guides/language/analysis-options
 
 include: package:pedantic/analysis_options.yaml
-#include: package:effective_dart/analysis_options.yaml
+# include: package:effective_dart/analysis_options.yaml
 
 analyzer:
   exclude:
     - 'example/**'
     - 'build/**'
     - '**.g.dart'
+    - 'lib/utilities/linearicons.dart'
   strong-mode:
     implicit-casts: false
     implicit-dynamic: true

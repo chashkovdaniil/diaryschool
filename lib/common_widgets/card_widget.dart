@@ -51,7 +51,7 @@ class CardWidget extends StatelessWidget {
                   child: const Text(
                     '40 минут',
                     style: TextStyle(
-                      color: Color.fromARGB(255, 139, 139, 148),
+                      color: kAccentColorText,
                       fontWeight: FontWeight.w300
                     ),
                   )

@@ -1,79 +1,48 @@
+import 'package:diaryschool/pages/timetable_page/bloc/timetable_bloc.dart';
+import 'package:diaryschool/pages/timetable_page/bloc/timetable_event.dart';
+import 'package:diaryschool/pages/timetable_page/bloc/timetable_model.dart';
+import 'package:diaryschool/pages/timetable_page/bloc/timetable_state.dart';
+import 'package:diaryschool/utilities/constants.dart';
 import 'package:diaryschool/utilities/custom_scroll_physics.dart';
 import 'package:flutter/material.dart';
-
-import 'custom_tab_bar_item.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:diaryschool/pages/timetable_page/widgets/custom_tab_bar_item.dart';
 
 class CustomTabBar extends StatefulWidget {
-  CustomTabBar({Key key}) : super(key: key);
-  @override 
+  CustomTabBar({Key key, this.bloc}) : super(key: key);
+  final TimetableBloc bloc;
+  @override
   _CustomTabBarState createState() => _CustomTabBarState();
 }
-class _CustomTabBarState extends State<CustomTabBar> with TickerProviderStateMixin {
-  final List<String> daysOfWeek = ["Пн","Вт","Ср","Чт","Пт","Сб","Вс"];
-  
-  Animation<double> _animation;
-  AnimationController controller;
-  ScrollController _scrollController;
-  double _prevIconSize = 0;
-  double _nextIconSize = 0;
-  bool transitionInThisScrollSession = false;
-  DateTime dateTime = DateTime.now().add(Duration(days: - DateTime.now().weekday+1));
-  Color iconColor = const Color.fromARGB(255, 139, 139, 148);
 
-  @override 
+class _CustomTabBarState extends State<CustomTabBar> {
+  final List<String> daysOfWeek = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+
+  ScrollController _scrollController;
+  DateTime firstDayOfCurrentWeek;
+  IconType wasActivated;
+  double offset;
+  double maxScrollOffset;
+  DateTime selectedDay = DateTime.now();
+
+  @override
   void initState() {
-    _animation = AnimationController(
-      value: _prevIconSize,
-      vsync: this,
-      upperBound: 30.0
-    );
-    _scrollController = ScrollController(
-      initialScrollOffset: 0.5
-    );
+    _scrollController = ScrollController(initialScrollOffset: 0.0001);
     _scrollController.addListener(() {
-      if (_scrollController.offset <= 0 && _scrollController.offset >= -30) {
-        if (_scrollController.offset.toInt() == -20) {
-          transitionInThisScrollSession = true;
-          iconColor = const Color.fromARGB(255, 37, 46, 101);
-          setState(() {});
-        }
-        if (_scrollController.offset >= -10 && _scrollController.offset < 0) {
-          if (transitionInThisScrollSession) {
-            iconColor = const Color.fromARGB(255, 139, 139, 148);
-            dateTime = dateTime.subtract(const Duration(days: 7));
-            print('prev');
-            setState(() {});
-          }
-          transitionInThisScrollSession = false;
-          setState(() {});
-        }
-        _prevIconSize = _scrollController.offset.abs();
-        setState(() {});
-      }
-      if (_scrollController.offset > _scrollController.position.maxScrollExtent 
-      && _scrollController.offset <= _scrollController.position.maxScrollExtent + 30) {
-        if (_scrollController.offset.toInt() == _scrollController.position.maxScrollExtent + 20) {
-          transitionInThisScrollSession = true;
-          iconColor = const Color.fromARGB(255, 37, 46, 101);
-          setState(() {});
-        }
-        if (_scrollController.offset > _scrollController.position.maxScrollExtent && _scrollController.offset <= _scrollController.position.maxScrollExtent + 10) {
-          if (transitionInThisScrollSession) {
-            iconColor = const Color.fromARGB(255, 139, 139, 148);
-            dateTime = dateTime.add(const Duration(days: 7));
-            print('next');
-            setState(() {});
-          }
-          transitionInThisScrollSession = false;
-          setState(() {});
-        }
-        _nextIconSize = _scrollController.offset - _scrollController.position.maxScrollExtent;
-        setState(() {});
-      }
+      offset = _scrollController.offset;
+      maxScrollOffset = _scrollController.position.maxScrollExtent;
+      widget.bloc.add(
+        WeekNavigationBarEvent(
+            maxScrollOffset: maxScrollOffset,
+            offset: offset,
+            wasActivated: wasActivated,
+            activeDay: selectedDay,
+            firstDayOfCurrentWeek: firstDayOfCurrentWeek),
+      );
     });
     super.initState();
   }
-  
+
   @override
   void dispose() {
     _scrollController.dispose();
@@ -90,40 +59,132 @@ class _CustomTabBarState extends State<CustomTabBar> with TickerProviderStateMix
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
-          SizedBox(
-            width: 30,
-            child: AnimatedBuilder(
-              animation: _animation,
-              builder: (BuildContext context, Widget w) {
-                return Icon(
-                    Icons.arrow_back,
-                    color: iconColor,
-                    size: _prevIconSize,
-                  );
+          BlocBuilder(
+            bloc: widget.bloc,
+            condition: (prevState, currentState) {
+              return (currentState is InitialTimetableState ||
+                      prevState is InitialTimetableState) ||
+                  (currentState is WeekNavigationBarState &&
+                      prevState is WeekNavigationBarState &&
+                      currentState.prevIcon.iconSize !=
+                          prevState.prevIcon.iconSize);
+            },
+            builder: (BuildContext context, state) {
+              if (state is WeekNavigationBarState) {
+                wasActivated =
+                    state.prevIcon.isActive ? IconType.previous : null;
+                return buildIcon(Icons.arrow_back, state.prevIcon.iconSize,
+                    state.prevIcon.isActive ? kPrimaryColorText : kAccentColorText);
+              } else if (state is InitialTimetableState) {
+                wasActivated =
+                    state.prevIcon.isActive ? IconType.previous : null;
+                return buildIcon(Icons.arrow_back, state.prevIcon.iconSize,
+                    state.prevIcon.isActive ? kPrimaryColorText : kAccentColorText);
               }
-            )
-          )
-        ] +
-          daysOfWeek.map((e) {
-            DateTime d =
-            dateTime.add(Duration(days: daysOfWeek.indexOf(e)));
-            return CustomTabBarItem(title: e, date: d, currentDate: DateTime.now());
-          }).toList() 
-        + [
-          SizedBox(
-            width: 30,
-            child: AnimatedBuilder(
-              animation: _animation,
-              builder: (BuildContext context, Widget child) {
-                return Icon(
-                  Icons.arrow_forward,
-                  color: iconColor,
-                  size: _nextIconSize,
-                );
+              return null;
+            },
+          ),
+          BlocBuilder(
+            bloc: widget.bloc,
+            condition: (prevState, currentState) {
+              return (currentState is InitialTimetableState ||
+                      prevState is InitialTimetableState) ||
+                  (currentState is WeekNavigationBarState &&
+                          prevState is WeekNavigationBarState) &&
+                      (currentState.firstDayOfCurrentWeek
+                                  .difference(prevState.firstDayOfCurrentWeek)
+                                  .inDays
+                                  .abs() >
+                              0 ||
+                          (currentState.activeDay.day !=
+                                  prevState.activeDay.day ||
+                              currentState.activeDay.month !=
+                                  prevState.activeDay.month ||
+                              currentState.activeDay.year !=
+                                  prevState.activeDay.year));
+            },
+            builder: (BuildContext context, state) {
+              if (state is WeekNavigationBarState) {
+                firstDayOfCurrentWeek = state.firstDayOfCurrentWeek;
+                return buildWeekWidget(firstDayOfCurrentWeek, state.activeDay);
+              } else if (state is InitialTimetableState) {
+                firstDayOfCurrentWeek = state.firstDayOfCurrentWeek;
+                return buildWeekWidget(firstDayOfCurrentWeek, state.activeDay);
               }
-            )
-          )
-        ]
-      ));
+              return null;
+            },
+          ),
+          BlocBuilder(
+            bloc: widget.bloc,
+            condition: (prevState, currentState) {
+              return (currentState is InitialTimetableState ||
+                      prevState is InitialTimetableState) ||
+                  (currentState is WeekNavigationBarState &&
+                      prevState is WeekNavigationBarState &&
+                      currentState.nextIcon.iconSize > 0 &&
+                      currentState.nextIcon.iconSize !=
+                          prevState.nextIcon.iconSize);
+            },
+            builder: (BuildContext context, state) {
+              if (state is WeekNavigationBarState) {
+                wasActivated = state.nextIcon.isActive ? IconType.next : null;
+                return buildIcon(Icons.arrow_forward, state.nextIcon.iconSize,
+                    state.nextIcon.isActive ? kPrimaryColorText : kAccentColorText);
+              } else if (state is InitialTimetableState) {
+                wasActivated = state.nextIcon.isActive ? IconType.next : null;
+                return buildIcon(Icons.arrow_forward, state.nextIcon.iconSize,
+                    state.nextIcon.isActive ? kPrimaryColorText : kAccentColorText);
+              }
+              return null;
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildIcon(IconData icon, double iconSize, Color iconColor) {
+    return AnimatedContainer(
+      curve: Curves.linear,
+      duration: const Duration(milliseconds: 200),
+      width: 30,
+      child: Icon(
+        icon,
+        color: iconColor,
+        size: iconSize.abs(),
+      ),
+    );
+  }
+
+  Widget buildWeekWidget(DateTime firstDayOfCurrentWeek, DateTime activeDay) {
+    return Row(
+      children: daysOfWeek.map(
+        (e) {
+          DateTime d =
+              firstDayOfCurrentWeek.add(Duration(days: daysOfWeek.indexOf(e)));
+          return InkWell(
+            onTap: () {
+              selectedDay = d;
+              widget.bloc.add(
+                WeekNavigationBarEvent(
+                  wasActivated: wasActivated,
+                  offset: offset,
+                  maxScrollOffset: maxScrollOffset,
+                  activeDay: d,
+                  firstDayOfCurrentWeek: firstDayOfCurrentWeek,
+                ),
+              );
+            },
+            child: CustomTabBarItem(
+              isCurrently: activeDay.day == d.day &&
+                  activeDay.month == d.month &&
+                  activeDay.year == d.year,
+              title: e,
+              date: d,
+            ),
+          );
+        },
+      ).toList(),
+    );
   }
 }
