@@ -23,3 +23,5 @@ const Map<int, String> kMonthIntToString = {
   11: "Ноя",
   12: "Дек",
 };
+
+const double kIconSlideActionSize = 40.0;

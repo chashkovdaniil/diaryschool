@@ -115,6 +115,7 @@ class _TimetablePageState extends State<TimetablePage> {
       body: ClipRRect(
         borderRadius: BorderRadius.circular(25),
         child: Container(
+          width: double.infinity,
           padding: const EdgeInsets.only(top: 20),
           color: Colors.white,
           child: Column(
@@ -127,27 +128,77 @@ class _TimetablePageState extends State<TimetablePage> {
                 child: SingleChildScrollView(
                   physics: const CustomScrollPhysics(),
                   child: Column(
-                    children: homeworks.map(
-                      (e) {
-                        return CardWidget(
-                          lesson: e['title'].toString(),
-                          start: e['start'] == null
-                              ? null
-                              : int.parse(
-                                  e['start'].toString(),
+                    children: homeworks.length > 0
+                        ? homeworks.map(
+                            (e) {
+                              return CardWidget(
+                                actions: <IconSlideAction>[
+                                  IconSlideAction(
+                                    key: const Key("done"),
+                                    iconData: Icons.done,
+                                    onTap: () {},
+                                  ),
+                                  IconSlideAction(
+                                    key: const Key("delete"),
+                                    iconData: Icons.delete,
+                                    onTap: () {},
+                                  ),
+                                ],
+                                lesson: e['title'].toString(),
+                                start: e['start'] == null
+                                    ? null
+                                    : int.parse(
+                                        e['start'].toString(),
+                                      ),
+                                end: e['end'] == null
+                                    ? null
+                                    : int.parse(
+                                        e['end'].toString(),
+                                      ),
+                                homework: e['homework'] == null
+                                    ? null
+                                    : e['homework'].toString(),
+                                isDone: e['isDone'] == null
+                                    ? null
+                                    : e['isDone'] == 1,
+                              );
+                            },
+                          ).toList()
+                        : <Widget>[
+                            Column(
+                              children: <Widget>[
+                                Text(
+                                  "😕",
+                                  style: TextStyle(
+                                    fontSize: 100.0,
+                                    color: Colors.black.withOpacity(0.6),
+                                  ),
                                 ),
-                          end: e['end'] == null
-                              ? null
-                              : int.parse(
-                                  e['end'].toString(),
+                                Text(
+                                  "Пока тут ничего нет",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 30,
+                                      color: Colors.black.withOpacity(0.6)),
                                 ),
-                          homework: e['homework'] == null
-                              ? null
-                              : e['homework'].toString(),
-                          isDone: e['isDone'] == null ? null : e['isDone'] == 1,
-                        );
-                      },
-                    ).toList(),
+                                FlatButton(
+                                  onPressed: () {},
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(2),
+                                    side: BorderSide(
+                                        color: Colors.black.withOpacity(0.6),
+                                        width: 2.0),
+                                  ),
+                                  child: Text(
+                                    "Добавить задание",
+                                    style: TextStyle(
+                                      color: Colors.black.withOpacity(0.6),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                   ),
                 ),
               )
