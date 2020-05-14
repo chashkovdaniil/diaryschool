@@ -1,10 +1,11 @@
 import 'dart:async';
 
+import 'package:diaryschool/pages/home_page.dart';
 import 'package:diaryschool/utilities/constants.dart';
+import 'package:diaryschool/utilities/linearicons.dart';
 import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:diaryschool/pages/timetable_page.dart';
-
 
 void main() {
   InAppPurchaseConnection.enablePendingPurchases();
@@ -20,9 +21,7 @@ class DiarySchoolApp extends StatefulWidget {
 
 class _DiarySchoolAppState extends State<DiarySchoolApp> {
   final List<Widget> pages = [
-    const Center(
-      child: Text('Home'),
-    ),
+    HomePage(),
     const Center(
       child: Text('Grades'),
     ),
@@ -37,25 +36,18 @@ class _DiarySchoolAppState extends State<DiarySchoolApp> {
   ];
   final List<BottomNavigationBarItem> bottomNavigationBarItems = [
     BottomNavigationBarItem(
-      icon: Icon(Icons.home), title: const Text('')
-    ),
+        icon: Icon(Linearicons.home), title: const Text('')),
     BottomNavigationBarItem(
-      icon: Icon(Icons.trending_up), title: const Text('')
-    ),
+        icon: Icon(Linearicons.chart_bars), title: const Text('')),
     BottomNavigationBarItem(
-      icon: Icon(Icons.check_circle_outline), title: const Text('')
-    ),
+        icon: Icon(Linearicons.checkmark_cicle), title: const Text('')),
     BottomNavigationBarItem(
-      icon: Icon(Icons.calendar_today), title: const Text('')
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.account_circle), title: const Text('')
-    )
+        icon: Icon(Linearicons.calendar_full), title: const Text('')),
+    BottomNavigationBarItem(icon: Icon(Linearicons.user), title: const Text(''))
   ];
 
-  PageController pageController = PageController(initialPage: 3);
+  PageController pageController = PageController(initialPage: 0);
   StreamController<int> indexController = StreamController<int>.broadcast();
-
 
   @override
   void dispose() {
@@ -71,32 +63,31 @@ class _DiarySchoolAppState extends State<DiarySchoolApp> {
       theme: ThemeData(primaryColor: Colors.white),
       home: SafeArea(
         child: Scaffold(
-          backgroundColor: backgroundColor,
+          backgroundColor: kBackgroundColor,
           body: PageView(
             physics: const NeverScrollableScrollPhysics(),
             controller: pageController,
             children: pages,
           ),
           bottomNavigationBar: StreamBuilder<Object>(
-            initialData: 3,
+            initialData: 0,
             stream: indexController.stream,
             builder: (BuildContext context, AsyncSnapshot<Object> snapshot) {
               int cIndex = snapshot.data as int;
               return BottomNavigationBar(
-                showSelectedLabels: false,
-                showUnselectedLabels: false,
-                elevation: 0,
-                type: BottomNavigationBarType.fixed,
-                selectedItemColor: selectedItemColorOnBNB,
-                unselectedItemColor: unselectedItemColorOnBNB ,
-                backgroundColor: Colors.transparent,
-                currentIndex: cIndex,
-                onTap: (int value) {
-                  indexController.add(value);
-                  pageController.jumpToPage(value);
-                },
-                items: bottomNavigationBarItems
-              );
+                  showSelectedLabels: false,
+                  showUnselectedLabels: false,
+                  elevation: 0,
+                  type: BottomNavigationBarType.fixed,
+                  selectedItemColor: kSelectedItemColorOnBNB,
+                  unselectedItemColor: kUnselectedItemColorOnBNB,
+                  backgroundColor: Colors.transparent,
+                  currentIndex: cIndex,
+                  onTap: (int value) {
+                    indexController.add(value);
+                    pageController.jumpToPage(value);
+                  },
+                  items: bottomNavigationBarItems);
             },
           ),
         ),

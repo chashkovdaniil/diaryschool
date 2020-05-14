@@ -2,6 +2,7 @@ import 'package:diaryschool/pages/timetable_page/bloc/timetable_bloc.dart';
 import 'package:diaryschool/pages/timetable_page/bloc/timetable_event.dart';
 import 'package:diaryschool/pages/timetable_page/bloc/timetable_model.dart';
 import 'package:diaryschool/pages/timetable_page/bloc/timetable_state.dart';
+import 'package:diaryschool/utilities/constants.dart';
 import 'package:diaryschool/utilities/custom_scroll_physics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -73,12 +74,12 @@ class _CustomTabBarState extends State<CustomTabBar> {
                 wasActivated =
                     state.prevIcon.isActive ? IconType.previous : null;
                 return buildIcon(Icons.arrow_back, state.prevIcon.iconSize,
-                    state.prevIcon.isActive ? Colors.blueAccent : Colors.black);
+                    state.prevIcon.isActive ? kPrimaryColorText : kAccentColorText);
               } else if (state is InitialTimetableState) {
                 wasActivated =
                     state.prevIcon.isActive ? IconType.previous : null;
                 return buildIcon(Icons.arrow_back, state.prevIcon.iconSize,
-                    state.prevIcon.isActive ? Colors.blueAccent : Colors.black);
+                    state.prevIcon.isActive ? kPrimaryColorText : kAccentColorText);
               }
               return null;
             },
@@ -128,11 +129,11 @@ class _CustomTabBarState extends State<CustomTabBar> {
               if (state is WeekNavigationBarState) {
                 wasActivated = state.nextIcon.isActive ? IconType.next : null;
                 return buildIcon(Icons.arrow_forward, state.nextIcon.iconSize,
-                    state.nextIcon.isActive ? Colors.blueAccent : Colors.black);
+                    state.nextIcon.isActive ? kPrimaryColorText : kAccentColorText);
               } else if (state is InitialTimetableState) {
                 wasActivated = state.nextIcon.isActive ? IconType.next : null;
                 return buildIcon(Icons.arrow_forward, state.nextIcon.iconSize,
-                    state.nextIcon.isActive ? Colors.blueAccent : Colors.black);
+                    state.nextIcon.isActive ? kPrimaryColorText : kAccentColorText);
               }
               return null;
             },

@@ -90,7 +90,7 @@ class _CardWidgetState extends State<CardWidget> {
 //
 //                  ],
 //                  color: Colors.white,
-                color: backgroundColor,
+                color: kBackgroundColor,
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(15),
                     bottomLeft: Radius.circular(15),
@@ -221,7 +221,7 @@ class IconSlideAction extends StatelessWidget {
         child: Icon(
           iconData,
           size: kIconSlideActionSize,
-          color: selectedItemColorOnBNB,
+          color: kSelectedItemColorOnBNB,
         ),
       ),
     );
