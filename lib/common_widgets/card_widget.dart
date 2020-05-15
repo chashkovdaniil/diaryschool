@@ -39,7 +39,7 @@ class _CardWidgetState extends State<CardWidget> {
       children: <Widget>[
         Container(
           decoration: BoxDecoration(
-          color: Colors.grey,
+          color: kBackgroundColor,
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(15),
               bottomLeft: Radius.circular(15),
@@ -166,7 +166,12 @@ class SlideAction extends StatelessWidget {
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Text(title),
+        child: Text(
+          title,
+          style: TextStyle(
+            color: kSelectedItemColorOnBNB
+          )
+        ),
         // child: Icon(
         //   iconData,
         //   size: kIconSlideActionSize,
