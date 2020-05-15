@@ -1,4 +1,5 @@
 import 'package:diaryschool/common_widgets/card_widget.dart';
+import 'package:diaryschool/data/models/homework.dart';
 import 'package:diaryschool/pages/timetable_page/bloc/timetable_bloc.dart';
 import 'package:diaryschool/pages/timetable_page/widgets/custom_tab_bar.dart';
 import 'package:diaryschool/utilities/constants.dart';
@@ -14,44 +15,89 @@ class TimetablePage extends StatefulWidget {
 }
 
 class _TimetablePageState extends State<TimetablePage> {
+  final List<Map<String, dynamic>> timetable = [
+    {
+      'id': 1,
+      'subject': 1,
+      'start': '8:00',
+      'end': '8:40',
+    },
+    {
+      'id': 2,
+      'subject': 2,
+      'start': '8:50',
+      'end': '9:30'
+    },
+    {
+      'id': 3,
+      'subject': 3,
+      'start': '9:40',
+      'end': '10:20'
+    },
+    {
+      'id': 4,
+      'subject': 4,
+      'start': '10:30',
+      'end': '11:10'
+    },
+    {
+      'id': 5,
+      'subject': 5,
+      'start': '11:20',
+      'end': '12:00'
+    },
+    {
+      'id': 6,
+      'subject': 6,
+      'start': '12:10',
+      'end': '12:50'
+    }
+  ];
   final List<Map<String, dynamic>> homeworks = [
     {
       'id': 1,
-      'title': 'Mathematics',
+      'subject': 1,
+      'idShedule': 2,
+      'isDone': 0,
     },
-    {'id': 2, 'title': 'Mathematics', 'homework': 'Page 124 #3,33,3,3'},
+    {
+      'id': 2, 
+      'subject': 2, 
+      'content': 'Page 124 #3,33,3,3',
+      'idShedule': 1,
+      'isDone': 0,
+    },
     {
       'id': 3,
-      'title': 'Mathematics',
-      'homework':
-          'Page 124 #3,33,3,3, ,kf,kf,,kf,kf,fkfkfkkffkdddddddddddddddddd',
-      'start': 123456789,
-      'end': 223456789,
+      'subject': 3,
+      'content':
+        'Page 124 #3,33,3,3, ,kf,kf,,kf,kf,\nfkfkfk\nkffkdddddddddddddddddd',
+      'idShedule': 3,
+      'isDone': 0,
     },
     {
       'id': 4,
-      'title': 'Mathematics',
-      'homework': 'Page 124 #3,33,3,3',
-      'start': 123456789,
-      'end': 223456789,
+      'subject': 4,
+      'content': 'Page 124 #3,33,3,3',
       'deadline': '2020.04.04 17:00',
-      'isDone': true
+      'isDone': 1,
+      'idShedule': 4
     },
     {
       'id': 4,
-      'title': 'Mathematics',
-      'homework': 'Page 124 #3,33,3,3',
-      'start': 123456789,
-      'end': 223456789,
-      'deadline': '2020.04.04 17:00'
+      'subject': 5,
+      'content': 'Page 124 #3,33,3,3',
+      'deadline': '2020.04.04 17:00',
+      'idShedule': 5,
+      'isDone': 0,
     },
     {
       'id': 4,
-      'title': 'Mathematics',
-      'homework': 'Page 124 #3,33,3,3',
-      'start': 123456789,
-      'end': 223456789,
-      'deadline': '2020.04.04 17:00'
+      'subject': 5,
+      'content': 'Page 124 #3,33,3,3',
+      'deadline': '2020.04.04 17:00',
+      'idShedule': 6,
+      'isDone': 0,
     }
   ];
   final TimetableBloc _timetableBloc = TimetableBloc();
@@ -102,14 +148,14 @@ class _TimetablePageState extends State<TimetablePage> {
         ),
         actions: <Widget>[
           FlatButton(
-              onPressed: () {
-                // TODO: выбор даты
-              },
-              child: const Text('Выбрать дату',
-                  style: TextStyle(
-                      color: Color.fromARGB(255, 37, 46, 101),
-                      fontSize: 15,
-                      fontWeight: FontWeight.w300)))
+            onPressed: () {
+              // TODO: выбор даты
+            },
+            child: const Text('Выбрать дату',
+                style: TextStyle(
+                    color: Color.fromARGB(255, 37, 46, 101),
+                    fontSize: 15,
+                    fontWeight: FontWeight.w300)))
         ],
       ),
       body: ClipRRect(
@@ -127,27 +173,57 @@ class _TimetablePageState extends State<TimetablePage> {
                 child: SingleChildScrollView(
                   physics: const CustomScrollPhysics(),
                   child: Column(
-                    children: homeworks.map(
+                    children: timetable.map(
                       (e) {
-                        return CardWidget(
-                          lesson: e['title'].toString(),
-                          start: e['start'] == null
-                              ? null
-                              : int.parse(
-                                  e['start'].toString(),
-                                ),
-                          end: e['end'] == null
-                              ? null
-                              : int.parse(
-                                  e['end'].toString(),
-                                ),
-                          homework: e['homework'] == null
-                              ? null
-                              : e['homework'].toString(),
-                          isDone: e['isDone'] == null ? null : e['isDone'] == 1,
+                        return Container(
+                          margin: const EdgeInsets.only(bottom: 15),
+                          child: Column(
+                            children: <Widget>[
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  e['start'] == null
+                                      ? const SizedBox.shrink()
+                                      : Container(
+                                          padding: const EdgeInsets.only(left: 20),
+                                          child: Text(
+                                            e['start'].toString(),
+                                            style: TextStyle(
+                                              color: const Color.fromARGB(255, 37, 46, 101),
+                                              fontWeight: FontWeight.w800,
+                                            ),
+                                          ),
+                                        ),
+                                  e['end'] == null
+                                      ? const SizedBox.shrink()
+                                      : Container(
+                                          padding: const EdgeInsets.only(right: 20),
+                                          child: Text(
+                                            e['end'].toString(),
+                                            style: const TextStyle(
+                                              color: Color.fromARGB(255, 139, 139, 148),
+                                              fontWeight: FontWeight.w300,
+                                            ),
+                                          ),
+                                        ),
+                                ],
+                              ),
+                              CardWidget(
+                                actions: <SlideAction>[
+                                  SlideAction(
+                                    title: 'Сделано',
+                                    // key: const Key("done"),
+                                    // iconData: Linearicons.checkmark_cicle,
+                                    onTap: () {},
+                                  ),
+                                ],
+                                homework: Homework.fromMap(homeworks[int.parse(e['id'].toString())-1]),
+                              )
+                            ]
+                          )
                         );
                       },
-                    ).toList(),
+                    ).toList()
                   ),
                 ),
               )

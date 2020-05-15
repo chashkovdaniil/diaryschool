@@ -12,6 +12,7 @@ abstract class TimetableState extends Equatable {
 // ==================== WeekNavigationBarState ====================
 class WeekNavigationBarState extends TimetableState {
   ///[wasActivated] - [null] если не было скролла да достаточного оффсета для смены недели. [IconType.next] или [IconType.previous] если был скролл на достаточный оффсет для смены недели.
+
   final WeekNavigationBarIconModel prevIcon;
   final WeekNavigationBarIconModel nextIcon;
 //  final IconType wasActivated;

@@ -20,6 +20,7 @@ class TimetableBloc extends Bloc<TimetableEvent, TimetableState> {
   WeekNavigationBarState updateWeekNavigationBarState(
       WeekNavigationBarEvent event) {
     /// Обновляет состояние WeekNavigationBatState.
+
     WeekNavigationBarIconModel prevIcon;
     WeekNavigationBarIconModel nextIcon;
     DateTime firstDayOfCurrentWeek;
