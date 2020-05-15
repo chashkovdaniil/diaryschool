@@ -63,14 +63,14 @@ class HomePage extends StatelessWidget {
                         onTap: () {
 
                         },
-                        title: Text('Список предметов (9)'),
+                        title: const Text('Список предметов (9)'),
                         trailing: Icon(Linearicons.arrow_right),
                       ),
                       ListTile(
                         onTap: () {
 
                         },
-                        title: Text('Учителя (10)'),
+                        title: const Text('Учителя (10)'),
                         trailing: Icon(Linearicons.arrow_right),
                       )
                       // FlatButton(
