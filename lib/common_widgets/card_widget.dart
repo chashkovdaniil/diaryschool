@@ -1,4 +1,5 @@
 import 'package:diaryschool/data/models/homework.dart';
+import 'package:diaryschool/pages/task_page/args.dart';
 import 'package:diaryschool/utilities/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,39 +19,37 @@ class CardWidget extends StatefulWidget {
 }
 
 class _CardWidgetState extends State<CardWidget> {
-  double _leftPadding = 20.0;
+  double _rightMargin = 20.0;
   double _startOffset;
   double _endOffset;
   bool _collapsed;
 
   @override
   void initState() {
-    _startOffset = _leftPadding;
+    _startOffset = _rightMargin;
     _endOffset = _startOffset +
-        (90 * widget.actions.length);
+        (40 * widget.actions.length);
     _collapsed = true;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final double width = MediaQuery.of(context).size.width;
+    const double height = 75;
     Homework homework = widget.homework;
     return Stack(
       children: <Widget>[
         Container(
+          width: width,
+          height: height,
           decoration: BoxDecoration(
-          color: kBackgroundColor,
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(15),
-              bottomLeft: Radius.circular(15),
-            ),
-            // border: Border.all(
-            //   color: Colors.grey.shade200,
-            //   width: 1,
-            // ),
+          color: Colors.white,
+            borderRadius: k15BorderRadius,
           ),
-          margin: const EdgeInsets.only(top: 5, left: 20),
+          margin: const EdgeInsets.only(top: 5, left: 20, right: 10),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: widget.actions.map((e) => e).toList(),
           ),
@@ -58,16 +57,19 @@ class _CardWidgetState extends State<CardWidget> {
         GestureDetector(
           onHorizontalDragUpdate: (dragUpdateDetails) {
             setState(() {
-              _leftPadding = getNextScrollPosition(
-                  _leftPadding + dragUpdateDetails.delta.dx, false);
+              _rightMargin = getNextScrollPosition(
+                  _rightMargin - dragUpdateDetails.delta.dx, false);
             });
           },
           onHorizontalDragEnd: (dragEndDetails) {
             setState(() {
-              _leftPadding = getNextScrollPosition(_leftPadding, true);
+              _rightMargin = getNextScrollPosition(_rightMargin, true);
             });
           },
           onHorizontalDragDown: (dragDownDetails) {},
+          onTap: () {
+            Navigator.pushNamed(context, '/task', arguments: TaskPageArgs(titleSubject: homework.subject.toString()));
+          },
           onDoubleTap: () {
             setState(() {
               homework.isDone = !homework.isDone;
@@ -75,21 +77,20 @@ class _CardWidgetState extends State<CardWidget> {
             // TODO: done
           },
           child: AnimatedContainer(
+            width: width,
+            height: height,
             duration: const Duration(milliseconds: 200),
             curve: Curves.linear,
-            margin: EdgeInsets.only(top: 5, left: _leftPadding),
+            margin: EdgeInsets.only(top: 5, right: _rightMargin, left: 20),
             padding:
-              const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+              const EdgeInsets.all(20),
             decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(15),
-                bottomLeft: Radius.circular(15),
-              ),
-              border: Border.all(
-                color: Colors.grey.shade200,
-                width: 1,
-              ),
+              color: const Color.fromARGB(255, 241, 240, 245),
+              borderRadius: k15BorderRadius,
+              // border: Border.all(
+              //   color: Colors.grey.shade200,
+              //   width: 1,
+              // ),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,33 +98,36 @@ class _CardWidgetState extends State<CardWidget> {
                 Row(
                   children: <Widget>[
                     Text(
-                      "Название предмета", // homework.subject делаем запрос в базу, чтобы получить название предмета
+                      "Математика", // homework.subject делаем запрос в базу, чтобы получить название предмета
                       maxLines: 1,
                       style: TextStyle(
-                          color: const Color.fromARGB(255, 37, 46, 101),
-                          fontWeight: FontWeight.w700),
+                        color: kPrimaryColorText,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16
+                      ),
                     ),
                     const SizedBox(width: 10),
+                    homework.grade == null
+                        ? const SizedBox.shrink()
+                        : Text(
+                          '${homework.grade}',
+                          style: TextStyle(
+                            color: Colors.red, 
+                            fontWeight: FontWeight.w700)),
+                    const SizedBox(width: 10),
                     homework.isDone
-                        ? Icon(Icons.done, color: Colors.green)
-                        : const SizedBox.shrink()
+                        ? Icon(Icons.done, color: Colors.green, size: 16)
+                        : const SizedBox.shrink(),
                   ],
                 ),
-                homework.content == null
-                    ? const SizedBox.shrink()
-                    : Column(
-                      children: <Widget>[
-                        const SizedBox(height: 10),
-                        Text(
-                          homework.content,
-                          maxLines: 4,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            color: Color.fromARGB(255, 139, 139, 148),
-                          ),
-                        ),
-                      ],
-                    ),
+                Text(
+                  homework.content ?? 'Нет задания',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    color: Color.fromARGB(255, 139, 139, 148),
+                  ),
+                ),
               ],
             ),
           ),
@@ -134,7 +138,7 @@ class _CardWidgetState extends State<CardWidget> {
 
   double getNextScrollPosition(double offset, bool dragEnd) {
     if (dragEnd) {
-      if (((_leftPadding - (_collapsed ? _startOffset : _endOffset))).abs() >
+      if (((_rightMargin - (_collapsed ? _startOffset : _endOffset))).abs() >
           (_endOffset - _startOffset) / 2) {
         _collapsed = !_collapsed;
         return _collapsed ? _startOffset : _endOffset;
@@ -155,8 +159,9 @@ class _CardWidgetState extends State<CardWidget> {
 
 class SlideAction extends StatelessWidget {
   final Function onTap;
-  final String title;
-  SlideAction({Key key, this.onTap, this.title}) : super(key: key);
+  // final String title;
+  final IconData iconData;
+  SlideAction({Key key, this.onTap, this.iconData}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -166,17 +171,11 @@ class SlideAction extends StatelessWidget {
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Text(
-          title,
-          style: TextStyle(
-            color: kSelectedItemColorOnBNB
-          )
+        child: Icon(
+          iconData,
+          size: kIconSlideActionSize,
+          color: kSelectedItemColorOnBNB,
         ),
-        // child: Icon(
-        //   iconData,
-        //   size: kIconSlideActionSize,
-        //   color: kSelectedItemColorOnBNB,
-        // ),
       ),
     );
   }

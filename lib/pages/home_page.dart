@@ -11,30 +11,16 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kBackgroundColorAppBarPages,
+      backgroundColor: Colors.transparent,
       body: Stack(
         children: <Widget>[
           Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            height: 60,
             color: kBackgroundColorHomePage,
-            padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
-            height: 100,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    Text('Среда ', style: TextStyle(
-                      color: kPrimaryColorText,
-                      fontWeight: FontWeight.w700
-                    )),
-                    Text('10 сен', style: TextStyle(
-                      color: kPrimaryColorText,
-                      fontWeight: FontWeight.w300
-                    ))
-                  ],
-                ),
                 Text(
                   'Hi Jack',
                   style: TextStyle(
@@ -42,14 +28,27 @@ class HomePage extends StatelessWidget {
                     fontSize: 20,
                     fontWeight: FontWeight.w800
                   ),
-                )
-              ]
+                ),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      Text('Среда ', style: TextStyle(
+                        color: kPrimaryColorText,
+                        fontWeight: FontWeight.w700
+                      )),
+                      Text('10 сен', style: TextStyle(
+                        color: kPrimaryColorText,
+                        fontWeight: FontWeight.w300
+                      ))
+                    ],
+                  ),
+              ],
             ),
           ),
           Container(
-            margin: const EdgeInsetsDirectional.only(top: 80),
+            margin: const EdgeInsets.only(top: 55),
             child: ClipRRect(
-              borderRadius: borderRadiusBodyPages,
+              borderRadius: kBorderRadiusBodyPages,
               child: Container(
                 height: MediaQuery.of(context).size.height - 90,
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -84,9 +83,9 @@ class HomePage extends StatelessWidget {
                 ),
               )
             ),
-          )
+          ),
         ]
-      ),
+      )
     );
   }
 }

@@ -78,7 +78,7 @@ class Tasks extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(
+                          const Text(
                             'Deadline',
                             style: TextStyle(
                               color: kAccentColorText

@@ -63,17 +63,19 @@ class _TimetablePageState extends State<TimetablePage> {
     {
       'id': 2, 
       'subject': 2, 
-      'content': 'Page 124 #3,33,3,3',
+      'content': 'Page 124 #3,33,3,311111111111111111',
       'idShedule': 1,
       'isDone': 0,
+      'grade': 5,
     },
     {
       'id': 3,
       'subject': 3,
       'content':
-        'Page 124 #3,33,3,3, ,kf,kf,,kf,kf,\nfkfkfk\nkffkdddddddddddddddddd',
+        'Page 124 #3,33,3,3, ,kf,kf,ввввввввввввввввввввввввввввввввввввввввввввввввв,kf,kf,\nfkfkfk\nkffkdddddddddddddddddd',
       'idShedule': 3,
       'isDone': 0,
+      'grade': 1,
     },
     {
       'id': 4,
@@ -81,7 +83,8 @@ class _TimetablePageState extends State<TimetablePage> {
       'content': 'Page 124 #3,33,3,3',
       'deadline': '2020.04.04 17:00',
       'isDone': 1,
-      'idShedule': 4
+      'idShedule': 4,
+      'grade': 2,
     },
     {
       'id': 4,
@@ -90,6 +93,7 @@ class _TimetablePageState extends State<TimetablePage> {
       'deadline': '2020.04.04 17:00',
       'idShedule': 5,
       'isDone': 0,
+      'grade': 3,
     },
     {
       'id': 4,
@@ -152,14 +156,14 @@ class _TimetablePageState extends State<TimetablePage> {
               // TODO: выбор даты
             },
             child: const Text('Выбрать дату',
-                style: TextStyle(
-                    color: Color.fromARGB(255, 37, 46, 101),
-                    fontSize: 15,
-                    fontWeight: FontWeight.w300)))
+              style: TextStyle(
+                  color: Color.fromARGB(255, 37, 46, 101),
+                  fontSize: 15,
+                  fontWeight: FontWeight.w300)))
         ],
       ),
       body: ClipRRect(
-        borderRadius: BorderRadius.circular(25),
+        borderRadius: kBorderRadiusBodyPages,
         child: Container(
           padding: const EdgeInsets.only(top: 20),
           color: Colors.white,
@@ -211,9 +215,9 @@ class _TimetablePageState extends State<TimetablePage> {
                               CardWidget(
                                 actions: <SlideAction>[
                                   SlideAction(
-                                    title: 'Сделано',
-                                    // key: const Key("done"),
-                                    // iconData: Linearicons.checkmark_cicle,
+                                    // title: 'Сделано',
+                                    key: const Key("done"),
+                                    iconData: Icons.check,
                                     onTap: () {},
                                   ),
                                 ],
