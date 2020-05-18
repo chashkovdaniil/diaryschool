@@ -24,10 +24,10 @@ class _DiarySchoolAppState extends State<DiarySchoolApp> {
       title: 'Дневник',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: Colors.white),
-      initialRoute: '/',
+      initialRoute: MainPage.id,
       routes: <String, WidgetBuilder> {
-        '/': (BuildContext context) => MainPage(),
-        '/task': (BuildContext context) => TaskPage(),
+        MainPage.id: (BuildContext context) => MainPage(),
+        TaskPage.id: (BuildContext context) => TaskPage(),
       },
     );
   }

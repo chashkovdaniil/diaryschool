@@ -1,8 +1,10 @@
 import 'package:diaryschool/data/models/homework.dart';
+import 'package:diaryschool/pages/task_page.dart';
 import 'package:diaryschool/pages/task_page/args.dart';
 import 'package:diaryschool/utilities/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:diaryschool/utilities/cupertino_push_with_arguments.dart';
 
 class CardWidget extends StatefulWidget {
   final Homework homework;
@@ -67,9 +69,20 @@ class _CardWidgetState extends State<CardWidget> {
           },
           onHorizontalDragDown: (dragDownDetails) {},
           onTap: () {
-            Navigator.pushNamed(context, '/task',
-                arguments:
-                    TaskPageArgs(titleSubject: homework.subject.toString()));
+            cupertinoPushWithArgs(
+              context: context,
+              arguments: TaskPageArgs(
+                titleSubject: homework.subject.toString(),
+              ),
+              pushTo: TaskPage(),
+            );
+//            Navigator.pushNamed(
+//              context,
+//              TaskPage.id,
+//              arguments: TaskPageArgs(
+//                titleSubject: homework.subject.toString(),
+//              ),
+//            );
           },
           onDoubleTap: () {
             setState(() {
