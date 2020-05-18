@@ -6,6 +6,7 @@ const Color kBackgroundColor = Color.fromARGB(250, 249, 249, 251);
 const Color kBackgroundColorAppBarPages = Colors.transparent;
 const Color kBackgroundColorPages = Colors.white;
 const Color kBackgroundColorHomePage = Color.fromARGB(255, 255, 237, 213);
+const Color kBackgroundColorTaskPage = Color.fromARGB(255, 255,237,213);
 const Color kPrimaryColorText = Color.fromARGB(255, 37, 46, 101);
 const Color kAccentColorText = Color.fromARGB(255, 139, 139, 148);
 const Color kSelectedItemColorOnBNB = Color.fromARGB(255, 132, 137, 165);
@@ -42,5 +43,8 @@ const Map<int, String> kShortDayOfWeekOnString = {
   6: 'Сб',
   7: 'Вс'
 };
-BorderRadius borderRadiusBodyPages = BorderRadius.circular(25);
-const double kIconSlideActionSize = 40.0;
+BorderRadius k15BorderRadius = BorderRadius.circular(15);
+BorderRadius k25BorderRadius = BorderRadius.circular(25);
+BorderRadius kBorderRadiusBodyPages = k25BorderRadius;
+
+const double kIconSlideActionSize = 30.0;

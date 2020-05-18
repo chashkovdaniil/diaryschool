@@ -71,14 +71,14 @@ class Tasks extends StatelessWidget {
                     borderRadius: BorderRadius.circular(15),
                     child: Container(
                       width: 130,
-                      padding: EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
                       color: int.parse(tasks[index]['deadline'].toString()) <= 3 
-                        ? Color.fromARGB(255, 254, 245, 246)
-                        : Color.fromARGB(255, 244, 253, 248),
+                        ? const Color.fromARGB(255, 254, 245, 246)
+                        : const Color.fromARGB(255, 244, 253, 248),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(
+                          const Text(
                             'Deadline',
                             style: TextStyle(
                               color: kAccentColorText
@@ -90,8 +90,8 @@ class Tasks extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(25),
                                 child: Container(
                                   color: int.parse(tasks[index]['deadline'].toString()) <= 3 
-                                    ? Color.fromARGB(255, 225, 84, 109)
-                                    : Color.fromARGB(255, 73, 208, 137),
+                                    ? const Color.fromARGB(255, 225, 84, 109)
+                                    : const Color.fromARGB(255, 73, 208, 137),
                                   width: 10, 
                                   height: 10
                                 ),
