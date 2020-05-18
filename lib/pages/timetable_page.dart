@@ -6,6 +6,7 @@ import 'package:diaryschool/utilities/custom_scroll_physics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:diaryschool/pages/timetable_page/bloc/timetable_state.dart';
+import 'package:diaryschool/utilities/linearicons.dart';
 
 class TimetablePage extends StatefulWidget {
   TimetablePage({Key key}) : super(key: key);
@@ -135,12 +136,12 @@ class _TimetablePageState extends State<TimetablePage> {
                                 actions: <IconSlideAction>[
                                   IconSlideAction(
                                     key: const Key("done"),
-                                    iconData: Icons.done,
+                                    iconData: Linearicons.checkmark_cicle,
                                     onTap: () {},
                                   ),
                                   IconSlideAction(
                                     key: const Key("delete"),
-                                    iconData: Icons.delete,
+                                    iconData: Linearicons.trash,
                                     onTap: () {},
                                   ),
                                 ],

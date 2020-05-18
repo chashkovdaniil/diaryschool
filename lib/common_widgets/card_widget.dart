@@ -90,7 +90,7 @@ class _CardWidgetState extends State<CardWidget> {
 //
 //                  ],
 //                  color: Colors.white,
-                color: kBackgroundColor,
+                  color: kBackgroundColor,
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(15),
                     bottomLeft: Radius.circular(15),
@@ -109,19 +109,20 @@ class _CardWidgetState extends State<CardWidget> {
               ),
               GestureDetector(
                 onHorizontalDragUpdate: (dragUpdateDetails) {
-                  setState(() {
-                    _leftPadding = getNextScrollPosition(
-                        _leftPadding + dragUpdateDetails.delta.dx, false);
-                  });
+                  setState(
+                    () {
+                      _leftPadding = getNextScrollPosition(
+                          _leftPadding + dragUpdateDetails.delta.dx, false);
+                    },
+                  );
                 },
-                onHorizontalDragCancel: () {},
-                onHorizontalDragStart: (dragStartDetails) {},
                 onHorizontalDragEnd: (dragEndDetails) {
-                  setState(() {
-                    _leftPadding = getNextScrollPosition(_leftPadding, true);
-                  });
+                  setState(
+                    () {
+                      _leftPadding = getNextScrollPosition(_leftPadding, true);
+                    },
+                  );
                 },
-                onHorizontalDragDown: (dragDownDetails) {},
                 child: AnimatedContainer(
                   height: 90.0,
                   duration: const Duration(milliseconds: 200),
