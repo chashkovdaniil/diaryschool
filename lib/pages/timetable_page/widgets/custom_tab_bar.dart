@@ -4,6 +4,7 @@ import 'package:diaryschool/pages/timetable_page/bloc/timetable_model.dart';
 import 'package:diaryschool/pages/timetable_page/bloc/timetable_state.dart';
 import 'package:diaryschool/utilities/constants.dart';
 import 'package:diaryschool/utilities/custom_scroll_physics.dart';
+import 'package:diaryschool/utilities/linearicons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:diaryschool/pages/timetable_page/widgets/custom_tab_bar_item.dart';
@@ -27,20 +28,6 @@ class _CustomTabBarState extends State<CustomTabBar> {
 
   @override
   void initState() {
-    _scrollController = ScrollController(initialScrollOffset: 0.0001);
-    _scrollController.addListener(() {
-      if (_scrollController.offset == 0) _scrollController.jumpTo(0.0001);
-      offset = _scrollController.offset;
-      maxScrollOffset = _scrollController.position.maxScrollExtent;
-      widget.bloc.add(
-        WeekNavigationBarEvent(
-            maxScrollOffset: maxScrollOffset,
-            offset: offset,
-            wasActivated: wasActivated,
-            activeDay: selectedDay,
-            firstDayOfCurrentWeek: firstDayOfCurrentWeek),
-      );
-    });
     super.initState();
   }
 
@@ -52,130 +39,80 @@ class _CustomTabBarState extends State<CustomTabBar> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      controller: _scrollController,
-      physics: const CustomScrollPhysics(),
-//child: Row(children: [1,2,3,4,5,6,7].map((e) => Padding(
-//  padding: const EdgeInsets.symmetric(horizontal: 80.0),
-//  child:   Text(e.toString()),
-//)).toList(),),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          BlocBuilder(
-            bloc: widget.bloc,
-            condition: (prevState, currentState) {
-              return (currentState is InitialTimetableState ||
-                      prevState is InitialTimetableState) ||
-                  (currentState is WeekNavigationBarState &&
-                      prevState is WeekNavigationBarState &&
-                      currentState.prevIcon.iconSize !=
-                          prevState.prevIcon.iconSize);
-            },
-            builder: (BuildContext context, state) {
-              if (state is WeekNavigationBarState) {
-                wasActivated =
-                    state.prevIcon.isActive ? IconType.previous : null;
-                return buildIcon(
-                    Icons.arrow_back,
-                    state.prevIcon.iconSize,
-                    state.prevIcon.isActive
-                        ? kPrimaryColorText
-                        : kAccentColorText);
-              } else if (state is InitialTimetableState) {
-                wasActivated =
-                    state.prevIcon.isActive ? IconType.previous : null;
-                return buildIcon(
-                    Icons.arrow_back,
-                    state.prevIcon.iconSize,
-                    state.prevIcon.isActive
-                        ? kPrimaryColorText
-                        : kAccentColorText);
-              }
-              return null;
-            },
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.max,
+      children: <Widget>[
+        GestureDetector(
+          onTap: () {
+            widget.bloc.add(
+              WeekNavigationBarEvent(
+                  activeDay: selectedDay,
+                  firstDayOfCurrentWeek: firstDayOfCurrentWeek.subtract(const Duration(days: 7))),
+            );
+          },
+          child: Container(
+            width: 30,
+            height: 40,
+            child: Icon(
+              Linearicons.arrow_left,
+              color: kAccentColorText,
+              size: 20,
+            ),
           ),
-          BlocBuilder(
-            bloc: widget.bloc,
-            condition: (prevState, currentState) {
-              return (currentState is InitialTimetableState ||
-                      prevState is InitialTimetableState) ||
-                  (currentState is WeekNavigationBarState &&
-                          prevState is WeekNavigationBarState) &&
-                      (currentState.firstDayOfCurrentWeek
-                                  .difference(prevState.firstDayOfCurrentWeek)
-                                  .inDays
-                                  .abs() >
-                              0 ||
-                          (currentState.activeDay.day !=
-                                  prevState.activeDay.day ||
-                              currentState.activeDay.month !=
-                                  prevState.activeDay.month ||
-                              currentState.activeDay.year !=
-                                  prevState.activeDay.year));
-            },
-            builder: (BuildContext context, state) {
-              if (state is WeekNavigationBarState) {
-                firstDayOfCurrentWeek = state.firstDayOfCurrentWeek;
-                return buildWeekWidget(firstDayOfCurrentWeek, state.activeDay);
-              } else if (state is InitialTimetableState) {
-                firstDayOfCurrentWeek = state.firstDayOfCurrentWeek;
-                return buildWeekWidget(firstDayOfCurrentWeek, state.activeDay);
-              }
-              return null;
-            },
+        ),
+        BlocBuilder(
+          bloc: widget.bloc,
+          condition: (prevState, currentState) {
+            return (currentState is InitialTimetableState ||
+                    prevState is InitialTimetableState) ||
+                (currentState is WeekNavigationBarState &&
+                        prevState is WeekNavigationBarState) &&
+                    (currentState.firstDayOfCurrentWeek
+                                .difference(prevState.firstDayOfCurrentWeek)
+                                .inDays
+                                .abs() >
+                            0 ||
+                        (currentState.activeDay.day !=
+                                prevState.activeDay.day ||
+                            currentState.activeDay.month !=
+                                prevState.activeDay.month ||
+                            currentState.activeDay.year !=
+                                prevState.activeDay.year));
+          },
+          builder: (BuildContext context, state) {
+            if (state is WeekNavigationBarState) {
+              firstDayOfCurrentWeek = state.firstDayOfCurrentWeek;
+              return buildWeekWidget(firstDayOfCurrentWeek, state.activeDay);
+            } else if (state is InitialTimetableState) {
+              firstDayOfCurrentWeek = state.firstDayOfCurrentWeek;
+              return buildWeekWidget(firstDayOfCurrentWeek, state.activeDay);
+            }
+            return null;
+          },
+        ),
+        GestureDetector(
+          onTap: () {
+            widget.bloc.add(
+              WeekNavigationBarEvent(
+                  activeDay: selectedDay,
+                  firstDayOfCurrentWeek: firstDayOfCurrentWeek.add(const Duration(days: 7))),
+            );
+          },
+          child: Container(
+            width: 30,
+            height: 40,
+            child: Icon(
+              Linearicons.arrow_right,
+              color: kAccentColorText,
+              size: 20,
+            ),
           ),
-          BlocBuilder(
-            bloc: widget.bloc,
-            condition: (prevState, currentState) {
-              return (currentState is InitialTimetableState ||
-                      prevState is InitialTimetableState) ||
-                  (currentState is WeekNavigationBarState &&
-                      prevState is WeekNavigationBarState &&
-                      currentState.nextIcon.iconSize > 0 &&
-                      currentState.nextIcon.iconSize !=
-                          prevState.nextIcon.iconSize);
-            },
-            builder: (BuildContext context, state) {
-              if (state is WeekNavigationBarState) {
-                wasActivated = state.nextIcon.isActive ? IconType.next : null;
-                return buildIcon(
-                    Icons.arrow_forward,
-                    state.nextIcon.iconSize,
-                    state.nextIcon.isActive
-                        ? kPrimaryColorText
-                        : kAccentColorText);
-              } else if (state is InitialTimetableState) {
-                wasActivated = state.nextIcon.isActive ? IconType.next : null;
-                return buildIcon(
-                    Icons.arrow_forward,
-                    state.nextIcon.iconSize,
-                    state.nextIcon.isActive
-                        ? kPrimaryColorText
-                        : kAccentColorText);
-              }
-              return null;
-            },
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
-  Widget buildIcon(IconData icon, double iconSize, Color iconColor) {
-    return AnimatedContainer(
-      curve: Curves.linear,
-      duration: const Duration(milliseconds: 200),
-      width: 30,
-      child: Icon(
-        icon,
-        color: iconColor,
-        size: iconSize.abs(),
-      ),
-    );
-  }
 
   Widget buildWeekWidget(DateTime firstDayOfCurrentWeek, DateTime activeDay) {
     return Row(
@@ -183,14 +120,10 @@ class _CustomTabBarState extends State<CustomTabBar> {
         (e) {
           DateTime d =
               firstDayOfCurrentWeek.add(Duration(days: daysOfWeek.indexOf(e)));
-          return InkWell(
+          return GestureDetector(
             onTap: () {
-              selectedDay = d;
               widget.bloc.add(
                 WeekNavigationBarEvent(
-                  wasActivated: wasActivated,
-                  offset: offset,
-                  maxScrollOffset: maxScrollOffset,
                   activeDay: d,
                   firstDayOfCurrentWeek: firstDayOfCurrentWeek,
                 ),

@@ -15,8 +15,8 @@ class HomePage extends StatelessWidget {
       body: Stack(
         children: <Widget>[
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            height: 60,
+            padding: const EdgeInsets.only(right: 20, left: 20, bottom: 15),
+            height: 75,
             color: kBackgroundColorHomePage,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

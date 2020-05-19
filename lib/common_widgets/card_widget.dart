@@ -1,10 +1,8 @@
 import 'package:diaryschool/data/models/homework.dart';
-import 'package:diaryschool/pages/task_page.dart';
 import 'package:diaryschool/pages/task_page/args.dart';
 import 'package:diaryschool/utilities/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:diaryschool/utilities/cupertino_push_with_arguments.dart';
 
 class CardWidget extends StatefulWidget {
   final Homework homework;
@@ -36,13 +34,11 @@ class _CardWidgetState extends State<CardWidget> {
 
   @override
   Widget build(BuildContext context) {
-//    final double width = MediaQuery.of(context).size.width;
     const double height = 75;
     Homework homework = widget.homework;
     return Stack(
       children: <Widget>[
         Container(
-//          width: width,
           height: height,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -69,20 +65,10 @@ class _CardWidgetState extends State<CardWidget> {
           },
           onHorizontalDragDown: (dragDownDetails) {},
           onTap: () {
-            cupertinoPushWithArgs(
-              context: context,
-              arguments: TaskPageArgs(
-                titleSubject: homework.subject.toString(),
-              ),
-              pushTo: TaskPage(),
+            Navigator.of(context).pushNamed(
+              '/task',
+              arguments: TaskPageArgs(titleSubject: homework.subject.toString()),
             );
-//            Navigator.pushNamed(
-//              context,
-//              TaskPage.id,
-//              arguments: TaskPageArgs(
-//                titleSubject: homework.subject.toString(),
-//              ),
-//            );
           },
           onDoubleTap: () {
             setState(() {
@@ -91,7 +77,6 @@ class _CardWidgetState extends State<CardWidget> {
             // TODO: done
           },
           child: AnimatedContainer(
-//            width: width,
             height: height,
             transform: Matrix4.translationValues(20 - _rightMargin, 0, 0),
             duration: const Duration(milliseconds: 200),
@@ -101,10 +86,6 @@ class _CardWidgetState extends State<CardWidget> {
             decoration: BoxDecoration(
               color: const Color.fromARGB(255, 241, 240, 245),
               borderRadius: k15BorderRadius,
-              // border: Border.all(
-              //   color: Colors.grey.shade200,
-              //   width: 1,
-              // ),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

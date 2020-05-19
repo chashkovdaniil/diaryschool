@@ -1,6 +1,6 @@
 import 'package:diaryschool/pages/task_page/widgets/card_add_file.dart';
 import 'package:diaryschool/pages/task_page/widgets/card_file.dart';
-import 'package:diaryschool/pages/timetable_page/widgets/week_navigation_bar/custom_scroll_physics.dart';
+import 'package:diaryschool/utilities/custom_scroll_physics.dart';
 import 'package:flutter/material.dart';
 
 class FilesTaskPage extends StatelessWidget {

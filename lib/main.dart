@@ -23,12 +23,17 @@ class _DiarySchoolAppState extends State<DiarySchoolApp> {
     return MaterialApp(
       title: 'Дневник',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primaryColor: Colors.white),
-      initialRoute: MainPage.id,
-      routes: <String, WidgetBuilder> {
-        MainPage.id: (BuildContext context) => MainPage(),
-        TaskPage.id: (BuildContext context) => TaskPage(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => MainPage(),
+        '/task': (context) => TaskPage()
       },
+      theme: ThemeData(
+        primaryColor: Colors.white,
+        pageTransitionsTheme: const PageTransitionsTheme(
+          builders: {
+            TargetPlatform.android: CupertinoPageTransitionsBuilder(),}),
+      ),
     );
   }
 }

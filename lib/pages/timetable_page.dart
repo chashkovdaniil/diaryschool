@@ -16,12 +16,7 @@ class TimetablePage extends StatefulWidget {
 
 class _TimetablePageState extends State<TimetablePage> {
   final List<Map<String, dynamic>> timetable = [
-    {
-      'id': 1,
-      'subject': 1,
-      'start': '8:00',
-      'end': '8:40',
-    },
+    {'id': 1,'subject': 1,'start': '8:00','end': '8:40',},
     {'id': 2, 'subject': 2, 'start': '8:50', 'end': '9:30'},
     {'id': 3, 'subject': 3, 'start': '9:40', 'end': '10:20'},
     {'id': 4, 'subject': 4, 'start': '10:30', 'end': '11:10'},
