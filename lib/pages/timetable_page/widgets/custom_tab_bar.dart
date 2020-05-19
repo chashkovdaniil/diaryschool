@@ -29,6 +29,7 @@ class _CustomTabBarState extends State<CustomTabBar> {
   void initState() {
     _scrollController = ScrollController(initialScrollOffset: 0.0001);
     _scrollController.addListener(() {
+      if (_scrollController.offset == 0) _scrollController.jumpTo(0.0001);
       offset = _scrollController.offset;
       maxScrollOffset = _scrollController.position.maxScrollExtent;
       widget.bloc.add(
@@ -55,6 +56,10 @@ class _CustomTabBarState extends State<CustomTabBar> {
       scrollDirection: Axis.horizontal,
       controller: _scrollController,
       physics: const CustomScrollPhysics(),
+//child: Row(children: [1,2,3,4,5,6,7].map((e) => Padding(
+//  padding: const EdgeInsets.symmetric(horizontal: 80.0),
+//  child:   Text(e.toString()),
+//)).toList(),),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
@@ -73,13 +78,21 @@ class _CustomTabBarState extends State<CustomTabBar> {
               if (state is WeekNavigationBarState) {
                 wasActivated =
                     state.prevIcon.isActive ? IconType.previous : null;
-                return buildIcon(Icons.arrow_back, state.prevIcon.iconSize,
-                    state.prevIcon.isActive ? kPrimaryColorText : kAccentColorText);
+                return buildIcon(
+                    Icons.arrow_back,
+                    state.prevIcon.iconSize,
+                    state.prevIcon.isActive
+                        ? kPrimaryColorText
+                        : kAccentColorText);
               } else if (state is InitialTimetableState) {
                 wasActivated =
                     state.prevIcon.isActive ? IconType.previous : null;
-                return buildIcon(Icons.arrow_back, state.prevIcon.iconSize,
-                    state.prevIcon.isActive ? kPrimaryColorText : kAccentColorText);
+                return buildIcon(
+                    Icons.arrow_back,
+                    state.prevIcon.iconSize,
+                    state.prevIcon.isActive
+                        ? kPrimaryColorText
+                        : kAccentColorText);
               }
               return null;
             },
@@ -128,12 +141,20 @@ class _CustomTabBarState extends State<CustomTabBar> {
             builder: (BuildContext context, state) {
               if (state is WeekNavigationBarState) {
                 wasActivated = state.nextIcon.isActive ? IconType.next : null;
-                return buildIcon(Icons.arrow_forward, state.nextIcon.iconSize,
-                    state.nextIcon.isActive ? kPrimaryColorText : kAccentColorText);
+                return buildIcon(
+                    Icons.arrow_forward,
+                    state.nextIcon.iconSize,
+                    state.nextIcon.isActive
+                        ? kPrimaryColorText
+                        : kAccentColorText);
               } else if (state is InitialTimetableState) {
                 wasActivated = state.nextIcon.isActive ? IconType.next : null;
-                return buildIcon(Icons.arrow_forward, state.nextIcon.iconSize,
-                    state.nextIcon.isActive ? kPrimaryColorText : kAccentColorText);
+                return buildIcon(
+                    Icons.arrow_forward,
+                    state.nextIcon.iconSize,
+                    state.nextIcon.isActive
+                        ? kPrimaryColorText
+                        : kAccentColorText);
               }
               return null;
             },

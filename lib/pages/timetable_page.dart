@@ -22,36 +22,11 @@ class _TimetablePageState extends State<TimetablePage> {
       'start': '8:00',
       'end': '8:40',
     },
-    {
-      'id': 2,
-      'subject': 2,
-      'start': '8:50',
-      'end': '9:30'
-    },
-    {
-      'id': 3,
-      'subject': 3,
-      'start': '9:40',
-      'end': '10:20'
-    },
-    {
-      'id': 4,
-      'subject': 4,
-      'start': '10:30',
-      'end': '11:10'
-    },
-    {
-      'id': 5,
-      'subject': 5,
-      'start': '11:20',
-      'end': '12:00'
-    },
-    {
-      'id': 6,
-      'subject': 6,
-      'start': '12:10',
-      'end': '12:50'
-    }
+    {'id': 2, 'subject': 2, 'start': '8:50', 'end': '9:30'},
+    {'id': 3, 'subject': 3, 'start': '9:40', 'end': '10:20'},
+    {'id': 4, 'subject': 4, 'start': '10:30', 'end': '11:10'},
+    {'id': 5, 'subject': 5, 'start': '11:20', 'end': '12:00'},
+    {'id': 6, 'subject': 6, 'start': '12:10', 'end': '12:50'}
   ];
   final List<Map<String, dynamic>> homeworks = [
     {
@@ -61,8 +36,8 @@ class _TimetablePageState extends State<TimetablePage> {
       'isDone': 0,
     },
     {
-      'id': 2, 
-      'subject': 2, 
+      'id': 2,
+      'subject': 2,
       'content': 'Page 124 #3,33,3,311111111111111111',
       'idShedule': 1,
       'isDone': 0,
@@ -72,7 +47,7 @@ class _TimetablePageState extends State<TimetablePage> {
       'id': 3,
       'subject': 3,
       'content':
-        'Page 124 #3,33,3,3, ,kf,kf,ввввввввввввввввввввввввввввввввввввввввввввввввв,kf,kf,\nfkfkfk\nkffkdddddddddddddddddd',
+          'Page 124 #3,33,3,3, ,kf,kf,ввввввввввввввввввввввввввввввввввввввввввввввввв,kf,kf,\nfkfkfk\nkffkdddddddddddddddddd',
       'idShedule': 3,
       'isDone': 0,
       'grade': 1,
@@ -152,14 +127,14 @@ class _TimetablePageState extends State<TimetablePage> {
         ),
         actions: <Widget>[
           FlatButton(
-            onPressed: () {
-              // TODO: выбор даты
-            },
-            child: const Text('Выбрать дату',
-              style: TextStyle(
-                  color: Color.fromARGB(255, 37, 46, 101),
-                  fontSize: 15,
-                  fontWeight: FontWeight.w300)))
+              onPressed: () {
+                // TODO: выбор даты
+              },
+              child: const Text('Выбрать дату',
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 37, 46, 101),
+                      fontSize: 15,
+                      fontWeight: FontWeight.w300)))
         ],
       ),
       body: ClipRRect(
@@ -177,58 +152,59 @@ class _TimetablePageState extends State<TimetablePage> {
                 child: SingleChildScrollView(
                   physics: const CustomScrollPhysics(),
                   child: Column(
-                    children: timetable.map(
-                      (e) {
-                        return Container(
+                      children: timetable.map(
+                    (e) {
+                      return Container(
                           margin: const EdgeInsets.only(bottom: 15),
-                          child: Column(
-                            children: <Widget>[
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  e['start'] == null
-                                      ? const SizedBox.shrink()
-                                      : Container(
-                                          padding: const EdgeInsets.only(left: 20),
-                                          child: Text(
-                                            e['start'].toString(),
-                                            style: TextStyle(
-                                              color: const Color.fromARGB(255, 37, 46, 101),
-                                              fontWeight: FontWeight.w800,
-                                            ),
+                          child: Column(children: <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                e['start'] == null
+                                    ? const SizedBox.shrink()
+                                    : Container(
+                                        padding:
+                                            const EdgeInsets.only(left: 20),
+                                        child: Text(
+                                          e['start'].toString(),
+                                          style: TextStyle(
+                                            color: const Color.fromARGB(
+                                                255, 37, 46, 101),
+                                            fontWeight: FontWeight.w800,
                                           ),
                                         ),
-                                  e['end'] == null
-                                      ? const SizedBox.shrink()
-                                      : Container(
-                                          padding: const EdgeInsets.only(right: 20),
-                                          child: Text(
-                                            e['end'].toString(),
-                                            style: const TextStyle(
-                                              color: Color.fromARGB(255, 139, 139, 148),
-                                              fontWeight: FontWeight.w300,
-                                            ),
+                                      ),
+                                e['end'] == null
+                                    ? const SizedBox.shrink()
+                                    : Container(
+                                        padding:
+                                            const EdgeInsets.only(right: 20),
+                                        child: Text(
+                                          e['end'].toString(),
+                                          style: const TextStyle(
+                                            color: Color.fromARGB(
+                                                255, 139, 139, 148),
+                                            fontWeight: FontWeight.w300,
                                           ),
                                         ),
-                                ],
-                              ),
-                              CardWidget(
-                                actions: <SlideAction>[
-                                  SlideAction(
-                                    // title: 'Сделано',
-                                    key: const Key("done"),
-                                    iconData: Icons.check,
-                                    onTap: () {},
-                                  ),
-                                ],
-                                homework: Homework.fromMap(homeworks[int.parse(e['id'].toString())-1]),
-                              )
-                            ]
-                          )
-                        );
-                      },
-                    ).toList()
-                  ),
+                                      ),
+                              ],
+                            ),
+                            CardWidget(
+                              actions: <SlideAction>[
+                                SlideAction(
+                                  // title: 'Сделано',
+                                  key: const Key("done"),
+                                  iconData: Icons.check,
+                                  onTap: () {},
+                                ),
+                              ],
+                              homework: Homework.fromMap(
+                                  homeworks[int.parse(e['id'].toString()) - 1]),
+                            )
+                          ]));
+                    },
+                  ).toList()),
                 ),
               )
             ],
