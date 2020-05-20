@@ -46,5 +46,6 @@ const Map<int, String> kShortDayOfWeekOnString = {
 BorderRadius k15BorderRadius = BorderRadius.circular(15);
 BorderRadius k25BorderRadius = BorderRadius.circular(25);
 BorderRadius kBorderRadiusBodyPages = k25BorderRadius;
+BorderRadius kButtonBorderRadius = BorderRadius.circular(8.0);
 
 const double kIconSlideActionSize = 30.0;
