@@ -44,20 +44,20 @@ class _TaskPageState extends State<TaskPage> {
               onPressed: () {
                 isEditController.add(!snapshot.data);
               },
-              backgroundColor: kBackgroundColorTaskPage,
+              backgroundColor: kBackgroundColorAppBarTaskPage,
               child: Icon(snapshot.data ? Icons.check : Linearicons.pencil,
                 color: kPrimaryColorText));
           }),
       body: Stack(children: <Widget>[
         Container(
           height: 170,
-          color: kBackgroundColorTaskPage,
+          color: kBackgroundColorAppBarTaskPage,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Row(children: <Widget>[
                 IconButton(
-                    icon: Icon(Linearicons.arrow_left,
+                    icon: const Icon(Linearicons.arrow_left,
                         color: kPrimaryColorText),
                     onPressed: () {
                       Navigator.of(context).pop();
@@ -92,7 +92,7 @@ class _TaskPageState extends State<TaskPage> {
                           FlatButton(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15)),
-                            color: kBackgroundColorTaskPage,
+                            color: kBackgroundColorAppBarTaskPage,
                             onPressed: () {
                               // TODO: ok
                             },

@@ -17,7 +17,7 @@ class HomePage extends StatelessWidget {
           Container(
             padding: const EdgeInsets.only(right: 20, left: 20, bottom: 15),
             height: 75,
-            color: kBackgroundColorHomePage,
+            color: kBackgroundColorAppBarHomePage,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -52,7 +52,7 @@ class HomePage extends StatelessWidget {
               child: Container(
                 height: MediaQuery.of(context).size.height - 90,
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                color: kBackgroundColorPages,
+                color: kBackgroundColorBodies,
                 child: SingleChildScrollView(
                   child: Column(
                     children: <Widget>[

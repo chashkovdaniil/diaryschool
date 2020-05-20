@@ -34,6 +34,9 @@ class _DiarySchoolAppState extends State<DiarySchoolApp> {
           builders: {
             TargetPlatform.android: CupertinoPageTransitionsBuilder(),}),
       ),
+      darkTheme: ThemeData(
+        
+      ),
     );
   }
 }
