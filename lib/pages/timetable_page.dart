@@ -122,31 +122,27 @@ class _TimetablePageState extends State<TimetablePage> {
           },
         ),
         actions: <Widget>[
-          BlocBuilder<TimetableBloc, TimetableState>(
-            bloc: _timetableBloc,
-            builder: (context, state) {
-              return FlatButton(
-                onPressed: () async {
-                  DateTime selectedDay = await showDatePicker(
-                    context: context, 
-                    initialDate: state.activeDay,
-                    firstDate: DateTime(2000), 
-                    lastDate: DateTime(2150));
-                  DateTime firstDayOfCurrentWeek = selectedDay
-                      .add(Duration(days: - selectedDay.weekday + 1));
-                  _timetableBloc.add(WeekNavigationBarEvent(
-                    activeDay: selectedDay,
-                    firstDayOfCurrentWeek: firstDayOfCurrentWeek,
-                  ));
-                  setState((){});
-                },
-                child: const Text('Выбрать дату',
-                  style: TextStyle(
-                    color: Color.fromARGB(255, 37, 46, 101),
-                    fontSize: 15,
-                    fontWeight: FontWeight.w300)));
+          FlatButton(
+            onPressed: () async {
+              DateTime selectedDay = await showDatePicker(
+                context: context, 
+                initialDate: _timetableBloc.state.activeDay,
+                firstDate: DateTime(2000), 
+                lastDate: DateTime(2150));
+              DateTime firstDayOfCurrentWeek = selectedDay
+                  .add(Duration(days: - selectedDay.weekday + 1));
+              if (selectedDay != null) {
+                _timetableBloc.add(WeekNavigationBarEvent(
+                  activeDay: selectedDay,
+                  firstDayOfCurrentWeek: firstDayOfCurrentWeek,
+                ));
+              }
             },
-          )
+            child: const Text('Выбрать дату',
+              style: TextStyle(
+                color: Color.fromARGB(255, 37, 46, 101),
+                fontSize: 15,
+                fontWeight: FontWeight.w300)))
         ],
       ),
       body: ClipRRect(

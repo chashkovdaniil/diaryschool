@@ -34,7 +34,6 @@ class _CustomTabBarState extends State<CustomTabBar> {
             firstDayOfCurrentWeek = firstDayOfCurrentWeek.subtract(
               const Duration(days: 7),
             );
-            setState(() {});
             widget.bloc.add(
               WeekNavigationBarEvent(
                 activeDay: selectedDay,
@@ -63,7 +62,6 @@ class _CustomTabBarState extends State<CustomTabBar> {
             firstDayOfCurrentWeek = firstDayOfCurrentWeek.add(
               const Duration(days: 7),
             );
-            setState(() {});
             widget.bloc.add(
               WeekNavigationBarEvent(
                 activeDay: selectedDay,
