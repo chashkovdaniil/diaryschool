@@ -1,6 +1,7 @@
 import 'package:diaryschool/common_widgets/card_widget.dart';
 import 'package:diaryschool/data/models/homework.dart';
 import 'package:diaryschool/pages/timetable_page/bloc/timetable_bloc.dart';
+import 'package:diaryschool/pages/timetable_page/bloc/timetable_event.dart';
 import 'package:diaryschool/pages/timetable_page/widgets/custom_tab_bar.dart';
 import 'package:diaryschool/utilities/constants.dart';
 import 'package:diaryschool/utilities/custom_scroll_physics.dart';
@@ -121,15 +122,31 @@ class _TimetablePageState extends State<TimetablePage> {
           },
         ),
         actions: <Widget>[
-          FlatButton(
-              onPressed: () {
-                // TODO: выбор даты
-              },
-              child: const Text('Выбрать дату',
+          BlocBuilder<TimetableBloc, TimetableState>(
+            bloc: _timetableBloc,
+            builder: (context, state) {
+              return FlatButton(
+                onPressed: () async {
+                  DateTime selectedDay = await showDatePicker(
+                    context: context, 
+                    initialDate: state.activeDay,
+                    firstDate: DateTime(2000), 
+                    lastDate: DateTime(2150));
+                  DateTime firstDayOfCurrentWeek = selectedDay
+                      .add(Duration(days: - selectedDay.weekday + 1));
+                  _timetableBloc.add(WeekNavigationBarEvent(
+                    activeDay: selectedDay,
+                    firstDayOfCurrentWeek: firstDayOfCurrentWeek,
+                  ));
+                  setState((){});
+                },
+                child: const Text('Выбрать дату',
                   style: TextStyle(
-                      color: Color.fromARGB(255, 37, 46, 101),
-                      fontSize: 15,
-                      fontWeight: FontWeight.w300)))
+                    color: Color.fromARGB(255, 37, 46, 101),
+                    fontSize: 15,
+                    fontWeight: FontWeight.w300)));
+            },
+          )
         ],
       ),
       body: ClipRRect(
@@ -147,57 +164,55 @@ class _TimetablePageState extends State<TimetablePage> {
                 child: SingleChildScrollView(
                   physics: const CustomScrollPhysics(),
                   child: Column(
-                      children: timetable.map(
-                    (e) {
+                    children: timetable.map((e) {
                       return Container(
-                          margin: const EdgeInsets.only(bottom: 15),
-                          child: Column(children: <Widget>[
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                e['start'] == null
-                                    ? const SizedBox.shrink()
-                                    : Container(
-                                        padding:
-                                            const EdgeInsets.only(left: 20),
-                                        child: Text(
-                                          e['start'].toString(),
-                                          style: const TextStyle(
-                                            color:  Color.fromARGB(
-                                                255, 37, 46, 101),
-                                            fontWeight: FontWeight.w800,
-                                          ),
+                        margin: const EdgeInsets.only(bottom: 15),
+                        child: Column(children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              e['start'] == null
+                                  ? const SizedBox.shrink()
+                                  : Container(
+                                      padding:
+                                          const EdgeInsets.only(left: 20),
+                                      child: Text(
+                                        e['start'].toString(),
+                                        style: const TextStyle(
+                                          color:  Color.fromARGB(
+                                              255, 37, 46, 101),
+                                          fontWeight: FontWeight.w800,
                                         ),
                                       ),
-                                e['end'] == null
-                                    ? const SizedBox.shrink()
-                                    : Container(
-                                        padding:
-                                            const EdgeInsets.only(right: 20),
-                                        child: Text(
-                                          e['end'].toString(),
-                                          style: const TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 139, 139, 148),
-                                            fontWeight: FontWeight.w300,
-                                          ),
+                                    ),
+                              e['end'] == null
+                                  ? const SizedBox.shrink()
+                                  : Container(
+                                      padding:
+                                          const EdgeInsets.only(right: 20),
+                                      child: Text(
+                                        e['end'].toString(),
+                                        style: const TextStyle(
+                                          color: Color.fromARGB(
+                                              255, 139, 139, 148),
+                                          fontWeight: FontWeight.w300,
                                         ),
                                       ),
-                              ],
-                            ),
-                            CardWidget(
-                              actions: <SlideAction>[
-                                SlideAction(
-                                  // title: 'Сделано',
-                                  key: const Key("done"),
-                                  iconData: Icons.check,
-                                  onTap: () {},
-                                ),
-                              ],
-                              homework: Homework.fromMap(
-                                  homeworks[int.parse(e['id'].toString()) - 1]),
-                            )
-                          ]));
+                                    ),
+                            ],
+                          ),
+                          CardWidget(
+                            actions: <SlideAction>[
+                              SlideAction(
+                                key: const Key("done"),
+                                iconData: Icons.check,
+                                onTap: () {},
+                              ),
+                            ],
+                            homework: Homework.fromMap(
+                                homeworks[int.parse(e['id'].toString()) - 1]),
+                          )
+                        ]));
                     },
                   ).toList()),
                 ),

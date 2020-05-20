@@ -2,15 +2,23 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 
 abstract class TimetableState extends Equatable {
-  const TimetableState();
+  final DateTime activeDay;
+  final DateTime firstDayOfCurrentWeek;
+
+  TimetableState({
+    @required this.activeDay,
+    @required this.firstDayOfCurrentWeek,
+  });
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [
+        activeDay,
+        firstDayOfCurrentWeek,
+      ];
 }
 
 // ==================== WeekNavigationBarState ====================
 class WeekNavigationBarState extends TimetableState {
-
   final DateTime activeDay;
   final DateTime firstDayOfCurrentWeek;
 
