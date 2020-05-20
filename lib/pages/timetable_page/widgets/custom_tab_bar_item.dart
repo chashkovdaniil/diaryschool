@@ -19,7 +19,6 @@ class CustomTabBarItem extends StatelessWidget {
         color: isCurrently ? const Color.fromARGB(255, 61, 48, 193) : null,
         borderRadius: kButtonBorderRadius,
       ),
-      margin: const EdgeInsets.symmetric(horizontal: 3),
       padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 5),
       child: Column(
         children: <Widget>[

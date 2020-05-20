@@ -163,7 +163,7 @@ class SlideAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return buildCustomMaterialButton(
+    return CustomMaterialButton(
       onPressed: () {
         // TODO: переход на страницу создания задания
       },

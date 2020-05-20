@@ -8,33 +8,28 @@ import 'package:flutter/material.dart';
 import 'package:diaryschool/pages/timetable_page/widgets/custom_tab_bar_item.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CustomTabBar extends StatefulWidget {
-  CustomTabBar({Key key, this.bloc}) : super(key: key);
+class CustomTabBar extends StatelessWidget {
   final TimetableBloc bloc;
-  @override
-  _CustomTabBarState createState() => _CustomTabBarState();
-}
+  CustomTabBar({Key key, this.bloc}) : super(key: key);
 
-class _CustomTabBarState extends State<CustomTabBar> {
   final List<String> daysOfWeek = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
-
-  DateTime firstDayOfCurrentWeek = DateTime.now().add(
-    Duration(days: -DateTime.now().weekday + 1),
-  );
-  DateTime selectedDay = DateTime.now();
  
   @override
   Widget build(BuildContext context) {
+    DateTime selectedDay = DateTime.now();
+    DateTime firstDayOfCurrentWeek = DateTime.now()
+        .add(Duration(days: -DateTime.now().weekday + 1));
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
-        buildCustomMaterialButton(
+        CustomMaterialButton(
           onPressed: () {
             firstDayOfCurrentWeek = firstDayOfCurrentWeek.subtract(
               const Duration(days: 7),
             );
-            widget.bloc.add(
+            bloc.add(
               WeekNavigationBarEvent(
                 activeDay: selectedDay,
                 firstDayOfCurrentWeek: firstDayOfCurrentWeek,
@@ -52,17 +47,17 @@ class _CustomTabBarState extends State<CustomTabBar> {
           ),
         ),
         BlocBuilder<TimetableBloc, TimetableState>(
-          bloc: widget.bloc,
+          bloc: bloc,
           builder: (context, state) {
             return buildWeekWidget(state.firstDayOfCurrentWeek, state.activeDay);
           }
         ),
-        buildCustomMaterialButton(
+        CustomMaterialButton(
           onPressed: () {
             firstDayOfCurrentWeek = firstDayOfCurrentWeek.add(
               const Duration(days: 7),
             );
-            widget.bloc.add(
+            bloc.add(
               WeekNavigationBarEvent(
                 activeDay: selectedDay,
                 firstDayOfCurrentWeek: firstDayOfCurrentWeek,
@@ -88,22 +83,24 @@ class _CustomTabBarState extends State<CustomTabBar> {
       children: daysOfWeek.map((e) {
         DateTime d =
             firstDayOfCurrentWeek.add(Duration(days: daysOfWeek.indexOf(e)));
-        return buildCustomMaterialButton(
-          onPressed: () {
-            setState(() {});
-            widget.bloc.add(
-              WeekNavigationBarEvent(
-                activeDay: d,
-                firstDayOfCurrentWeek: firstDayOfCurrentWeek,
-              ),
-            );
-          },
-          child: CustomTabBarItem(
-            isCurrently: activeDay.day == d.day &&
-                activeDay.month == d.month &&
-                activeDay.year == d.year,
-            title: e,
-            date: d,
+        return Container(
+          margin: const EdgeInsets.all(3.0),
+          child: CustomMaterialButton(
+            onPressed: () {
+              bloc.add(
+                WeekNavigationBarEvent(
+                  activeDay: d,
+                  firstDayOfCurrentWeek: firstDayOfCurrentWeek,
+                ),
+              );
+            },
+            child: CustomTabBarItem(
+              isCurrently: activeDay.day == d.day &&
+                  activeDay.month == d.month &&
+                  activeDay.year == d.year,
+              title: e,
+              date: d,
+            ),
           ),
         );
       }).toList(),
