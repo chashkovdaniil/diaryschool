@@ -129,9 +129,9 @@ class _TimetablePageState extends State<TimetablePage> {
                 initialDate: _timetableBloc.state.activeDay,
                 firstDate: DateTime(2000), 
                 lastDate: DateTime(2150));
-              DateTime firstDayOfCurrentWeek = selectedDay
-                  .add(Duration(days: - selectedDay.weekday + 1));
               if (selectedDay != null) {
+                DateTime firstDayOfCurrentWeek = selectedDay
+                    .add(Duration(days: - selectedDay.weekday + 1));
                 _timetableBloc.add(WeekNavigationBarEvent(
                   activeDay: selectedDay,
                   firstDayOfCurrentWeek: firstDayOfCurrentWeek,
