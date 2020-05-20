@@ -16,8 +16,9 @@ class CustomTabBar extends StatefulWidget {
 class _CustomTabBarState extends State<CustomTabBar> {
   final List<String> daysOfWeek = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 
-  DateTime firstDayOfCurrentWeek =
-      DateTime.now().add(Duration(days: -DateTime.now().weekday + 1));
+  DateTime firstDayOfCurrentWeek = DateTime.now().add(
+    Duration(days: -DateTime.now().weekday + 1),
+  );
   DateTime selectedDay = DateTime.now();
 
   @override

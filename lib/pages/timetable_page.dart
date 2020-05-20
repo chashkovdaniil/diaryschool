@@ -162,8 +162,8 @@ class _TimetablePageState extends State<TimetablePage> {
                                             const EdgeInsets.only(left: 20),
                                         child: Text(
                                           e['start'].toString(),
-                                          style: TextStyle(
-                                            color: const Color.fromARGB(
+                                          style: const TextStyle(
+                                            color:  Color.fromARGB(
                                                 255, 37, 46, 101),
                                             fontWeight: FontWeight.w800,
                                           ),

@@ -23,10 +23,10 @@ class _DiarySchoolAppState extends State<DiarySchoolApp> {
     return MaterialApp(
       title: 'Дневник',
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
+      initialRoute: MainPage.id,
       routes: {
-        '/': (context) => MainPage(),
-        '/task': (context) => TaskPage()
+        MainPage.id: (context) => MainPage(),
+        TaskPage.id: (context) => TaskPage()
       },
       theme: ThemeData(
         primaryColor: Colors.white,
