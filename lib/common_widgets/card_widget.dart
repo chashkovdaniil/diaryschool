@@ -42,7 +42,7 @@ class _CardWidgetState extends State<CardWidget> {
           height: height,
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: k15BorderRadius,
+            borderRadius: kBorderRadiusCardWidget,
           ),
           margin: const EdgeInsets.only(top: 5, left: 20, right: 10),
           child: Row(
@@ -85,7 +85,7 @@ class _CardWidgetState extends State<CardWidget> {
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               color: const Color.fromARGB(255, 241, 240, 245),
-              borderRadius: k15BorderRadius,
+              borderRadius: kBorderRadiusCardWidget,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

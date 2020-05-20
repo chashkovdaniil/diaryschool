@@ -64,7 +64,7 @@ class _TaskPageState extends State<TaskPage> {
                     }),
                 Text(
                   'Название предмета ${args.titleSubject}',
-                  style: TextStyle(color: kPrimaryColorText),
+                  style: const TextStyle(color: kPrimaryColorText),
                 )
               ]),
               FilesTaskPage(files ?? []),

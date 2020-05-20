@@ -3,7 +3,6 @@ import 'package:diaryschool/pages/timetable_page/bloc/timetable_event.dart';
 import 'package:diaryschool/pages/timetable_page/bloc/timetable_model.dart';
 import 'package:diaryschool/pages/timetable_page/bloc/timetable_state.dart';
 import 'package:diaryschool/utilities/constants.dart';
-import 'package:diaryschool/utilities/custom_scroll_physics.dart';
 import 'package:diaryschool/utilities/linearicons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,11 +24,6 @@ class _CustomTabBarState extends State<CustomTabBar> {
   double offset;
   double maxScrollOffset;
   DateTime selectedDay = DateTime.now();
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   void dispose() {
