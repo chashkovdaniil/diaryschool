@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 const Color kPrimaryColor = Color.fromARGB(255, 231, 72, 86);
 const Color kAccentColor = Color.fromARGB(255, 243, 163, 170);
-// const Color k
 const Color kBackgroundColor = Color.fromARGB(250, 249, 249, 251);
 const Color kBackgroundColorBodies = Colors.white;
 const Color kBackgroundColorAppBarHomePage = Color.fromARGB(255, 255, 237, 213);

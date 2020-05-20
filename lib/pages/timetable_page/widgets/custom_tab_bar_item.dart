@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 class CustomTabBarItem extends StatelessWidget {
   final String title;
   final DateTime date;
-  // final DateTime currentDate;
   final bool isCurrently;
 
   CustomTabBarItem({
