@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 const Color kPrimaryColor = Color.fromARGB(255, 231, 72, 86);
 const Color kAccentColor = Color.fromARGB(255, 243, 163, 170);
+// const Color k
 const Color kBackgroundColor = Color.fromARGB(250, 249, 249, 251);
-const Color kBackgroundColorAppBarPages = Colors.transparent;
-const Color kBackgroundColorPages = Colors.white;
-const Color kBackgroundColorHomePage = Color.fromARGB(255, 255, 237, 213);
-const Color kBackgroundColorTaskPage = Color.fromARGB(255, 255,237,213);
+const Color kBackgroundColorBodies = Colors.white;
+const Color kBackgroundColorAppBarHomePage = Color.fromARGB(255, 255, 237, 213);
+const Color kBackgroundColorAppBarTaskPage = Color.fromARGB(255, 255,237,213);
 const Color kPrimaryColorText = Color.fromARGB(255, 37, 46, 101);
 const Color kAccentColorText = Color.fromARGB(255, 139, 139, 148);
-const Color kSelectedItemColorOnBNB = Color.fromARGB(255, 132, 137, 165);
+const Color kSelectedItemColorOnBNB = Color.fromARGB(255, 131, 136, 167);
 const Color kUnselectedItemColorOnBNB = Color.fromARGB(255, 209, 212, 217);
 const Map<int, String> kMonthIntToString = {
   1: "Янв",
@@ -45,5 +45,6 @@ const Map<int, String> kShortDayOfWeekOnString = {
 };
 BorderRadius kBorderRadiusCardWidget = BorderRadius.circular(15);
 BorderRadius kBorderRadiusBodyPages = BorderRadius.circular(25);
+BorderRadius kButtonBorderRadius = BorderRadius.circular(8.0);
 
 const double kIconSlideActionSize = 30.0;

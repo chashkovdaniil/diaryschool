@@ -1,6 +1,6 @@
+import 'package:diaryschool/common_widgets/custom_material_button.dart';
 import 'package:diaryschool/pages/timetable_page/bloc/timetable_bloc.dart';
 import 'package:diaryschool/pages/timetable_page/bloc/timetable_event.dart';
-import 'package:diaryschool/pages/timetable_page/bloc/timetable_model.dart';
 import 'package:diaryschool/pages/timetable_page/bloc/timetable_state.dart';
 import 'package:diaryschool/utilities/constants.dart';
 import 'package:diaryschool/utilities/linearicons.dart';
@@ -18,18 +18,9 @@ class CustomTabBar extends StatefulWidget {
 class _CustomTabBarState extends State<CustomTabBar> {
   final List<String> daysOfWeek = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 
-  ScrollController _scrollController;
   DateTime firstDayOfCurrentWeek;
-  IconType wasActivated;
-  double offset;
-  double maxScrollOffset;
   DateTime selectedDay = DateTime.now();
 
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,18 +28,21 @@ class _CustomTabBarState extends State<CustomTabBar> {
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
-        GestureDetector(
-          onTap: () {
+        buildCustomMaterialButton(
+          onPressed: () {
             widget.bloc.add(
               WeekNavigationBarEvent(
-                  activeDay: selectedDay,
-                  firstDayOfCurrentWeek: firstDayOfCurrentWeek.subtract(const Duration(days: 7))),
+                activeDay: selectedDay,
+                firstDayOfCurrentWeek: firstDayOfCurrentWeek.subtract(
+                  const Duration(days: 7),
+                ),
+              ),
             );
           },
           child: Container(
             width: 30,
             height: 40,
-            child: Icon(
+            child: const Icon(
               Linearicons.arrow_left,
               color: kAccentColorText,
               size: 20,
@@ -85,18 +79,21 @@ class _CustomTabBarState extends State<CustomTabBar> {
             return null;
           },
         ),
-        GestureDetector(
-          onTap: () {
+        buildCustomMaterialButton(
+          onPressed: () {
             widget.bloc.add(
               WeekNavigationBarEvent(
-                  activeDay: selectedDay,
-                  firstDayOfCurrentWeek: firstDayOfCurrentWeek.add(const Duration(days: 7))),
+                activeDay: selectedDay,
+                firstDayOfCurrentWeek: firstDayOfCurrentWeek.add(
+                  const Duration(days: 7),
+                ),
+              ),
             );
           },
           child: Container(
             width: 30,
             height: 40,
-            child: Icon(
+            child: const Icon(
               Linearicons.arrow_right,
               color: kAccentColorText,
               size: 20,
@@ -107,15 +104,14 @@ class _CustomTabBarState extends State<CustomTabBar> {
     );
   }
 
-
   Widget buildWeekWidget(DateTime firstDayOfCurrentWeek, DateTime activeDay) {
     return Row(
       children: daysOfWeek.map(
         (e) {
           DateTime d =
               firstDayOfCurrentWeek.add(Duration(days: daysOfWeek.indexOf(e)));
-          return GestureDetector(
-            onTap: () {
+          return buildCustomMaterialButton(
+            onPressed: () {
               widget.bloc.add(
                 WeekNavigationBarEvent(
                   activeDay: d,
