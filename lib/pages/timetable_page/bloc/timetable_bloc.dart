@@ -12,19 +12,9 @@ class TimetableBloc extends Bloc<TimetableEvent, TimetableState> {
     TimetableEvent event,
   ) async* {
     if (event is WeekNavigationBarEvent) {
-      yield updateWeekNavigationBarState(event);
+      yield WeekNavigationBarState(
+          activeDay: event.activeDay,
+          firstDayOfCurrentWeek: event.firstDayOfCurrentWeek);
     }
-  }
-
-  WeekNavigationBarState updateWeekNavigationBarState(
-      WeekNavigationBarEvent event) {
-    /// Обновляет состояние WeekNavigationBatState.
-
-    DateTime firstDayOfCurrentWeek;
-
-    return WeekNavigationBarState(
-        activeDay: event.activeDay,
-        firstDayOfCurrentWeek:
-            firstDayOfCurrentWeek ?? event.firstDayOfCurrentWeek);
   }
 }

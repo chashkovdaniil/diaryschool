@@ -1,5 +1,6 @@
 import 'package:diaryschool/pages/home_page/widgets/current_lesson.dart';
 import 'package:diaryschool/utilities/constants.dart';
+import 'package:diaryschool/utilities/custom_scroll_physics.dart';
 import 'package:diaryschool/utilities/linearicons.dart';
 import 'package:flutter/material.dart';
 
@@ -16,18 +17,27 @@ class HomePage extends StatelessWidget {
         children: <Widget>[
           Container(
             padding: const EdgeInsets.only(right: 20, left: 20, bottom: 15),
-            height: 75,
+            height: 80,
             color: kBackgroundColorAppBarHomePage,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Text(
-                  'Hi Jack',
-                  style: TextStyle(
-                    color: kPrimaryColorText,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w800
-                  ),
+                Row(
+                  children: <Widget>[
+                    CircleAvatar(
+                      backgroundColor: Colors.red,
+                      radius: 20,
+                    ),
+                    const SizedBox(width: 10),
+                    Text(
+                      'Hi Jack',
+                      style: TextStyle(
+                        color: kPrimaryColorText,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w800
+                      ),
+                    ),
+                  ],
                 ),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -46,14 +56,15 @@ class HomePage extends StatelessWidget {
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(top: 55),
+            margin: const EdgeInsets.only(top: 65),
             child: ClipRRect(
               borderRadius: kBorderRadiusBodyPages,
               child: Container(
-                height: MediaQuery.of(context).size.height - 90,
+                height: MediaQuery.of(context).size.height,
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 color: kBackgroundColorBodies,
                 child: SingleChildScrollView(
+                  physics: const CustomScrollPhysics(),
                   child: Column(
                     children: <Widget>[
                       CurrentLesson(),

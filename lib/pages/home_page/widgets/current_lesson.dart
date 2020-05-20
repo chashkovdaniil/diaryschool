@@ -1,3 +1,4 @@
+import 'package:diaryschool/pages/task_page.dart';
 import 'package:diaryschool/pages/task_page/args.dart';
 import 'package:diaryschool/utilities/constants.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,7 @@ class CurrentLesson extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
         child: GestureDetector(
           onTap: () => Navigator.of(context).pushNamed(
-            '/task', 
+            TaskPage.id, 
             arguments: TaskPageArgs(titleSubject: 'test')),
           child: Container(
             width: MediaQuery.of(context).size.width,
