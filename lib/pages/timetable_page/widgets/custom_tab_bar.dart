@@ -13,66 +13,77 @@ class CustomTabBar extends StatelessWidget {
   CustomTabBar({Key key, this.bloc}) : super(key: key);
 
   final List<String> daysOfWeek = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
- 
+
   @override
   Widget build(BuildContext context) {
-    DateTime selectedDay = DateTime.now();
-    DateTime firstDayOfCurrentWeek = DateTime.now()
-        .add(Duration(days: -DateTime.now().weekday + 1));
+    // DateTime selectedDay = DateTime.now();
+    DateTime firstDayOfCurrentWeek =
+        DateTime.now().add(Duration(days: -DateTime.now().weekday + 1));
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
-        CustomMaterialButton(
-          onPressed: () {
-            firstDayOfCurrentWeek = firstDayOfCurrentWeek.subtract(
-              const Duration(days: 7),
-            );
-            bloc.add(
-              WeekNavigationBarEvent(
-                activeDay: selectedDay,
-                firstDayOfCurrentWeek: firstDayOfCurrentWeek,
+        BlocBuilder<TimetableBloc, TimetableState>(
+          bloc: bloc,
+          builder: (context, state) {
+            return CustomMaterialButton(
+              onPressed: () {
+                firstDayOfCurrentWeek = firstDayOfCurrentWeek.subtract(
+                  const Duration(days: 7),
+                );
+                bloc.add(
+                  WeekNavigationBarEvent(
+                    activeDay: state.activeDay,
+                    firstDayOfCurrentWeek: firstDayOfCurrentWeek,
+                  ),
+                );
+              },
+              child: Container(
+                width: 30,
+                height: 40,
+                child: const Icon(
+                  Linearicons.arrow_left,
+                  color: kAccentColorText,
+                  size: 20,
+                ),
               ),
             );
           },
-          child: Container(
-            width: 30,
-            height: 40,
-            child: const Icon(
-              Linearicons.arrow_left,
-              color: kAccentColorText,
-              size: 20,
-            ),
-          ),
         ),
         BlocBuilder<TimetableBloc, TimetableState>(
           bloc: bloc,
           builder: (context, state) {
-            return buildWeekWidget(state.firstDayOfCurrentWeek, state.activeDay);
-          }
+            return buildWeekWidget(
+                state.firstDayOfCurrentWeek, state.activeDay);
+          },
         ),
-        CustomMaterialButton(
-          onPressed: () {
-            firstDayOfCurrentWeek = firstDayOfCurrentWeek.add(
-              const Duration(days: 7),
-            );
-            bloc.add(
-              WeekNavigationBarEvent(
-                activeDay: selectedDay,
-                firstDayOfCurrentWeek: firstDayOfCurrentWeek,
+        BlocBuilder<TimetableBloc, TimetableState>(
+          bloc: bloc,
+          builder: (context, state) {
+            return CustomMaterialButton(
+              onPressed: () {
+                firstDayOfCurrentWeek = firstDayOfCurrentWeek.add(
+                  const Duration(days: 7),
+                );
+                bloc.add(
+                  WeekNavigationBarEvent(
+                    activeDay: state.activeDay,
+                    firstDayOfCurrentWeek: firstDayOfCurrentWeek,
+                  ),
+                );
+              },
+              child: Container(
+                width: 30,
+                height: 40,
+                child: const Icon(
+                  Linearicons.arrow_right,
+                  color: kAccentColorText,
+                  size: 20,
+                ),
               ),
             );
           },
-          child: Container(
-            width: 30,
-            height: 40,
-            child: const Icon(
-              Linearicons.arrow_right,
-              color: kAccentColorText,
-              size: 20,
-            ),
-          ),
         ),
       ],
     );

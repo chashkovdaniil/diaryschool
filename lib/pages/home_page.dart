@@ -12,21 +12,24 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
       body: Stack(
         children: <Widget>[
           Container(
             padding: const EdgeInsets.only(right: 20, left: 20, bottom: 15),
             height: 80,
-            color: kBackgroundColorAppBarHomePage,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    CircleAvatar(
-                      backgroundColor: Colors.red,
-                      radius: 20,
+                    Container(
+                      width: 48,
+                      height: 48,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: Colors.white,
+                        boxShadow: kShadow,
+                      ),
                     ),
                     const SizedBox(width: 10),
                     Text(
@@ -34,35 +37,50 @@ class HomePage extends StatelessWidget {
                       style: TextStyle(
                         color: kPrimaryColorText,
                         fontSize: 20,
-                        fontWeight: FontWeight.w800
+                        fontWeight: FontWeight.w800,
                       ),
                     ),
                   ],
                 ),
                 Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Text('Среда ', style: TextStyle(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Text(
+                      'Среда ',
+                      style: TextStyle(
                         color: kPrimaryColorText,
-                        fontWeight: FontWeight.w700
-                      )),
-                      Text('10 сен', style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    Text(
+                      '10 сен',
+                      style: TextStyle(
                         color: kPrimaryColorText,
-                        fontWeight: FontWeight.w300
-                      ))
-                    ],
-                  ),
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
-          ),
+          ), 
           Container(
-            margin: const EdgeInsets.only(top: 65),
+            margin: const EdgeInsets.only(
+              top: 70,
+            ),
+            height: MediaQuery.of(context).size.height,
+            decoration: BoxDecoration(
+              borderRadius: kBorderRadiusBodyPages,
+              boxShadow: kShadow,
+            ),
             child: ClipRRect(
               borderRadius: kBorderRadiusBodyPages,
               child: Container(
-                height: MediaQuery.of(context).size.height,
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                color: kBackgroundColorBodies,
+                decoration: BoxDecoration(
+                  borderRadius: kBorderRadiusBodyPages,
+                  color: kBackgroundColorBodies,
+                ),
                 child: SingleChildScrollView(
                   physics: const CustomScrollPhysics(),
                   child: Column(
@@ -70,16 +88,12 @@ class HomePage extends StatelessWidget {
                       CurrentLesson(),
                       Tasks(),
                       ListTile(
-                        onTap: () {
-
-                        },
+                        onTap: () {},
                         title: const Text('Список предметов (9)'),
                         trailing: Icon(Linearicons.arrow_right),
                       ),
                       ListTile(
-                        onTap: () {
-
-                        },
+                        onTap: () {},
                         title: const Text('Учителя (10)'),
                         trailing: Icon(Linearicons.arrow_right),
                       )
@@ -92,11 +106,11 @@ class HomePage extends StatelessWidget {
                     ],
                   ),
                 ),
-              )
+              ),
             ),
           ),
-        ]
-      )
+        ],
+      ),
     );
   }
 }

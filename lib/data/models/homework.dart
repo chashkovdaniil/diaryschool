@@ -3,6 +3,7 @@ class Homework {
   int idShedule;
   int subject;
   int grade;
+  int deadline;
   bool isDone;
   String content;
   List files;
@@ -16,6 +17,7 @@ class Homework {
     this.subject,
     this.content,
     this.grade,
+    this.deadline,
     this.isDone = false,
     /*this.common = false*/});
 
@@ -36,6 +38,9 @@ class Homework {
     grade: json['grade'] == null 
         ? null
         : int.parse(json['grade'].toString()),
+    deadline: json['deadline'] == null 
+        ? null
+        : int.parse(json['deadline'].toString()),
     isDone: json['isDone'] == 1,
     // common: json['common'] == 1,
     // files: json['files']
@@ -45,8 +50,9 @@ class Homework {
     'idShedule': idShedule,
     'subject': subject,
     'content': content,
+    'deadline': deadline,
     // 'date': date,
-    // 'grade': grade,
+    'grade': grade,
     'isDone': isDone ? 1 : 0,
     // 'common': common ? 1 : 0
   };

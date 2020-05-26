@@ -13,7 +13,8 @@ class MainPage extends StatefulWidget {
   @override
   _MainPageState createState() => _MainPageState();
 }
-class _MainPageState extends State<MainPage> {  
+
+class _MainPageState extends State<MainPage> {
   final List<Widget> pages = [
     HomePage(),
     const Center(
@@ -30,14 +31,27 @@ class _MainPageState extends State<MainPage> {
   ];
   final List<BottomNavigationBarItem> bottomNavigationBarItems = [
     BottomNavigationBarItem(
-        icon: Icon(Linearicons.home), title: const Text('')),
+      icon: Icon(Linearicons.home),
+      title: const Text(''),
+    ),
     BottomNavigationBarItem(
-        icon: Icon(Linearicons.chart_bars), title: const Text('')),
+        icon: Icon(
+          Linearicons.chart_bars,
+          size: 24,
+        ),
+        title: const Text('')),
     BottomNavigationBarItem(
-        icon: Icon(Linearicons.checkmark_cicle), title: const Text('')),
+      icon: Icon(Linearicons.checkmark_cicle),
+      title: const Text(''),
+    ),
     BottomNavigationBarItem(
-        icon: Icon(Linearicons.calendar_full), title: const Text('')),
-    BottomNavigationBarItem(icon: Icon(Linearicons.user), title: const Text(''))
+      icon: Icon(Linearicons.calendar_full),
+      title: const Text(''),
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Linearicons.user),
+      title: const Text(''),
+    ),
   ];
 
   PageController pageController = PageController(initialPage: 0);
@@ -64,20 +78,31 @@ class _MainPageState extends State<MainPage> {
           stream: indexController.stream,
           builder: (BuildContext context, AsyncSnapshot<Object> snapshot) {
             int cIndex = snapshot.data as int;
-            return BottomNavigationBar(
-              showSelectedLabels: false,
-              showUnselectedLabels: false,
-              elevation: 0,
-              type: BottomNavigationBarType.fixed,
-              selectedItemColor: kSelectedItemColorOnBNB,
-              unselectedItemColor: kUnselectedItemColorOnBNB,
-              backgroundColor: Colors.transparent,
-              currentIndex: cIndex,
-              onTap: (int value) {
-                indexController.add(value);
-                pageController.jumpToPage(value);
-              },
-              items: bottomNavigationBarItems);
+            return Container(
+              // decoration: BoxDecoration(
+              //   border: Border(
+              //     top: BorderSide(
+              //       width: 1,
+              //       color: Color(0xffdfe3e4)
+              //     ),
+              //   ),
+              // ),
+              child: BottomNavigationBar(
+                showSelectedLabels: false,
+                showUnselectedLabels: false,
+                elevation: 0,
+                type: BottomNavigationBarType.fixed,
+                selectedItemColor: kSelectedItemColorOnBNB,
+                unselectedItemColor: kUnselectedItemColorOnBNB,
+                backgroundColor: kBackgroundColorBodies,
+                currentIndex: cIndex,
+                onTap: (int value) {
+                  indexController.add(value);
+                  pageController.jumpToPage(value);
+                },
+                items: bottomNavigationBarItems,
+              ),
+            );
           },
         ),
       ),

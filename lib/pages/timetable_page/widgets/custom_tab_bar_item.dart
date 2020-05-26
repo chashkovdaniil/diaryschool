@@ -16,7 +16,7 @@ class CustomTabBarItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: isCurrently ? const Color.fromARGB(255, 61, 48, 193) : null,
+        color: isCurrently ? kHeadline6Color : null,
         borderRadius: kButtonBorderRadius,
       ),
       padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 5),
@@ -25,18 +25,15 @@ class CustomTabBarItem extends StatelessWidget {
           Text(
             title,
             style: TextStyle(
-                color: isCurrently
-                    ? Colors.white
-                    : const Color.fromARGB(255, 139, 139, 148),
-                fontSize: 15,
-                fontWeight: FontWeight.w300),
+              color: isCurrently ? Colors.white : kBodyText2Color,
+              fontSize: 15,
+              fontWeight: FontWeight.w300,
+            ),
           ),
           Text(
             "${date.day}",
             style: TextStyle(
-              color: isCurrently
-                  ? Colors.white
-                  : const Color.fromARGB(255, 37, 46, 101),
+              color: isCurrently ? Colors.white : kHeadline6Color,
               fontWeight: FontWeight.w500,
             ),
           ),
