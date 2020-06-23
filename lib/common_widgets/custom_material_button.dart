@@ -11,8 +11,9 @@ class CustomMaterialButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialButton(
       shape: RoundedRectangleBorder(
-        borderRadius: kButtonBorderRadius,
+        borderRadius: kBorderRadius,
       ),
+      highlightColor: Colors.transparent,
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       minWidth: 0,
       padding: EdgeInsets.zero,

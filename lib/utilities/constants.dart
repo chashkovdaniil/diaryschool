@@ -1,25 +1,37 @@
 import 'package:flutter/material.dart';
 
-const Color kPrimaryColor = Color.fromARGB(255, 231, 72, 86);
-const Color kAccentColor = Color.fromARGB(255, 243, 163, 170);
-const Color kBackgroundColor = Color.fromARGB(250, 249, 249, 251);
-const Color kBackgroundColorBodies = Colors.white;
-const Color kBackgroundColorAppBarHomePage = Color.fromARGB(255, 255, 237, 213);
-const Color kBackgroundColorAppBarTaskPage = Color.fromARGB(255, 255, 237, 213);
-const Color kPrimaryColorText = Color.fromARGB(255, 37, 46, 101);
-const Color kAccentColorText = Color.fromARGB(255, 139, 139, 148);
-const Color kSelectedItemColorOnBNB = Color(0xffda3f2f);
-const Color kUnselectedItemColorOnBNB = Color(0xffb0b6bb);
-const Color kScaffoldBackgroundColor = Color(0xffffffff);
-const Color kHeadline6Color = Color(0xffda3f2f);
-const Color kColorRed = Color(0xffda3f2f);
-const Color kCardWidgetBackgroundColor = Color(0xfff4f6f6);
-const Color kBodyText1Color = Color(0xffda3f2f);
-const Color kBodyText2Color = Color(0xffb0b6bb);
-const List<BoxShadow> kShadow = [
+const kColorRed = MaterialColor(0xffd13438, {
+  100: Color(0xffFDCED4),
+  200: Color(0xffEC9C9E),
+  300: Color(0xffE27679),
+  400: Color(0xffEC5759),
+  500: Color(0xffF24741),
+  600: Color(0xffE33D3D),
+  700: Color(0xffD13438),
+  800: Color(0xffC42E30),
+  900: Color(0xffB52426),
+});
+const kColorBlack = Color(0xff626262);
+const kColorGrey1 = Color(0xffe0e0e0);
+const kColorGrey2 = Color(0xffa3a2a2);
+
+const kPrimaryColor = kColorRed;
+const kAccentColor = Colors.white;
+
+const kBackgroundColor = kPrimaryColor;
+const kPrimaryColorText = Color.fromARGB(255, 37, 46, 101);
+const kAccentColorText = Color.fromARGB(255, 139, 139, 148);
+const kScaffoldBackgroundColor = Colors.white;
+const kCardWidgetBackgroundColor = Color(0xffffffff);
+
+BorderRadius kBorderRadius = BorderRadius.circular(15);
+const kDefaultPadding = 20.0;
+const kDefaultShadow = [
   BoxShadow(
-    color: Color.fromRGBO(0, 0, 0, 0.16),
-    blurRadius: 10,
+    offset: Offset(3, 4),
+    // color: Color.fromRGBO(0, 0, 0, 0.16),
+    color: Colors.black12,
+    blurRadius: 4,
   ),
 ];
 const Map<int, String> kMonthIntToString = {
@@ -54,8 +66,3 @@ const Map<int, String> kShortDayOfWeekOnString = {
   6: 'Сб',
   7: 'Вс'
 };
-BorderRadius kBorderRadiusCardWidget = BorderRadius.circular(15);
-const BorderRadius kBorderRadiusBodyPages = BorderRadius.vertical(top: Radius.circular(25));
-BorderRadius kButtonBorderRadius = BorderRadius.circular(8.0);
-
-const double kIconSlideActionSize = 30.0;

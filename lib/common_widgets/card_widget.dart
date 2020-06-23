@@ -1,18 +1,19 @@
+import 'package:diaryschool/common_widgets/task_bottom_sheet.dart';
 import 'package:diaryschool/data/models/homework.dart';
 import 'package:diaryschool/data/models/timetable.dart';
-import 'package:diaryschool/pages/task_page.dart';
-import 'package:diaryschool/pages/task_page/args.dart';
 import 'package:diaryschool/utilities/constants.dart';
 import 'package:flutter/material.dart';
 
 class CardWidget extends StatefulWidget {
   final Homework homework;
   final Timetable timetable;
+  final Map<String, bool> filter;
 
   CardWidget({
     Key key,
     @required this.homework,
     @required this.timetable,
+    @required this.filter,
   }) : super(key: key);
 
   @override
@@ -22,15 +23,23 @@ class CardWidget extends StatefulWidget {
 class _CardWidgetState extends State<CardWidget> {
   @override
   Widget build(BuildContext context) {
+    bool showTeacher = widget.filter['teacher'];
+    bool showRoute = widget.filter['route'];
+    bool showDeadline = widget.filter['deadline'];
+    bool showTime = widget.filter['time'];
+
     Homework homework = widget.homework;
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      child: GestureDetector(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      child: InkWell(
         onTap: () {
-          Navigator.of(context).pushNamed(
-            TaskPage.id,
-            arguments: TaskPageArgs(
-              titleSubject: homework.subject.toString(),
+          showModalBottomSheet(
+            context: context,
+            backgroundColor: Theme.of(context).colorScheme.surface,
+            shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
+            builder: (_context) => TaskBottomSheet(
+              context: _context,
+              homework: homework,
             ),
           );
         },
@@ -39,148 +48,135 @@ class _CardWidgetState extends State<CardWidget> {
             homework.isDone = !homework.isDone;
           });
         },
-        child: Container(
-          // padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        borderRadius: kBorderRadius,
+        child: Ink(
           decoration: BoxDecoration(
-            color: kCardWidgetBackgroundColor,
-            borderRadius: kBorderRadiusCardWidget,
-            boxShadow: [
-              const BoxShadow(
-                offset: Offset(3, 4),
-                color: Color.fromRGBO(0, 0, 0, 0.16),
-                blurRadius: 10,
-              ),
-            ],
+            color: Theme.of(context).colorScheme.surface,
+            borderRadius: kBorderRadius,
+            boxShadow: kDefaultShadow,
           ),
           child: Column(
             children: <Widget>[
+              ListTile(
+                title: Text(
+                  "Математика", // homework.subject делаем запрос в базу, чтобы получить название предмета
+                  maxLines: 1,
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+                trailing: homework.grade == null
+                    ? null
+                    : Text(
+                        '${homework.grade}',
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                subtitle: homework.content == null
+                    ? null
+                    : Text(
+                        homework.content,
+                        maxLines: 5,
+                        softWrap: false,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.bodyText2,
+                      ),
+              ),
               Container(
                 padding: const EdgeInsets.only(
-                  left: 20,
-                  right: 20,
-                  top: 20,
+                  left: 10,
+                  right: 10,
+                  bottom: 15,
                 ),
-                child: Column(
+                child: ListView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
                   children: <Widget>[
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            Text(
-                              "Математика", // homework.subject делаем запрос в базу, чтобы получить название предмета
-                              maxLines: 1,
-                              style: Theme.of(context).textTheme.headline6,
-                            ),
-                            const SizedBox(width: 10),
-                            homework.grade == null
-                                ? const SizedBox.shrink()
-                                : Text(
-                                    '${homework.grade}',
-                                    style:
-                                        Theme.of(context).textTheme.bodyText2,
-                                  ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          homework.content ?? 'Нет задания',
-                          maxLines: 5,
-                          softWrap: false,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.bodyText2,
-                        ),
-                      ],
-                    ),
-                    // TODO: Прописать условия отображения разделителя
-                    const Divider(),
-                    Row(
-                      children: <Widget>[
-                        Icon(
-                          Icons.person,
-                          color: kBodyText2Color,
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          "Галина Васильевна",
-                          style: Theme.of(context).textTheme.bodyText2,
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Icon(
-                          Icons.place,
-                          color: kBodyText2Color,
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          "306, 3 этаж",
-                          style: Theme.of(context).textTheme.bodyText2,
-                        ),
-                      ],
-                    ),
-                    homework.deadline == null &&
-                            homework.isDone == false &&
-                            homework.content != null
-                        ? Row(
-                            children: <Widget>[
-                              Icon(
-                                Icons.timer,
-                                color: kBodyText1Color,
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                "Осталось 3 дня",
-                                style: Theme.of(context).textTheme.bodyText1,
-                              ),
-                            ],
+                    showTeacher || showRoute || showDeadline || showTime
+                        ? const Divider(height: 1)
+                        : const SizedBox.shrink(),
+                    const SizedBox(height: 15),
+                    showTeacher
+                        ? _buildCardInfoItem(
+                            Icons.person,
+                            "Галина Васильевна",
                           )
                         : const SizedBox.shrink(),
-                    homework.content != null && homework.isDone == false
-                        ? const Divider()
+                    showRoute
+                        ? _buildCardInfoItem(
+                            Icons.place,
+                            "306, 3 этаж",
+                          )
+                        : const SizedBox.shrink(),
+                    showTime
+                        ? _buildCardInfoItem(
+                            Icons.place,
+                            "10:00 - 10:40",
+                          )
+                        : const SizedBox.shrink(),
+                    homework.deadline == null &&
+                            homework.isDone == false &&
+                            homework.content != null &&
+                            showDeadline
+                        ? _buildCardInfoItem(
+                            Icons.timer,
+                            "Осталось 3 дня",
+                          )
                         : const SizedBox.shrink(),
                   ],
                 ),
               ),
               homework.content != null && homework.isDone == false
-                  ? Container(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      child: MaterialButton(
-                        minWidth: MediaQuery.of(context).size.width,
-                        onPressed: () {
-                          setState(() {
-                            homework.isDone = true;
-                          });
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            Icon(
-                              Icons.check,
-                              color: kBodyText2Color,
-                            ),
-                            Text(
-                              'Отметить как выполненное',
-                              style: Theme.of(context).textTheme.bodyText2,
-                            ),
-                          ],
-                        ),
+                  ? Padding(
+                      padding: const EdgeInsets.only(
+                        left: 10,
+                        right: 10,
+                      ),
+                      child: Column(
+                        children: <Widget>[
+                          const Divider(
+                            height: 0,
+                          ),
+                          ButtonBar(
+                            children: <Widget>[
+                              FlatButton(
+                                materialTapTargetSize:
+                                    MaterialTapTargetSize.shrinkWrap,
+                                onPressed: () {
+                                  setState(() {
+                                    homework.isDone = true;
+                                  });
+                                },
+                                child: Text(
+                                  'Готово'.toUpperCase(),
+                                  style: Theme.of(context).textTheme.button,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     )
-                  : const SizedBox(height: 20),
+                  : const SizedBox.shrink(),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildCardInfoItem(IconData icon, String title) {
+    return Column(
+      children: <Widget>[
+        Row(
+          children: <Widget>[
+            Icon(icon),
+            const SizedBox(width: 5),
+            Text(
+              title,
+              style: Theme.of(context).textTheme.subtitle2,
+            ),
+          ],
+        ),
+        const SizedBox(height: 5),
+      ],
     );
   }
 }
