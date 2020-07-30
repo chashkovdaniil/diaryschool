@@ -28,25 +28,24 @@ BorderRadius kBorderRadius = BorderRadius.circular(15);
 const kDefaultPadding = 20.0;
 const kDefaultShadow = [
   BoxShadow(
-    offset: Offset(3, 4),
-    // color: Color.fromRGBO(0, 0, 0, 0.16),
+    offset: Offset(0, 4),
     color: Colors.black12,
-    blurRadius: 4,
+    blurRadius: 8,
   ),
 ];
 const Map<int, String> kMonthIntToString = {
-  1: "Янв",
-  2: "Фев",
-  3: "Мар",
-  4: "Апр",
-  5: "Май",
-  6: "Июнь",
-  7: "Июль",
-  8: "Авг",
-  9: "Сен",
-  10: "Окт",
-  11: "Ноя",
-  12: "Дек",
+  1: 'Янв',
+  2: 'Фев',
+  3: 'Мар',
+  4: 'Апр',
+  5: 'Май',
+  6: 'Июнь',
+  7: 'Июль',
+  8: 'Авг',
+  9: 'Сен',
+  10: 'Окт',
+  11: 'Ноя',
+  12: 'Дек',
 };
 const Map<int, String> kDayOfWeekOnString = {
   1: 'Понедельник',

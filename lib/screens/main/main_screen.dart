@@ -1,14 +1,15 @@
 import 'dart:async';
 
+import 'package:diaryschool/screens/failure/failure_screen.dart';
+import 'package:diaryschool/screens/grades/grades_screen.dart';
 import 'package:diaryschool/screens/home/home_screen.dart';
 import 'package:diaryschool/screens/timetable/timetable_screen.dart';
 import 'package:diaryschool/utilities/constants.dart';
-import 'package:diaryschool/utilities/linearicons.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
   MainScreen({Key key}) : super(key: key);
-  static String id = "/";
+  static String id = '/';
 
   @override
   _MainScreenState createState() => _MainScreenState();
@@ -17,41 +18,34 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   final List<Widget> screens = [
     HomeScreen(),
-    const Center(
-      child: Text('Grades'),
-    ),
-    const Center(
-      child: Text('Not done'),
-    ),
-    // const Center(child: Text("qqq")),
+    GradesScreen(),
+    FailureScreen(),
     TimetableScreen(),
-    const Center(
-      child: Text('Profile'),
-    )
+    // SettingsScreen(),
   ];
   final List<BottomNavigationBarItem> bottomNavigationBarItems = [
     BottomNavigationBarItem(
-      icon: Icon(Linearicons.home),
-      title: const Text(''),
+      icon: Icon(Icons.home),
+      title: const Text('Главная'),
     ),
     BottomNavigationBarItem(
         icon: Icon(
-          Linearicons.chart_bars,
+          Icons.trending_up,
           size: 24,
         ),
-        title: const Text('')),
+        title: const Text('Оценки')),
     BottomNavigationBarItem(
-      icon: Icon(Linearicons.checkmark_cicle),
-      title: const Text(''),
+      icon: Icon(Icons.done_all),
+      title: const Text('Долги'),
     ),
     BottomNavigationBarItem(
-      icon: Icon(Linearicons.calendar_full),
-      title: const Text(''),
+      icon: Icon(Icons.calendar_today),
+      title: const Text('Расписание'),
     ),
-    BottomNavigationBarItem(
-      icon: Icon(Linearicons.user),
-      title: const Text(''),
-    ),
+    // BottomNavigationBarItem(
+    //   icon: Icon(Icons.settings),
+    //   title: const Text('Настройки'),
+    // ),
   ];
 
   PageController pageController = PageController(initialPage: 0);
@@ -80,7 +74,7 @@ class _MainScreenState extends State<MainScreen> {
           int cIndex = snapshot.data as int;
           return Container(
             child: BottomNavigationBar(
-              showSelectedLabels: false,
+              showSelectedLabels: true,
               showUnselectedLabels: false,
               elevation: 0,
               type: BottomNavigationBarType.fixed,

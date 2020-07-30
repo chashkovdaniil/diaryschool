@@ -24,7 +24,10 @@ class _TaskScreenState extends State<TaskScreen> {
         ModalRoute.of(context).settings.arguments as TaskScreenArgs;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Математика'),
+        title: Hero(
+          tag: args.homework.subject,
+          child: Text('Математика'),
+        ),
       ),
       bottomNavigationBar: BottomAppBar(
         elevation: 0,
@@ -76,7 +79,7 @@ class _TaskScreenState extends State<TaskScreen> {
           padding: const EdgeInsets.all(kDefaultPadding / 2),
           child: TextFormField(
             decoration: InputDecoration(
-              labelText: 'Введите задание',
+              hintText: 'Введите задание',
               enabledBorder: InputBorder.none,
               focusedBorder: InputBorder.none,
               border: InputBorder.none,

@@ -1,5 +1,5 @@
-import 'package:diaryschool/data/models/homework.dart';
-import 'package:diaryschool/data/models/subject.dart';
+import 'package:diaryschool/models/homework.dart';
+import 'package:diaryschool/models/subject.dart';
 import 'package:diaryschool/screens/task/task_screen.dart';
 import 'package:diaryschool/screens/task/args.dart';
 import 'package:diaryschool/utilities/constants.dart';
@@ -34,9 +34,12 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    Text(
-                      'Математика',
-                      style: Theme.of(context).textTheme.headline6,
+                    Hero(
+                      tag: widget.homework.subject,
+                      child: Text(
+                        'Математика',
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
                     ),
                     const Spacer(),
                     IconButton(
@@ -46,6 +49,7 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                           TaskScreen.id,
                           arguments: TaskScreenArgs(
                             titleSubject: widget.homework.subject.toString(),
+                            homework: widget.homework,
                           ),
                         );
                       },

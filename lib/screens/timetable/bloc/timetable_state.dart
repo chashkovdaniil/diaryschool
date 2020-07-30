@@ -19,7 +19,9 @@ abstract class TimetableState extends Equatable {
 
 // ==================== WeekNavigationBarState ====================
 class WeekNavigationBarState extends TimetableState {
+  @override
   final DateTime activeDay;
+  @override
   final DateTime firstDayOfCurrentWeek;
 
   WeekNavigationBarState({
@@ -37,7 +39,9 @@ class WeekNavigationBarState extends TimetableState {
 class InitialTimetableState extends TimetableState {
   // [activeDay] - По умолчанию сегодняшний день
   // [firstDayOfCurrentWeek] - По умолчанию первый день текущей недели.
+  @override
   final DateTime activeDay = DateTime.now();
+  @override
   final DateTime firstDayOfCurrentWeek =
       DateTime.now().add(Duration(days: -DateTime.now().weekday + 1));
 

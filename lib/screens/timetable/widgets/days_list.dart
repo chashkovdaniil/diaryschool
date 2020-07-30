@@ -3,7 +3,6 @@ import 'package:diaryschool/screens/timetable/bloc/timetable_bloc.dart';
 import 'package:diaryschool/screens/timetable/bloc/timetable_event.dart';
 import 'package:diaryschool/screens/timetable/bloc/timetable_state.dart';
 import 'package:diaryschool/utilities/constants.dart';
-import 'package:diaryschool/utilities/linearicons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -39,7 +38,7 @@ class DaysList extends StatelessWidget {
             width: 30,
             height: 40,
             child: const Icon(
-              Linearicons.arrow_left,
+              Icons.keyboard_arrow_left,
               size: 20,
             ),
           ),
@@ -67,7 +66,7 @@ class DaysList extends StatelessWidget {
             width: 30,
             height: 40,
             child: const Icon(
-              Linearicons.arrow_right,
+              Icons.keyboard_arrow_right,
               size: 20,
             ),
           ),

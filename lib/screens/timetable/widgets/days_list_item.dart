@@ -35,7 +35,7 @@ class DaysListItem extends StatelessWidget {
             ),
           ),
           Text(
-            "${date.day}",
+            '${date.day}',
             style: TextStyle(
               color: isCurrently ? Theme.of(context).colorScheme.onPrimary : kColorRed.shade500,
               fontWeight: FontWeight.w500,

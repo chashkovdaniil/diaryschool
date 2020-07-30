@@ -1,0 +1,49 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'homework.dart';
+
+// **************************************************************************
+// TypeAdapterGenerator
+// **************************************************************************
+
+class HomeworkAdapter extends TypeAdapter<Homework> {
+  @override
+  Homework read(BinaryReader reader) {
+    var numOfFields = reader.readByte();
+    var fields = <int, dynamic>{
+      for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return Homework(
+      subject: fields[0] as int,
+      isDone: fields[4] as bool,
+      content: fields[1] as String,
+      date: fields[2] as DateTime,
+      files: (fields[3] as List)?.cast<dynamic>(),
+      grade: fields[5] as String,
+      deadline: fields[6] as DateTime,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, Homework obj) {
+    writer
+      ..writeByte(7)
+      ..writeByte(0)
+      ..write(obj.subject)
+      ..writeByte(1)
+      ..write(obj.content)
+      ..writeByte(2)
+      ..write(obj.date)
+      ..writeByte(3)
+      ..write(obj.files)
+      ..writeByte(4)
+      ..write(obj.isDone)
+      ..writeByte(5)
+      ..write(obj.grade)
+      ..writeByte(6)
+      ..write(obj.deadline);
+  }
+
+  @override
+  int get typeId => 1;
+}

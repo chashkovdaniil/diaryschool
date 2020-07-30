@@ -1,6 +1,13 @@
+import 'package:diaryschool/screens/articles/articles_screen.dart';
+import 'package:diaryschool/screens/help/help_screen.dart';
 import 'package:diaryschool/screens/home/widgets/deadline_tile.dart';
 import 'package:diaryschool/screens/home/widgets/menu_tile.dart';
+import 'package:diaryschool/screens/search/search_screen.dart';
+import 'package:diaryschool/screens/settings/settings_screen.dart';
+import 'package:diaryschool/screens/subjects/subjects_screen.dart';
+import 'package:diaryschool/screens/teachers/teachers_screen.dart';
 import 'package:diaryschool/utilities/constants.dart';
+import 'package:flutter/cupertino.dart' show CupertinoPageRoute;
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -13,8 +20,30 @@ class HomeScreen extends StatelessWidget {
         title: const Text('Главная'),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {},
+            icon: Hero(
+              tag: 'search',
+              child: Icon(Icons.search),
+            ),
+            onPressed: () {
+              return Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => SearchScreen(),
+                ),
+              );
+            },
+          ),
+          IconButton(
+            icon: Icon(
+              Icons.sort,
+              textDirection: TextDirection.rtl,
+            ),
+            onPressed: () {
+              return Navigator.of(context).push(
+                CupertinoPageRoute(
+                  builder: (context) => SettingsScreen(),
+                ),
+              );
+            },
           ),
         ],
       ),
@@ -24,7 +53,7 @@ class HomeScreen extends StatelessWidget {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(
-                left: kDefaultPadding- 5,
+                left: kDefaultPadding - 5,
                 bottom: kDefaultPadding - 5,
               ),
               child: Text(
@@ -60,29 +89,44 @@ class HomeScreen extends StatelessWidget {
                   Row(
                     children: <Widget>[
                       MenuTile(
-                        onTap: () {},
+                        onTap: () => Navigator.pushNamed(
+                          context,
+                          TeachersScreen.id,
+                        ),
                         icon: Icons.people,
                         title: 'Учителя',
                       ),
-                      SizedBox(width: kDefaultPadding),
+                      const SizedBox(width: kDefaultPadding),
                       MenuTile(
-                        onTap: () {},
+                        onTap: () => Navigator.pushNamed(
+                          context,
+                          SubjectsScreen.id,
+                        ),
                         icon: Icons.list,
                         title: 'Предметы',
                       ),
                     ],
                   ),
-                  SizedBox(height: kDefaultPadding),
+                  const SizedBox(height: kDefaultPadding),
                   Row(
                     children: <Widget>[
                       MenuTile(
-                        onTap: () {},
+                        onTap: () => Navigator.pushNamed(
+                          context,
+                          HelpScreen.id,
+                        ),
                         icon: Icons.help_outline,
                         title: 'Помощь',
                       ),
-                      SizedBox(width: kDefaultPadding),
+                      const SizedBox(width: kDefaultPadding),
                       MenuTile(
-                        onTap: () {},
+                        onTap: () {
+                          return Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const ArticlesScreen(),
+                            ),
+                          );
+                        },
                         icon: Icons.art_track,
                         title: 'Статьи',
                       ),

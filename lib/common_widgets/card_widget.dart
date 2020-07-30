@@ -1,18 +1,15 @@
 import 'package:diaryschool/common_widgets/task_bottom_sheet.dart';
-import 'package:diaryschool/data/models/homework.dart';
-import 'package:diaryschool/data/models/timetable.dart';
+import 'package:diaryschool/models/homework.dart';
 import 'package:diaryschool/utilities/constants.dart';
 import 'package:flutter/material.dart';
 
 class CardWidget extends StatefulWidget {
   final Homework homework;
-  final Timetable timetable;
   final Map<String, bool> filter;
 
   CardWidget({
     Key key,
     @required this.homework,
-    @required this.timetable,
     @required this.filter,
   }) : super(key: key);
 
@@ -21,6 +18,13 @@ class CardWidget extends StatefulWidget {
 }
 
 class _CardWidgetState extends State<CardWidget> {
+  Homework _homework;
+
+  @override
+  void initState() {
+    _homework = widget.homework;
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     bool showTeacher = widget.filter['teacher'];
@@ -28,7 +32,6 @@ class _CardWidgetState extends State<CardWidget> {
     bool showDeadline = widget.filter['deadline'];
     bool showTime = widget.filter['time'];
 
-    Homework homework = widget.homework;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: InkWell(
@@ -39,13 +42,13 @@ class _CardWidgetState extends State<CardWidget> {
             shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
             builder: (_context) => TaskBottomSheet(
               context: _context,
-              homework: homework,
+              homework: _homework,
             ),
           );
         },
         onDoubleTap: () {
           setState(() {
-            homework.isDone = !homework.isDone;
+            _homework.isDone = !_homework.isDone;
           });
         },
         borderRadius: kBorderRadius,
@@ -59,20 +62,20 @@ class _CardWidgetState extends State<CardWidget> {
             children: <Widget>[
               ListTile(
                 title: Text(
-                  "Математика", // homework.subject делаем запрос в базу, чтобы получить название предмета
+                  'Математика', // _homework.subject делаем запрос в базу, чтобы получить название предмета
                   maxLines: 1,
                   style: Theme.of(context).textTheme.headline6,
                 ),
-                trailing: homework.grade == null
+                trailing: _homework.grade == null
                     ? null
                     : Text(
-                        '${homework.grade}',
+                        '${_homework.grade}',
                         style: Theme.of(context).textTheme.headline6,
                       ),
-                subtitle: homework.content == null
+                subtitle: _homework.content == null
                     ? null
                     : Text(
-                        homework.content,
+                        _homework.content,
                         maxLines: 5,
                         softWrap: false,
                         overflow: TextOverflow.ellipsis,
@@ -80,50 +83,66 @@ class _CardWidgetState extends State<CardWidget> {
                       ),
               ),
               Container(
-                padding: const EdgeInsets.only(
+                padding: EdgeInsets.only(
                   left: 10,
                   right: 10,
-                  bottom: 15,
+                  bottom: showTeacher ||
+                            showRoute ||
+                            (_homework.deadline != null &&
+                                _homework.isDone == false &&
+                                _homework.content != null &&
+                                showDeadline) ||
+                            showTime ? 15 : 0,
                 ),
                 child: ListView(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   children: <Widget>[
-                    showTeacher || showRoute || showDeadline || showTime
-                        ? const Divider(height: 1)
+                    showTeacher ||
+                            showRoute ||
+                            (_homework.deadline != null &&
+                                _homework.isDone == false &&
+                                _homework.content != null &&
+                                showDeadline) ||
+                            showTime
+                        ? Column(
+                          children: <Widget>[
+                            const Divider(height: 1),
+                            const SizedBox(height: 15)
+                          ],
+                        )
                         : const SizedBox.shrink(),
-                    const SizedBox(height: 15),
                     showTeacher
                         ? _buildCardInfoItem(
                             Icons.person,
-                            "Галина Васильевна",
+                            'Галина Васильевна',
                           )
                         : const SizedBox.shrink(),
                     showRoute
                         ? _buildCardInfoItem(
                             Icons.place,
-                            "306, 3 этаж",
+                            '306, 3 этаж',
                           )
                         : const SizedBox.shrink(),
                     showTime
                         ? _buildCardInfoItem(
-                            Icons.place,
-                            "10:00 - 10:40",
+                            Icons.access_time,
+                            '10:00 - 10:40',
                           )
                         : const SizedBox.shrink(),
-                    homework.deadline == null &&
-                            homework.isDone == false &&
-                            homework.content != null &&
+                    _homework.deadline != null &&
+                            _homework.isDone == false &&
+                            _homework.content != null &&
                             showDeadline
                         ? _buildCardInfoItem(
                             Icons.timer,
-                            "Осталось 3 дня",
+                            'Осталось 3 дня',
                           )
                         : const SizedBox.shrink(),
                   ],
                 ),
               ),
-              homework.content != null && homework.isDone == false
+              _homework.content != null && _homework.isDone == false
                   ? Padding(
                       padding: const EdgeInsets.only(
                         left: 10,
@@ -141,7 +160,7 @@ class _CardWidgetState extends State<CardWidget> {
                                     MaterialTapTargetSize.shrinkWrap,
                                 onPressed: () {
                                   setState(() {
-                                    homework.isDone = true;
+                                    _homework.isDone = true;
                                   });
                                 },
                                 child: Text(
