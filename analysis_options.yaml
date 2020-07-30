@@ -1,13 +1,16 @@
 # https://dart.dev/guides/language/analysis-options
 
 include: package:pedantic/analysis_options.yaml
-#include: package:effective_dart/analysis_options.yaml
+# include: package:effective_dart/analysis_options.yaml
 
 analyzer:
+  # enable-experiment:
+    # - spread_collections
   exclude:
     - 'example/**'
     - 'build/**'
     - '**.g.dart'
+    # - 'lib/utilities/linearicons.dart'
   strong-mode:
     implicit-casts: false
     implicit-dynamic: true
@@ -32,6 +35,7 @@ linter:
     lines_longer_than_80_chars: false
 
     # true
+    prefer_spread_collections: true
     valid_regexps: true
     use_key_in_widget_constructors: true
     unrelated_type_equality_checks: true
