@@ -11,9 +11,19 @@ class TeacherProvider extends ChangeNotifier {
 
   List<Teacher> get teachers => _teachers.values.toList();
 
-  Future add(Teacher teacher) async {
+  // Future add(Teacher teacher) async {
+  //   try {
+  //     await _teachers.add(teacher);
+  //     notifyListeners();
+  //     return true;
+  //   } catch (e) {
+  //     return false;
+  //   }
+  // }
+
+  Future delete(int index) async {
     try {
-      await _teachers.add(teacher);
+      await _teachers.deleteAt(index);
       notifyListeners();
       return true;
     } catch (e) {
@@ -21,9 +31,11 @@ class TeacherProvider extends ChangeNotifier {
     }
   }
 
-  Future delete(int index) async {
+  Future add(Teacher teacher,{int index}) async {
     try {
-      await _teachers.deleteAt(index);
+      index == null
+          ? await _teachers.add(teacher)
+          : await _teachers.putAt(index, teacher);
       notifyListeners();
       return true;
     } catch (e) {

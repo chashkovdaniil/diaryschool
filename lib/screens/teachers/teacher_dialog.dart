@@ -7,9 +7,11 @@ import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 
 class TeacherDialog extends StatefulWidget {
+  final int index;
   final Teacher teacher;
   TeacherDialog({
     Key key,
+    this.index,
     @required this.teacher,
   }) : super(key: key);
 
@@ -81,12 +83,13 @@ class _TeacherDialogState extends State<TeacherDialog> {
         ),
         FlatButton(
           onPressed: () {
-            Provider.of<TeacherProvider>(context, listen: false).add(widget.teacher);
+            Provider.of<TeacherProvider>(context, listen: false).add(
+              widget.teacher,
+              index: widget.index,
+            );
             Navigator.of(context).pop();
           },
-          child: Text(widget.teacher.name == null
-              ? 'Добавить'.toUpperCase()
-              : 'Сохранить'.toUpperCase()),
+          child: Text('Сохранить'.toUpperCase()),
         ),
       ],
     );
