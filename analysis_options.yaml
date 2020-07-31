@@ -4,8 +4,8 @@ include: package:pedantic/analysis_options.yaml
 # include: package:effective_dart/analysis_options.yaml
 
 analyzer:
-  # enable-experiment:
-    # - spread_collections
+  enable-experiment:
+    - non-nullable
   exclude:
     - 'example/**'
     - 'build/**'

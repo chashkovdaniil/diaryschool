@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:diaryschool/models/homework.dart';
 import 'package:diaryschool/models/subject.dart';
 import 'package:diaryschool/models/teacher.dart';
+import 'package:diaryschool/provider/SubjectProvider.dart';
 import 'package:diaryschool/provider/TeacherProvider.dart';
 import 'package:diaryschool/screens/help/help_screen.dart';
 import 'package:diaryschool/screens/main/main_screen.dart';
@@ -47,6 +48,8 @@ class DiarySchoolApp extends StatelessWidget {
         // ),
         ChangeNotifierProvider<TeacherProvider>(
           create: (context) => TeacherProvider(teachers),
+        ),ChangeNotifierProvider<SubjectProvider>(
+          create: (context) => SubjectProvider(),
         )
         // StreamProvider<BoxEvent>(
         //   create: (context) => Hive.box<Teacher>('teachers').watch(),
