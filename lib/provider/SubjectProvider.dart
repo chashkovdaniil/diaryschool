@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:diaryschool/models/subject.dart';
 import 'package:diaryschool/provider/SchoolProvider.dart';
 import 'package:hive/hive.dart';
@@ -7,16 +9,12 @@ class SubjectProvider extends ChangeNotifier
     implements SchoolProvider<Subject> {
   Box<Subject> _values;
 
-  SubjectProvider() {
-    _init();
+  SubjectProvider(Box<Subject> box) {
+    _values = box;
   }
 
   @override
   List<Subject> get values => _values.values.toList();
-  
-  Future<void> _init() async {
-    _values = await Hive.openBox('subjects');
-  }
 
   @override
   Future<bool> put(Subject subject, {int index}) async {

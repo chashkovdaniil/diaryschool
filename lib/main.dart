@@ -30,26 +30,26 @@ void main() async {
 
   // await Hive.openBox('subjects');
   final Box<Teacher> teachers = await Hive.openBox<Teacher>('teachers');
+  final Box<Subject> subjects = await Hive.openBox<Subject>('subjects');
   // await Hive.openBox('homeworks');
 
   InAppPurchaseConnection.enablePendingPurchases();
-  runApp(DiarySchoolApp(teachers: teachers));
+  runApp(DiarySchoolApp(teachers: teachers, subjects: subjects));
 }
 
 class DiarySchoolApp extends StatelessWidget {
-  Box<Teacher> teachers;
-  DiarySchoolApp({Key key, this.teachers}) : super(key: key);
+  final Box<Teacher> teachers;
+  final Box<Subject> subjects;
+  DiarySchoolApp({Key key, this.teachers, this.subjects}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        // ValueListenableProvider(
-        //   create: (context) => ValueNotifier(Hive.box<Teacher>('teachers').listenable().value),
-        // ),
         ChangeNotifierProvider<TeacherProvider>(
           create: (context) => TeacherProvider(teachers),
-        ),ChangeNotifierProvider<SubjectProvider>(
-          create: (context) => SubjectProvider(),
+        ),
+        ChangeNotifierProvider<SubjectProvider>(
+          create: (context) => SubjectProvider(subjects),
         )
         // StreamProvider<BoxEvent>(
         //   create: (context) => Hive.box<Teacher>('teachers').watch(),

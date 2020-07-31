@@ -16,19 +16,18 @@ class SubjectAdapter extends TypeAdapter<Subject> {
     return Subject(
       title: fields[0] as String,
       teacher: fields[1] as int,
-    );
+    )..map = fields[2] as String;
   }
 
   @override
   void write(BinaryWriter writer, Subject obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.title)
       ..writeByte(1)
-      ..write(obj.teacher);
+      ..write(obj.teacher)
+      ..writeByte(2)
+      ..write(obj.map);
   }
-
-  @override
-  int get typeId => 2;
 }

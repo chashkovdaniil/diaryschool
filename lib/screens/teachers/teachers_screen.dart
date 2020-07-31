@@ -19,10 +19,8 @@ class TeachersScreen extends StatefulWidget {
 }
 
 class _TeachersScreenState extends State<TeachersScreen> {
-  Box<Teacher> _teachers;
   @override
   void initState() {
-    _teachers = Hive.box('teachers');
     super.initState();
   }
 
@@ -58,7 +56,6 @@ class _TeachersScreenState extends State<TeachersScreen> {
           const SizedBox(height: 16),
           Consumer<TeacherProvider>(
             builder: (context, provider, child) {
-              log(provider.teachers.toString());
               return ListView.separated(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
@@ -66,11 +63,11 @@ class _TeachersScreenState extends State<TeachersScreen> {
                   padding: EdgeInsets.only(left: kDefaultPadding * 4 - 10),
                 ),
                 cacheExtent: 60,
-                itemCount: provider.teachers.length,
+                itemCount: provider.values.length,
                 itemBuilder: (context, index) {
                   return TeacherCard(
                     key: ValueKey(index),
-                    teacher: provider.teachers[index],
+                    teacher: provider.values[index],
                   );
                 },
               );

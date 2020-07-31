@@ -83,7 +83,7 @@ class _TeacherDialogState extends State<TeacherDialog> {
         ),
         FlatButton(
           onPressed: () {
-            Provider.of<TeacherProvider>(context, listen: false).add(
+            Provider.of<TeacherProvider>(context, listen: false).put(
               widget.teacher,
               index: widget.index,
             );

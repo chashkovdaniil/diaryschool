@@ -1,9 +1,13 @@
 import 'package:diaryschool/common_widgets/divider.dart';
 import 'package:diaryschool/models/subject.dart';
 import 'package:diaryschool/models/teacher.dart';
+import 'package:diaryschool/provider/SubjectProvider.dart';
+import 'package:diaryschool/provider/TeacherProvider.dart';
+import 'package:diaryschool/screens/subjects/subject_dialog.dart';
 import 'package:diaryschool/screens/teachers/teacher_dialog.dart';
 import 'package:diaryschool/utilities/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SubjectsScreen extends StatelessWidget {
   static String id = 'subjectsScreen';
@@ -38,156 +42,59 @@ class SubjectsScreen extends StatelessWidget {
               ),
             ),
           ),
-          ListView.separated(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            cacheExtent: 72,
-            itemBuilder: (ctx, index) {
-              return ListTile(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (ctx) {
-                      return SubjectDialog(
-                        subject: Subject(
-                          title: 'Математика',
-                          teacher: 1,
-                        ),
-                      );
+          Consumer<SubjectProvider>(builder: (context, data, child) {
+            return ListView.separated(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              cacheExtent: 72,
+              itemBuilder: (ctx, index) {
+                return ListTile(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (ctx) {
+                        return SubjectDialog(
+                          subject: data.values[index],
+                          index: index,
+                        );
+                      },
+                    );
+                  },
+                  leading: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      borderRadius: kBorderRadius,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  title: Text(
+                    data.values[index].title,
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                  subtitle: Text(
+                    '${data.values[index].map}, '
+                    '${Provider.of<TeacherProvider>(context).values[data.values[index].teacher].toString()}',
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                  trailing: IconButton(
+                    icon: Icon(Icons.delete_outline),
+                    onPressed: () {
+                      return Provider.of<SubjectProvider>(context,
+                              listen: false)
+                          .delete(index);
                     },
-                  );
-                },
-                leading: Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    borderRadius: kBorderRadius,
-                    color: Colors.grey,
                   ),
-                ),
-                title: Text(
-                  'Математика',
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-                subtitle: Text(
-                  '306, Галина Васильевна',
-                  style: Theme.of(context).textTheme.subtitle1,
-                ),
-              );
-            },
-            separatorBuilder: (context, index) => const CustomDivider(
-              padding: EdgeInsets.only(left: kDefaultPadding * 4 - 10),
-            ),
-            itemCount: 6,
-          ),
+                );
+              },
+              separatorBuilder: (context, index) => const CustomDivider(
+                padding: EdgeInsets.only(left: kDefaultPadding * 4 - 10),
+              ),
+              itemCount: data.values.length,
+            );
+          }),
         ],
       ),
-    );
-  }
-}
-
-class SubjectDialog extends StatefulWidget {
-  Subject subject;
-  SubjectDialog({
-    Key key,
-    this.subject,
-  }) : super(key: key);
-
-  @override
-  _SubjectDialogState createState() => _SubjectDialogState();
-}
-
-class _SubjectDialogState extends State<SubjectDialog> {
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text('Предмет'),
-      content: ListView(
-        shrinkWrap: true,
-        children: <Widget>[
-          TextFormField(
-            initialValue: widget.subject.title,
-            decoration: InputDecoration(hintText: 'Название'),
-            onChanged: (value) {
-              setState(() {
-                widget.subject.title = value;
-              });
-            },
-          ),
-          TextFormField(
-            initialValue: widget.subject.title,
-            decoration: InputDecoration(hintText: 'Кабинет или аудитория'),
-            onChanged: (value) {
-              setState(() {
-                widget.subject.title = value;
-              });
-            },
-          ),
-          FlatButton(
-            onPressed: () async {
-              print(await showDialog(
-                context: context,
-                builder: (ctx) => AlertDialog(
-                  title: Row(
-                    children: <Widget>[
-                      Text('Выбрать учителя'),
-                      const Spacer(),
-                      IconButton(
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (ctx) {
-                              return TeacherDialog(teacher: Teacher());
-                            },
-                          );
-                        },
-                        icon: Icon(Icons.add),
-                      ),
-                    ],
-                  ),
-                  content: ListView.builder(
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) => ListTile(
-                      dense: true,
-                      onTap: () => Navigator.of(context).pop(1),
-                      title: Text(
-                        'Ирина Генадьевна',
-                        style: Theme.of(context).textTheme.subtitle1,
-                      ),
-                    ),
-                    itemCount: 1,
-                  ),
-                  actions: <Widget>[
-                    FlatButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      child: Text('Закрыть'.toUpperCase()),
-                    ),
-                  ],
-                ),
-              ));
-            },
-            child: Text(
-              widget.subject.teacher == null
-                  ? 'Указать учителя'
-                  : widget.subject.teacher.toString(),
-              style: Theme.of(context).textTheme.button,
-            ),
-          )
-        ],
-      ),
-      actions: <Widget>[
-        FlatButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: Text('Отмена'.toUpperCase()),
-        ),
-        FlatButton(
-          onPressed: () => print(widget.subject.title),
-          // child: Text('f')
-          child: Text(widget.subject.title == null
-              ? 'Добавить'.toUpperCase()
-              : 'Сохранить'.toUpperCase()),
-        ),
-      ],
     );
   }
 }
