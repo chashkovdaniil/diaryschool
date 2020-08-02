@@ -3,12 +3,15 @@ import 'dart:ui';
 import 'package:diaryschool/models/homework.dart';
 import 'package:diaryschool/models/subject.dart';
 import 'package:diaryschool/models/teacher.dart';
+import 'package:diaryschool/provider/HomeworkProvider.dart';
 import 'package:diaryschool/provider/SubjectProvider.dart';
 import 'package:diaryschool/provider/TeacherProvider.dart';
+import 'package:diaryschool/screens/failure/failure_screen.dart';
 import 'package:diaryschool/screens/help/help_screen.dart';
 import 'package:diaryschool/screens/main/main_screen.dart';
 import 'package:diaryschool/screens/subjects/subjects_screen.dart';
 import 'package:diaryschool/screens/task/task_screen.dart';
+import 'package:diaryschool/screens/tasks/tasks_screen.dart';
 import 'package:diaryschool/screens/teachers/teachers_screen.dart';
 import 'package:diaryschool/utilities/constants.dart';
 import 'package:flutter/foundation.dart';
@@ -20,7 +23,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter((await getApplicationDocumentsDirectory()).path);
   Hive
@@ -28,19 +31,30 @@ void main() async {
     ..registerAdapter(HomeworkAdapter())
     ..registerAdapter(TeacherAdapter());
 
-  // await Hive.openBox('subjects');
   final Box<Teacher> teachers = await Hive.openBox<Teacher>('teachers');
   final Box<Subject> subjects = await Hive.openBox<Subject>('subjects');
-  // await Hive.openBox('homeworks');
+  final Box<Homework> homeworks = await Hive.openBox<Homework>('homeworks');
 
   InAppPurchaseConnection.enablePendingPurchases();
-  runApp(DiarySchoolApp(teachers: teachers, subjects: subjects));
+  runApp(DiarySchoolApp(
+    teachers: teachers,
+    subjects: subjects,
+    homeworks: homeworks,
+  ));
 }
 
 class DiarySchoolApp extends StatelessWidget {
   final Box<Teacher> teachers;
   final Box<Subject> subjects;
-  DiarySchoolApp({Key key, this.teachers, this.subjects}) : super(key: key);
+  final Box<Homework> homeworks;
+
+  DiarySchoolApp({
+    Key key,
+    this.teachers,
+    this.subjects,
+    this.homeworks,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -50,20 +64,10 @@ class DiarySchoolApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<SubjectProvider>(
           create: (context) => SubjectProvider(subjects),
-        )
-        // StreamProvider<BoxEvent>(
-        //   create: (context) => Hive.box<Teacher>('teachers').watch(),
-        // )
-        // ValueListenableProvider<ValueListenable<Box<Subject>>>(
-        //   create: (context) => ValueNotifier(
-        //     Hive.box<Subject>('subjects').listenable(),
-        //   ),
-        // ),
-        // ValueListenableProvider<ValueListenable<Box<Homework>>>(
-        //   create: (context) => ValueNotifier(
-        //     Hive.box<Homework>('homeworks').listenable(),
-        //   ),
-        // ),
+        ),
+        ChangeNotifierProvider<HomeworkProvider>(
+          create: (context) => HomeworkProvider(homeworks),
+        ),
       ],
       child: MaterialApp(
         title: 'Дневник',
@@ -75,6 +79,8 @@ class DiarySchoolApp extends StatelessWidget {
           TeachersScreen.id: (context) => const TeachersScreen(),
           SubjectsScreen.id: (context) => const SubjectsScreen(),
           HelpScreen.id: (context) => const HelpScreen(),
+          FailureScreen.id: (context) => FailureScreen(),
+          TasksScreen.id: (context) => TasksScreen(),
         },
         darkTheme: ThemeData(
           scaffoldBackgroundColor: const Color(0xff424242),
@@ -182,6 +188,9 @@ class DiarySchoolApp extends StatelessWidget {
           ),
         ),
         theme: ThemeData(
+          // floatingActionButtonTheme: FloatingActionButtonThemeData(
+
+          // ),
           appBarTheme: AppBarTheme(
             color: Colors.white,
             elevation: 0,
@@ -198,6 +207,7 @@ class DiarySchoolApp extends StatelessWidget {
               ),
             ),
           ),
+          accentColor: Colors.white,
           dialogTheme: DialogTheme(
             shape: RoundedRectangleBorder(
               borderRadius: kBorderRadius,

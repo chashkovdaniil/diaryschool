@@ -19,8 +19,8 @@ class Homework {
   DateTime deadline;
 
   Homework({
-    this.subject,
-    this.isDone,
+    this.subject = 0,
+    this.isDone = false,
     this.content,
     this.date,
     this.files,

@@ -40,4 +40,7 @@ class TeacherAdapter extends TypeAdapter<Teacher> {
       ..writeByte(5)
       ..write(obj.subjects);
   }
+
+  @override
+  int get typeId => 0;
 }

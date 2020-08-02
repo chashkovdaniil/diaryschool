@@ -1,16 +1,22 @@
 import 'package:diaryschool/common_widgets/task_bottom_sheet.dart';
 import 'package:diaryschool/models/homework.dart';
+import 'package:diaryschool/provider/HomeworkProvider.dart';
+import 'package:diaryschool/provider/SubjectProvider.dart';
+import 'package:diaryschool/provider/TeacherProvider.dart';
 import 'package:diaryschool/utilities/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CardWidget extends StatefulWidget {
   final Homework homework;
+  final int index;
   final Map<String, bool> filter;
 
   CardWidget({
     Key key,
     @required this.homework,
     @required this.filter,
+    @required this.index,
   }) : super(key: key);
 
   @override
@@ -25,6 +31,7 @@ class _CardWidgetState extends State<CardWidget> {
     _homework = widget.homework;
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     bool showTeacher = widget.filter['teacher'];
@@ -43,6 +50,7 @@ class _CardWidgetState extends State<CardWidget> {
             builder: (_context) => TaskBottomSheet(
               context: _context,
               homework: _homework,
+              index: widget.index,
             ),
           );
         },
@@ -62,10 +70,11 @@ class _CardWidgetState extends State<CardWidget> {
             children: <Widget>[
               ListTile(
                 title: Text(
-                  'Математика', // _homework.subject делаем запрос в базу, чтобы получить название предмета
-                  maxLines: 1,
-                  style: Theme.of(context).textTheme.headline6,
-                ),
+                      Provider.of<SubjectProvider>(context).values[_homework.subject]
+                          .title, // _homework.subject делаем запрос в базу, чтобы получить название предмета
+                      maxLines: 1,
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
                 trailing: _homework.grade == null
                     ? null
                     : Text(
@@ -87,12 +96,14 @@ class _CardWidgetState extends State<CardWidget> {
                   left: 10,
                   right: 10,
                   bottom: showTeacher ||
-                            showRoute ||
-                            (_homework.deadline != null &&
-                                _homework.isDone == false &&
-                                _homework.content != null &&
-                                showDeadline) ||
-                            showTime ? 15 : 0,
+                          showRoute ||
+                          (_homework.deadline != null &&
+                              _homework.isDone == false &&
+                              _homework.content != null &&
+                              showDeadline) ||
+                          showTime
+                      ? 15
+                      : 0,
                 ),
                 child: ListView(
                   physics: const NeverScrollableScrollPhysics(),
@@ -106,22 +117,28 @@ class _CardWidgetState extends State<CardWidget> {
                                 showDeadline) ||
                             showTime
                         ? Column(
-                          children: <Widget>[
-                            const Divider(height: 1),
-                            const SizedBox(height: 15)
-                          ],
-                        )
+                            children: <Widget>[
+                              const Divider(height: 1),
+                              const SizedBox(height: 15)
+                            ],
+                          )
                         : const SizedBox.shrink(),
                     showTeacher
                         ? _buildCardInfoItem(
                             Icons.person,
-                            'Галина Васильевна',
+                            Provider.of<TeacherProvider>(context)
+                                .values[Provider.of<SubjectProvider>(context)
+                                    .values[_homework.subject]
+                                    .teacher]
+                                .toString(),
                           )
                         : const SizedBox.shrink(),
                     showRoute
                         ? _buildCardInfoItem(
                             Icons.place,
-                            '306, 3 этаж',
+                            Provider.of<SubjectProvider>(context)
+                                .values[_homework.subject]
+                                .map,
                           )
                         : const SizedBox.shrink(),
                     showTime
@@ -162,6 +179,13 @@ class _CardWidgetState extends State<CardWidget> {
                                   setState(() {
                                     _homework.isDone = true;
                                   });
+                                  Provider.of<HomeworkProvider>(
+                                    context,
+                                    listen: false,
+                                  ).put(
+                                    _homework,
+                                    index: widget.index,
+                                  );
                                 },
                                 child: Text(
                                   'Готово'.toUpperCase(),
@@ -182,20 +206,22 @@ class _CardWidgetState extends State<CardWidget> {
   }
 
   Widget _buildCardInfoItem(IconData icon, String title) {
-    return Column(
-      children: <Widget>[
-        Row(
-          children: <Widget>[
-            Icon(icon),
-            const SizedBox(width: 5),
-            Text(
-              title,
-              style: Theme.of(context).textTheme.subtitle2,
-            ),
-          ],
-        ),
-        const SizedBox(height: 5),
-      ],
-    );
+    return title == null || title == ''
+        ? const SizedBox.shrink()
+        : Column(
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  Icon(icon),
+                  const SizedBox(width: 5),
+                  Text(
+                    title,
+                    style: Theme.of(context).textTheme.subtitle2,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 5),
+            ],
+          );
   }
 }

@@ -30,4 +30,7 @@ class SubjectAdapter extends TypeAdapter<Subject> {
       ..writeByte(2)
       ..write(obj.map);
   }
+
+  @override
+  int get typeId => 2;
 }

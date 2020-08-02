@@ -1,16 +1,19 @@
 import 'package:diaryschool/models/homework.dart';
 import 'package:diaryschool/models/subject.dart';
+import 'package:diaryschool/provider/HomeworkProvider.dart';
+import 'package:diaryschool/provider/SubjectProvider.dart';
 import 'package:diaryschool/screens/task/task_screen.dart';
 import 'package:diaryschool/screens/task/args.dart';
 import 'package:diaryschool/utilities/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class TaskBottomSheet extends StatefulWidget {
   final BuildContext context;
   final Homework homework;
-  final Subject subject;
+  final int index;
 
-  TaskBottomSheet({Key key, this.context, this.homework, this.subject})
+  TaskBottomSheet({Key key, this.context, this.homework, this.index})
       : super(key: key);
   @override
   State<StatefulWidget> createState() => _TaskBottomSheetState();
@@ -34,22 +37,22 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    Hero(
-                      tag: widget.homework.subject,
-                      child: Text(
-                        'Математика',
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
+                    Text(
+                      Provider.of<SubjectProvider>(context)
+                          .values[widget.homework.subject]
+                          .title,
+                      style: Theme.of(context).textTheme.headline6,
                     ),
                     const Spacer(),
                     IconButton(
                       icon: Icon(Icons.keyboard_arrow_up),
                       onPressed: () {
-                        Navigator.of(context).pushNamed(
-                          TaskScreen.id,
-                          arguments: TaskScreenArgs(
-                            titleSubject: widget.homework.subject.toString(),
-                            homework: widget.homework,
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => TaskScreen(
+                              homework: widget.homework,
+                              index: widget.index,
+                            ),
                           ),
                         );
                       },
@@ -62,14 +65,12 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                 ),
                 TextFormField(
                   maxLines: 5,
-                  initialValue: _task,
+                  initialValue: widget.homework.content,
                   decoration: const InputDecoration(
                     labelText: 'Введите задание',
                   ),
                   onChanged: (val) {
-                    setState(() {
-                      _task = val;
-                    });
+                    widget.homework.content = val;
                   },
                   style: Theme.of(context).textTheme.subtitle2,
                 ),
@@ -78,7 +79,17 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                     'Сохранить'.toUpperCase(),
                     style: Theme.of(context).textTheme.button,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    // TODO: сделать валидацию
+                    Provider.of<HomeworkProvider>(
+                      context,
+                      listen: false,
+                    ).put(
+                      widget.homework,
+                      index: widget.index,
+                    );
+                    Navigator.of(context).pop();
+                  },
                 ),
               ],
             ),

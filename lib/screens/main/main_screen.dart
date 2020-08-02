@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:diaryschool/screens/failure/failure_screen.dart';
 import 'package:diaryschool/screens/grades/grades_screen.dart';
 import 'package:diaryschool/screens/home/home_screen.dart';
-import 'package:diaryschool/screens/timetable/timetable_screen.dart';
+import 'package:diaryschool/screens/task/task_screen.dart';
+import 'package:diaryschool/screens/tasks/tasks_screen.dart';
 import 'package:diaryschool/utilities/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -16,12 +16,12 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  final List<Widget> screens = [
-    HomeScreen(),
-    GradesScreen(),
-    FailureScreen(),
-    TimetableScreen(),
-    // SettingsScreen(),
+  int _currentScreen = 0;
+  final List<GlobalKey<NavigatorState>> _navigatorKeys = [
+    GlobalKey<NavigatorState>(debugLabel: 'Home'),
+    GlobalKey<NavigatorState>(debugLabel: 'Grades'),
+    GlobalKey<NavigatorState>(debugLabel: 'Tasks'),
+    GlobalKey<NavigatorState>(debugLabel: 'Timetable'),
   ];
   final List<BottomNavigationBarItem> bottomNavigationBarItems = [
     BottomNavigationBarItem(
@@ -29,67 +29,98 @@ class _MainScreenState extends State<MainScreen> {
       title: const Text('Главная'),
     ),
     BottomNavigationBarItem(
-        icon: Icon(
-          Icons.trending_up,
-          size: 24,
-        ),
-        title: const Text('Оценки')),
+      icon: Icon(
+        Icons.trending_up,
+        size: 24,
+      ),
+      title: const Text('Оценки'),
+    ),
     BottomNavigationBarItem(
-      icon: Icon(Icons.done_all),
-      title: const Text('Долги'),
+      icon: Icon(Icons.format_list_bulleted),
+      title: const Text('Уроки'),
     ),
     BottomNavigationBarItem(
       icon: Icon(Icons.calendar_today),
       title: const Text('Расписание'),
     ),
-    // BottomNavigationBarItem(
-    //   icon: Icon(Icons.settings),
-    //   title: const Text('Настройки'),
-    // ),
   ];
+  Widget navWidget({
+    @required final int index,
+    @required final Widget child,
+  }) =>
+      WillPopScope(
+        child: child,
+        onWillPop: () async {
+          if (Navigator.of(context).canPop()) {
+            Navigator.of(context).pop();
+            return false;
+          }
+          if (_navigatorKeys[index].currentState.canPop()) {
+            _navigatorKeys[index].currentState.pop();
+            return false;
+          }
+          return true;
+        },
+      );
 
-  PageController pageController = PageController(initialPage: 0);
-  StreamController<int> indexController = StreamController<int>.broadcast();
+  List<Widget> _screens;
 
   @override
-  void dispose() {
-    indexController.close();
-    super.dispose();
+  void initState() {
+    _screens = [
+      navWidget(
+        index: 0,
+        child: HomeScreen(),
+      ),
+      navWidget(
+        index: 1,
+        child: GradesScreen(),
+      ),
+      navWidget(
+        index: 2,
+        child: TasksScreen(),
+      ),
+      navWidget(
+        index: 3,
+        child: Container(color: Colors.redAccent),
+      ),
+    ];
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: PageView(
-          physics: const NeverScrollableScrollPhysics(),
-          controller: pageController,
-          children: screens,
+        child: IndexedStack(
+          index: _currentScreen,
+          children: _screens,
         ),
       ),
-      bottomNavigationBar: StreamBuilder<Object>(
-        initialData: 0,
-        stream: indexController.stream,
-        builder: (BuildContext context, AsyncSnapshot<Object> snapshot) {
-          int cIndex = snapshot.data as int;
-          return Container(
-            child: BottomNavigationBar(
-              showSelectedLabels: true,
-              showUnselectedLabels: false,
-              elevation: 0,
-              type: BottomNavigationBarType.fixed,
-              selectedItemColor: kPrimaryColor,
-              unselectedItemColor: Theme.of(context).colorScheme.onSurface,
-              backgroundColor: Colors.transparent,
-              currentIndex: cIndex,
-              onTap: (int value) {
-                indexController.add(value);
-                pageController.jumpToPage(value);
-              },
-              items: bottomNavigationBarItems,
-            ),
-          );
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Navigator.of(context).pushNamed(TaskScreen.id),
+        elevation: 0,
+        child: Icon(
+          Icons.add,
+          color: Theme.of(context).accentColor,
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: BottomNavigationBar(
+        showSelectedLabels: true,
+        showUnselectedLabels: false,
+        elevation: 0,
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: kPrimaryColor,
+        unselectedItemColor: Theme.of(context).colorScheme.onSurface,
+        backgroundColor: Colors.transparent,
+        currentIndex: _currentScreen,
+        onTap: (int value) {
+          setState(() {
+            _currentScreen = value;
+          });
         },
+        items: bottomNavigationBarItems,
       ),
     );
   }
