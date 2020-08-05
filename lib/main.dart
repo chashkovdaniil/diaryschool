@@ -4,6 +4,7 @@ import 'package:diaryschool/models/homework.dart';
 import 'package:diaryschool/models/subject.dart';
 import 'package:diaryschool/models/teacher.dart';
 import 'package:diaryschool/provider/HomeworkProvider.dart';
+import 'package:diaryschool/provider/SettingsProvider.dart';
 import 'package:diaryschool/provider/SubjectProvider.dart';
 import 'package:diaryschool/provider/TeacherProvider.dart';
 import 'package:diaryschool/screens/failure/failure_screen.dart';
@@ -34,12 +35,14 @@ Future<void> main() async {
   final Box<Teacher> teachers = await Hive.openBox<Teacher>('teachers');
   final Box<Subject> subjects = await Hive.openBox<Subject>('subjects');
   final Box<Homework> homeworks = await Hive.openBox<Homework>('homeworks');
+  final Box settings = await Hive.openBox('settings');
 
   InAppPurchaseConnection.enablePendingPurchases();
   runApp(DiarySchoolApp(
     teachers: teachers,
     subjects: subjects,
     homeworks: homeworks,
+    settings: settings,
   ));
 }
 
@@ -47,12 +50,14 @@ class DiarySchoolApp extends StatelessWidget {
   final Box<Teacher> teachers;
   final Box<Subject> subjects;
   final Box<Homework> homeworks;
+  final Box settings;
 
   DiarySchoolApp({
     Key key,
     this.teachers,
     this.subjects,
     this.homeworks,
+    this.settings,
   }) : super(key: key);
 
   @override
@@ -67,6 +72,9 @@ class DiarySchoolApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<HomeworkProvider>(
           create: (context) => HomeworkProvider(homeworks),
+        ),
+        ChangeNotifierProvider<SettingsProvider>(
+          create: (context) => SettingsProvider(settings),
         ),
       ],
       child: MaterialApp(
@@ -188,9 +196,6 @@ class DiarySchoolApp extends StatelessWidget {
           ),
         ),
         theme: ThemeData(
-          // floatingActionButtonTheme: FloatingActionButtonThemeData(
-
-          // ),
           appBarTheme: AppBarTheme(
             color: Colors.white,
             elevation: 0,
@@ -207,7 +212,6 @@ class DiarySchoolApp extends StatelessWidget {
               ),
             ),
           ),
-          accentColor: Colors.white,
           dialogTheme: DialogTheme(
             shape: RoundedRectangleBorder(
               borderRadius: kBorderRadius,
@@ -224,6 +228,7 @@ class DiarySchoolApp extends StatelessWidget {
           ),
           primarySwatch: kColorRed,
           secondaryHeaderColor: kColorRed.shade700,
+          accentColor: Colors.white,
           primaryColor: kColorRed.shade700,
           fontFamily: GoogleFonts.getFont('Open Sans').fontFamily,
           textTheme: TextTheme(

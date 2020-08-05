@@ -4,6 +4,7 @@ import 'package:diaryschool/common_widgets/card_widget.dart';
 import 'package:diaryschool/common_widgets/custom_material_button.dart';
 import 'package:diaryschool/models/homework.dart';
 import 'package:diaryschool/provider/HomeworkProvider.dart';
+import 'package:diaryschool/provider/SettingsProvider.dart';
 import 'package:diaryschool/screens/tasks/widgets/filter_dialog.dart';
 import 'package:diaryschool/utilities/constants.dart';
 import 'package:flutter/material.dart';
@@ -18,17 +19,17 @@ class TasksScreen extends StatefulWidget {
 }
 
 class _TasksScreenState extends State<TasksScreen> {
-  final List<String> daysOfWeek = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+  Map<String, bool> _filter;
   DateTime currentDate = DateTime.now();
   int currentWeekday;
+  final List<String> daysOfWeek = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
   final DateTime firstDayOfCurrentDate =
       DateTime.now().add(Duration(days: -DateTime.now().weekday + 1));
-  final Map<String, bool> filter = {
-    'teacher': true,
-    'route': true,
-    'deadline': true,
-    'time': false,
-  };
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+  }
 
   @override
   void initState() {
@@ -47,6 +48,8 @@ class _TasksScreenState extends State<TasksScreen> {
       }
       return false;
     }).toList();
+    _filter =
+        Provider.of<SettingsProvider>(context).filter;
 
     return Scaffold(
       appBar: AppBar(
@@ -57,7 +60,7 @@ class _TasksScreenState extends State<TasksScreen> {
               showDialog(
                 context: context,
                 builder: (context) => FilterDialog(
-                  filter: filter,
+                  filter: _filter,
                 ),
               );
             },
@@ -129,7 +132,7 @@ class _TasksScreenState extends State<TasksScreen> {
               itemBuilder: (context, index) {
                 return CardWidget(
                   key: ValueKey(_homeworks[index].date.millisecondsSinceEpoch),
-                  filter: filter,
+                  filter: _filter,
                   homework: _homeworks[index],
                   index: index,
                 );
