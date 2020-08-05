@@ -4,8 +4,12 @@
 .dart_tool/
 .packages
 build/
+android/.gradle
+ios
 # If you're building an application, you may want to check-in your pubspec.lock
 pubspec.lock
+.flutter-plugins
+.flutter-plugins-dependencies
 
 # Directory created by dartdoc
 # If you don't generate documentation locally you can remove this line.

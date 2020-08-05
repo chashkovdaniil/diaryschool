@@ -1,0 +1,89 @@
+import 'dart:developer';
+
+import 'package:diaryschool/provider/SettingsProvider.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+class FilterDialog extends StatefulWidget {
+  Map<String, bool> filter;
+  FilterDialog({
+    Key key,
+    @required this.filter,
+  }) : super(key: key);
+  @override
+  State<StatefulWidget> createState() => _FilterDialogState();
+}
+
+class _FilterDialogState extends State<FilterDialog> {
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Фильтр'),
+      content: ListView(
+        shrinkWrap: true,
+        children: <Widget>[
+          ListTile(
+            title: const Text('Учитель'),
+            trailing: Checkbox(
+              value: widget.filter['teacher'],
+              activeColor: Theme.of(context).primaryColor,
+              onChanged: (val) {
+                widget.filter['teacher'] = val;
+                setState(() {});
+              },
+            ),
+          ),
+          ListTile(
+            title: const Text('Время'),
+            trailing: Checkbox(
+              value:  widget.filter['time'],
+              activeColor: Theme.of(context).primaryColor,
+              onChanged: (val) {
+                setState(() {
+                   widget.filter['time'] = val;
+                });
+              },
+            ),
+          ),
+          ListTile(
+            title: const Text('Дедлайн'),
+            trailing: Checkbox(
+              value:  widget.filter['deadline'],
+              activeColor: Theme.of(context).primaryColor,
+              onChanged: (val) {
+                setState(() {
+                   widget.filter['deadline'] = val;
+                });
+              },
+            ),
+          ),
+          ListTile(
+            title: const Text('Путь'),
+            trailing: Checkbox(
+              value:  widget.filter['route'],
+              activeColor: Theme.of(context).primaryColor,
+              onChanged: (val) {
+                setState(() {
+                   widget.filter['route'] = val;
+                });
+              },
+            ),
+          ),
+        ],
+      ),
+      actions: [
+        FlatButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text('Отмена'),
+        ),
+        FlatButton(
+          onPressed: () {
+            context.read<SettingsProvider>().setFilter(widget.filter);
+            Navigator.pop(context);
+          },
+          child: const Text('Применить'),
+        ),
+      ],
+    );
+  }
+}
