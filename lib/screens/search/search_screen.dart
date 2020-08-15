@@ -9,11 +9,11 @@ class SearchScreen extends StatelessWidget {
         appBar: AppBar(
           leading: Hero(
             tag: 'search',
-            child: Icon(Icons.search),
+            child: const Icon(Icons.search),
           ),
           title: TextFormField(
             autofocus: true,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: 'Укажите запрос',
               enabledBorder: InputBorder.none,
               disabledBorder: InputBorder.none,
@@ -22,7 +22,7 @@ class SearchScreen extends StatelessWidget {
           ),
           actions: <Widget>[
             IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.close,
               ),
               onPressed: () => Navigator.of(context).pop(),

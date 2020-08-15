@@ -1,4 +1,3 @@
-import 'package:diaryschool/utilities/constants.dart';
 import 'package:flutter/material.dart';
 
 class FilesTaskWindow extends StatefulWidget {
@@ -23,7 +22,7 @@ class _FilesTaskWindowState extends State<FilesTaskWindow> {
         ),
       ],
       content: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
         ),
         itemCount: 28,

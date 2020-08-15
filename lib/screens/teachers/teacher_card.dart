@@ -3,7 +3,6 @@ import 'package:diaryschool/provider/TeacherProvider.dart';
 import 'package:diaryschool/screens/teachers/teacher_dialog.dart';
 import 'package:diaryschool/utilities/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 
 class TeacherCard extends StatelessWidget {
@@ -45,7 +44,7 @@ class TeacherCard extends StatelessWidget {
         style: Theme.of(context).textTheme.button,
       ),
       trailing: IconButton(
-        icon: Icon(Icons.delete_outline),
+        icon: const Icon(Icons.delete_outline),
         onPressed: () {
           return Provider.of<TeacherProvider>(context, listen: false)
               .delete(key.value);

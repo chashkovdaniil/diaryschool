@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:diaryschool/models/homework.dart';
 import 'package:diaryschool/provider/SchoolProvider.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +14,15 @@ class HomeworkProvider extends ChangeNotifier
   }
 
   @override
-  List<Homework> get values => _values.values.toList();
+  List<Homework> get values {
+    List<Homework> _result = [];
+    _values.values.toList().asMap().forEach((key, value) {
+      value.uid = key;
+      _result.add(value);
+    });
+    return _result;
+  }
+
   @override
   Future<bool> delete(int index) async {
     try {
@@ -25,11 +35,14 @@ class HomeworkProvider extends ChangeNotifier
   }
 
   @override
-  Future<bool> put(Homework data, {int index}) async {
+  Future<bool> put(Homework data) async {
     try {
-      index == null
-          ? await _values.add(data)
-          : await _values.putAt(index, data);
+      if (data.uid == null) {
+        await _values.add(data);
+      } else {
+        log('put');
+        await _values.put(data.uid, data);
+      }
       notifyListeners();
       return true;
     } catch (e) {

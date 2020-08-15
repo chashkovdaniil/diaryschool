@@ -8,6 +8,22 @@ class SettingsProvider extends ChangeNotifier {
     _values = values;
   }
 
+  bool turnNotification() {
+    try {
+      return _values.get('turnNotification', defaultValue: false) as bool;
+    } catch (e) {
+      rethrow;
+    }
+  }
+  Future<bool> turningNotification(bool val) async {
+    try {
+      await _values.put('turnNotification', val);
+      return true;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Map<String, bool> get filter => {
         'teacher': _values.get(
           'filterTeacher',
@@ -18,11 +34,11 @@ class SettingsProvider extends ChangeNotifier {
           defaultValue: false,
         ) as bool,
         'route': _values.get(
-          'filterDeadline',
+          'filterRoute',
           defaultValue: false,
         ) as bool,
         'deadline': _values.get(
-          'filterRoute',
+          'filterDeadline',
           defaultValue: false,
         ) as bool,
       };

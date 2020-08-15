@@ -1,7 +1,7 @@
 import 'package:hive/hive.dart';
 
 part 'teacher.g.dart';
-@HiveType(typeId: 0)
+@HiveType(typeId: 2)
 class Teacher {
   @HiveField(0)
   String name;
@@ -15,6 +15,8 @@ class Teacher {
   int phone;
   @HiveField(5)
   List<int> subjects;
+  @HiveField(6)
+  int uid;
 
   Teacher({
     this.name,
@@ -23,6 +25,7 @@ class Teacher {
     this.email,
     this.phone,
     this.subjects,
+    this.uid,
   });
 
   Teacher.fromMap(Map<String,dynamic> data) {
@@ -31,6 +34,7 @@ class Teacher {
     middleName = data['middleName'] as String;
     email = data['email'] as String;
     phone = data['phone'] as int;
+    uid = data['uid'] as int;
     subjects = data['subjects'] as List<int>;
   }
 

@@ -12,14 +12,21 @@ class TeacherProvider extends ChangeNotifier
   }
 
   @override
-  List<Teacher> get values => _values.values.toList();
+  List<Teacher> get values {
+    List<Teacher> _teachers = [];
+    _values.values.toList().asMap().forEach((key, value) {
+      value.uid = key;
+      _teachers.add(value);
+    });
+    return _teachers;
+  }
 
   @override
-  Future<bool> put(Teacher teacher, {int index}) async {
+  Future<bool> put(Teacher teacher) async {
     try {
-      index == null
+      teacher.uid == null
           ? await _values.add(teacher)
-          : await _values.putAt(index, teacher);
+          : await _values.putAt(teacher.uid, teacher);
       notifyListeners();
       return true;
     } catch (e) {

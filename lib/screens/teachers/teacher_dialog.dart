@@ -20,61 +20,80 @@ class TeacherDialog extends StatefulWidget {
 }
 
 class _TeacherDialogState extends State<TeacherDialog> {
+  final _formKey = GlobalKey<FormState>(debugLabel: 'teacherForm');
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text('Добавить учителя'),
-      content: ListView(
-        shrinkWrap: true,
-        children: <Widget>[
-          TextFormField(
-            initialValue: widget.teacher.name,
-            decoration: InputDecoration(hintText: 'Имя'),
-            onChanged: (value) {
-              setState(() {
-                widget.teacher.name = value;
-              });
-            },
-          ),
-          TextFormField(
-            initialValue: widget.teacher.surname,
-            decoration: InputDecoration(hintText: 'Фамилия'),
-            onChanged: (value) {
-              setState(() {
-                widget.teacher.surname = value;
-              });
-            },
-          ),
-          TextFormField(
-            initialValue: widget.teacher.middleName,
-            decoration: InputDecoration(hintText: 'Отчество'),
-            onChanged: (value) {
-              setState(() {
-                widget.teacher.middleName = value;
-              });
-            },
-          ),
-          TextFormField(
-            initialValue: widget.teacher.email,
-            decoration: InputDecoration(hintText: 'Email'),
-            onChanged: (value) {
-              setState(() {
-                widget.teacher.email = value;
-              });
-            },
-          ),
-          TextFormField(
-            initialValue: widget.teacher.phone == null
-                ? ''
-                : widget.teacher.phone.toString(),
-            decoration: InputDecoration(hintText: 'Телефон'),
-            onChanged: (value) {
-              setState(() {
-                widget.teacher.phone = int.parse(value);
-              });
-            },
-          ),
-        ],
+      content: Form(
+        key: _formKey,
+        child: ListView(
+          shrinkWrap: true,
+          children: <Widget>[
+            TextFormField(
+              initialValue: widget.teacher.name,
+              decoration: InputDecoration(hintText: 'Имя'),
+              onChanged: (value) {
+                setState(() {
+                  widget.teacher.name = value;
+                });
+              },
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'Укажите имя';
+                }
+                return null;
+              },
+            ),
+            TextFormField(
+              initialValue: widget.teacher.surname,
+              decoration: InputDecoration(hintText: 'Фамилия'),
+              onChanged: (value) {
+                setState(() {
+                  widget.teacher.surname = value;
+                });
+              },
+            ),
+            TextFormField(
+              initialValue: widget.teacher.middleName,
+              decoration: InputDecoration(hintText: 'Отчество'),
+              onChanged: (value) {
+                setState(() {
+                  widget.teacher.middleName = value;
+                });
+              },
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'Укажите отчество';
+                }
+                return null;
+              },
+            ),
+            TextFormField(
+              initialValue: widget.teacher.email,
+              keyboardType: TextInputType.emailAddress,
+              decoration: InputDecoration(hintText: 'Email'),
+              onChanged: (value) {
+                setState(() {
+                  widget.teacher.email = value;
+                });
+              },
+            ),
+            TextFormField(
+              initialValue: widget.teacher.phone == null
+                  ? ''
+                  : widget.teacher.phone.toString(),
+              keyboardType: TextInputType.phone,
+              decoration: InputDecoration(hintText: 'Телефон'),
+              onChanged: (value) {
+                setState(() {
+                  widget.teacher.phone = int.parse(value);
+                });
+              },
+            ),
+          ],
+        ),
       ),
       actions: <Widget>[
         FlatButton(
@@ -83,11 +102,12 @@ class _TeacherDialogState extends State<TeacherDialog> {
         ),
         FlatButton(
           onPressed: () {
-            Provider.of<TeacherProvider>(context, listen: false).put(
-              widget.teacher,
-              index: widget.index,
-            );
-            Navigator.of(context).pop();
+            if (_formKey.currentState.validate()) {
+              Provider.of<TeacherProvider>(context, listen: false)
+                  .put(widget.teacher);
+              return Navigator.of(context).pop();
+            }
+            log('error');
           },
           child: Text('Сохранить'.toUpperCase()),
         ),

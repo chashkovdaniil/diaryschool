@@ -14,14 +14,21 @@ class SubjectProvider extends ChangeNotifier
   }
 
   @override
-  List<Subject> get values => _values.values.toList();
+  List<Subject> get values {
+    List<Subject> _subjects = [];
+    _values.values.toList().asMap().forEach((key, value) {
+      value.uid = key;
+      _subjects.add(value);
+    });
+    return _subjects;
+  }
 
   @override
-  Future<bool> put(Subject subject, {int index}) async {
+  Future<bool> put(Subject subject) async {
     try {
-      index == null
+      subject.uid == null
           ? await _values.add(subject)
-          : await _values.putAt(index, subject);
+          : await _values.putAt(subject.uid, subject);
       notifyListeners();
       return true;
     } catch (e) {

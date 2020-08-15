@@ -8,10 +8,13 @@ part of 'homework.dart';
 
 class HomeworkAdapter extends TypeAdapter<Homework> {
   @override
+  final int typeId = 0;
+
+  @override
   Homework read(BinaryReader reader) {
-    var numOfFields = reader.readByte();
-    var fields = <int, dynamic>{
-      for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Homework(
       subject: fields[0] as int,
@@ -21,13 +24,14 @@ class HomeworkAdapter extends TypeAdapter<Homework> {
       files: (fields[3] as List)?.cast<dynamic>(),
       grade: fields[5] as String,
       deadline: fields[6] as DateTime,
+      uid: fields[7] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, Homework obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.subject)
       ..writeByte(1)
@@ -41,9 +45,18 @@ class HomeworkAdapter extends TypeAdapter<Homework> {
       ..writeByte(5)
       ..write(obj.grade)
       ..writeByte(6)
-      ..write(obj.deadline);
+      ..write(obj.deadline)
+      ..writeByte(7)
+      ..write(obj.uid);
   }
 
   @override
-  int get typeId => 1;
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is HomeworkAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }

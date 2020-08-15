@@ -33,38 +33,50 @@ class _FilterDialogState extends State<FilterDialog> {
               },
             ),
           ),
-          ListTile(
-            title: const Text('Время'),
-            trailing: Checkbox(
-              value:  widget.filter['time'],
-              activeColor: Theme.of(context).primaryColor,
-              onChanged: (val) {
-                setState(() {
-                   widget.filter['time'] = val;
-                });
-              },
-            ),
-          ),
+          // ListTile(
+          //   title: const Text('Время'),
+          //   trailing: Checkbox(
+          //     value:  widget.filter['time'],
+          //     activeColor: Theme.of(context).primaryColor,
+          //     onChanged: (val) {
+          //       setState(() {
+          //          widget.filter['time'] = val;
+          //       });
+          //     },
+          //   ),
+          // ),
           ListTile(
             title: const Text('Дедлайн'),
             trailing: Checkbox(
-              value:  widget.filter['deadline'],
+              value: widget.filter['deadline'],
               activeColor: Theme.of(context).primaryColor,
               onChanged: (val) {
                 setState(() {
-                   widget.filter['deadline'] = val;
+                  widget.filter['deadline'] = val;
                 });
               },
             ),
           ),
+          // ListTile(
+          //   title: const Text('Показывать только невыполненные'),
+          //   trailing: Checkbox(
+          //     value: widget.filter['deadline'],
+          //     activeColor: Theme.of(context).primaryColor,
+          //     onChanged: (val) {
+          //       setState(() {
+          //         widget.filter['deadline'] = val;
+          //       });
+          //     },
+          //   ),
+          // ),
           ListTile(
             title: const Text('Путь'),
             trailing: Checkbox(
-              value:  widget.filter['route'],
+              value: widget.filter['route'],
               activeColor: Theme.of(context).primaryColor,
               onChanged: (val) {
                 setState(() {
-                   widget.filter['route'] = val;
+                  widget.filter['route'] = val;
                 });
               },
             ),

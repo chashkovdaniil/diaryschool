@@ -3,10 +3,13 @@ import 'dart:ui';
 import 'package:diaryschool/models/homework.dart';
 import 'package:diaryschool/models/subject.dart';
 import 'package:diaryschool/models/teacher.dart';
+import 'package:diaryschool/models/time_of_day_adaper.dart';
+import 'package:diaryschool/models/timetable_row.dart';
 import 'package:diaryschool/provider/HomeworkProvider.dart';
 import 'package:diaryschool/provider/SettingsProvider.dart';
 import 'package:diaryschool/provider/SubjectProvider.dart';
 import 'package:diaryschool/provider/TeacherProvider.dart';
+import 'package:diaryschool/provider/TimetableProvider.dart';
 import 'package:diaryschool/screens/failure/failure_screen.dart';
 import 'package:diaryschool/screens/help/help_screen.dart';
 import 'package:diaryschool/screens/main/main_screen.dart';
@@ -30,11 +33,15 @@ Future<void> main() async {
   Hive
     ..registerAdapter(SubjectAdapter())
     ..registerAdapter(HomeworkAdapter())
-    ..registerAdapter(TeacherAdapter());
+    ..registerAdapter(TeacherAdapter())
+    ..registerAdapter(TimetableRowAdapter())
+    ..registerAdapter(TimeOfDayAdapter());
 
   final Box<Teacher> teachers = await Hive.openBox<Teacher>('teachers');
   final Box<Subject> subjects = await Hive.openBox<Subject>('subjects');
   final Box<Homework> homeworks = await Hive.openBox<Homework>('homeworks');
+  final Box<TimetableRow> timetable =
+      await Hive.openBox<TimetableRow>('timetable');
   final Box settings = await Hive.openBox('settings');
 
   InAppPurchaseConnection.enablePendingPurchases();
@@ -43,6 +50,7 @@ Future<void> main() async {
     subjects: subjects,
     homeworks: homeworks,
     settings: settings,
+    timetable: timetable,
   ));
 }
 
@@ -50,6 +58,7 @@ class DiarySchoolApp extends StatelessWidget {
   final Box<Teacher> teachers;
   final Box<Subject> subjects;
   final Box<Homework> homeworks;
+  final Box<TimetableRow> timetable;
   final Box settings;
 
   DiarySchoolApp({
@@ -58,6 +67,7 @@ class DiarySchoolApp extends StatelessWidget {
     this.subjects,
     this.homeworks,
     this.settings,
+    this.timetable,
   }) : super(key: key);
 
   @override
@@ -76,11 +86,20 @@ class DiarySchoolApp extends StatelessWidget {
         ChangeNotifierProvider<SettingsProvider>(
           create: (context) => SettingsProvider(settings),
         ),
+        ChangeNotifierProvider<TimetableProvider>(
+          create: (context) => TimetableProvider(timetable),
+        ),
       ],
       child: MaterialApp(
         title: 'Дневник',
         debugShowCheckedModeBanner: false,
         initialRoute: MainScreen.id,
+        builder: (context, child) {
+          return MediaQuery(
+            data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+            child: child,
+          );
+        },
         routes: {
           MainScreen.id: (context) => MainScreen(),
           TaskScreen.id: (context) => TaskScreen(),
@@ -94,11 +113,17 @@ class DiarySchoolApp extends StatelessWidget {
           scaffoldBackgroundColor: const Color(0xff424242),
           bottomAppBarColor: const Color(0xff424242),
           primarySwatch: kColorRed,
-          inputDecorationTheme: const InputDecorationTheme(
-            labelStyle: TextStyle(
+          cursorColor: kColorRed.shade700,
+          inputDecorationTheme: InputDecorationTheme(
+            labelStyle: const TextStyle(
               color: Color(0xffE0E0E0),
             ),
-            hintStyle: TextStyle(
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                color: kColorRed.shade700,
+              ),
+            ),
+            hintStyle: const TextStyle(
               color: Color(0xffE0E0E0),
             ),
           ),
@@ -112,9 +137,9 @@ class DiarySchoolApp extends StatelessWidget {
             color: Color(0xffE0E0E0),
           ),
           primaryColor: kColorRed.shade700,
+          accentColor: Colors.white,
           primaryColorDark: kColorRed.shade700,
-          buttonTheme: ButtonThemeData(
-            textTheme: ButtonTextTheme.accent,
+          buttonTheme: const ButtonThemeData(
             highlightColor: Colors.transparent,
           ),
           dividerColor: const Color(0xffE0E0E0),
@@ -130,31 +155,31 @@ class DiarySchoolApp extends StatelessWidget {
               letterSpacing: 1.25,
               fontWeight: FontWeight.w500,
             ),
-            overline: TextStyle(
-              color: const Color(0xffE0E0E0),
+            overline: const TextStyle(
+              color: Color(0xffE0E0E0),
               fontSize: 14,
               letterSpacing: 1.25,
               fontWeight: FontWeight.w500,
             ),
-            subtitle1: TextStyle(
-              color: const Color(0xffE0E0E0),
+            subtitle1: const TextStyle(
+              color: Color(0xffE0E0E0),
               fontSize: 16,
               fontWeight: FontWeight.normal,
               letterSpacing: 0.15,
             ),
-            subtitle2: TextStyle(
-              color: const Color(0xffE0E0E0),
+            subtitle2: const TextStyle(
+              color: Color(0xffE0E0E0),
               fontSize: 14,
               fontWeight: FontWeight.w200,
               letterSpacing: 0.1,
             ),
-            bodyText1: TextStyle(
-              color: const Color(0xffE0E0E0),
+            bodyText1: const TextStyle(
+              color: Color(0xffE0E0E0),
               fontSize: 14,
               fontWeight: FontWeight.normal,
             ),
-            bodyText2: TextStyle(
-              color: const Color(0xffE0E0E0),
+            bodyText2: const TextStyle(
+              color: Color(0xffE0E0E0),
               fontSize: 14,
               fontWeight: FontWeight.normal,
             ),
@@ -196,6 +221,7 @@ class DiarySchoolApp extends StatelessWidget {
           ),
         ),
         theme: ThemeData(
+          cursorColor: kColorRed.shade700,
           appBarTheme: AppBarTheme(
             color: Colors.white,
             elevation: 0,
@@ -243,25 +269,25 @@ class DiarySchoolApp extends StatelessWidget {
               letterSpacing: 1.25,
               fontWeight: FontWeight.w500,
             ),
-            overline: TextStyle(
+            overline: const TextStyle(
               color: kColorBlack,
               fontSize: 14,
               letterSpacing: 1.25,
               fontWeight: FontWeight.w500,
             ),
-            subtitle1: TextStyle(
+            subtitle1: const TextStyle(
               color: kColorBlack,
               fontSize: 16,
               fontWeight: FontWeight.normal,
               letterSpacing: 0.15,
             ),
-            subtitle2: TextStyle(
+            subtitle2: const TextStyle(
               color: kColorBlack,
               fontSize: 14,
               fontWeight: FontWeight.w200,
               letterSpacing: 0.1,
             ),
-            bodyText2: TextStyle(
+            bodyText2: const TextStyle(
               color: kColorBlack,
               fontSize: 14,
               fontWeight: FontWeight.normal,

@@ -1,31 +1,20 @@
-import 'dart:developer';
 
 import 'package:diaryschool/common_widgets/select_subject_dialog.dart';
 import 'package:diaryschool/models/homework.dart';
-import 'package:diaryschool/models/subject.dart';
 import 'package:diaryschool/provider/HomeworkProvider.dart';
 import 'package:diaryschool/provider/SubjectProvider.dart';
-import 'package:diaryschool/screens/task/args.dart';
-import 'package:diaryschool/screens/task/widgets/files_task_window.dart';
 import 'package:diaryschool/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class TaskScreen extends StatefulWidget {
   Homework _homework;
-  final int index;
-  TaskScreen({
-    Key key,
-    Homework homework,
-    this.index,
-  }) : super(key: key) {
-    _homework = index == null
-        ? Homework(
+  TaskScreen({Key key, Homework homework}) : super(key: key) {
+    _homework = homework ?? Homework(
             date: DateTime.now(),
-          )
-        : homework;
+          );
   }
-  static String id = "/taskScreen";
+  static String id = '/taskScreen';
 
   @override
   _TaskScreenState createState() => _TaskScreenState();
@@ -79,14 +68,11 @@ class _TaskScreenState extends State<TaskScreen> {
                       ),
                       child: Row(
                         children: <Widget>[
-                          Consumer<SubjectProvider>(
-                            builder: (context, data, child) {
-                              return Text(
-                                data.values[widget._homework.subject ?? 0]
-                                    .title,
-                                style: Theme.of(context).textTheme.headline6,
-                              );
-                            },
+                          Text(
+                            Provider.of<SubjectProvider>(context)
+                                .values[widget._homework.subject ?? 0]
+                                .title,
+                            style: Theme.of(context).textTheme.headline6,
                           ),
                           Icon(
                             Icons.arrow_drop_down,
@@ -120,7 +106,11 @@ class _TaskScreenState extends State<TaskScreen> {
                 ),
               );
               setState(() {
-                widget._homework.date = _date ?? DateTime.now();
+                if (_date == null || widget._homework.date == null) {
+                  widget._homework.date = DateTime.now();
+                } else {
+                  widget._homework.date = _date;
+                }
               });
             },
             child: Padding(
@@ -161,7 +151,7 @@ class _TaskScreenState extends State<TaskScreen> {
             child: Padding(
               padding: const EdgeInsets.all(kDefaultPadding / 2),
               child: TextFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Введите задание',
                   enabledBorder: InputBorder.none,
                   focusedBorder: InputBorder.none,
@@ -203,7 +193,7 @@ class _TaskScreenState extends State<TaskScreen> {
                     });
                   },
                   icon: widget._homework.grade == null
-                      ? Icon(Icons.star_border)
+                      ? const Icon(Icons.star_border)
                       : Text(
                           widget._homework.grade,
                           style: Theme.of(context).textTheme.subtitle1.copyWith(
@@ -246,10 +236,7 @@ class _TaskScreenState extends State<TaskScreen> {
                       Provider.of<HomeworkProvider>(
                         context,
                         listen: false,
-                      ).put(
-                        widget._homework,
-                        index: widget.index,
-                      );
+                      ).put(widget._homework);
                     }
                     Navigator.of(context).pop();
                   },

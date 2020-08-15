@@ -4,6 +4,7 @@ import 'package:diaryschool/screens/grades/grades_screen.dart';
 import 'package:diaryschool/screens/home/home_screen.dart';
 import 'package:diaryschool/screens/task/task_screen.dart';
 import 'package:diaryschool/screens/tasks/tasks_screen.dart';
+import 'package:diaryschool/screens/timetable/timetable_page.dart';
 import 'package:diaryschool/utilities/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -24,24 +25,24 @@ class _MainScreenState extends State<MainScreen> {
     GlobalKey<NavigatorState>(debugLabel: 'Timetable'),
   ];
   final List<BottomNavigationBarItem> bottomNavigationBarItems = [
-    BottomNavigationBarItem(
+    const BottomNavigationBarItem(
       icon: Icon(Icons.home),
-      title: const Text('Главная'),
+      title: Text('Главная'),
     ),
-    BottomNavigationBarItem(
+    const BottomNavigationBarItem(
       icon: Icon(
         Icons.trending_up,
         size: 24,
       ),
-      title: const Text('Оценки'),
+      title: Text('Оценки'),
     ),
-    BottomNavigationBarItem(
+    const BottomNavigationBarItem(
       icon: Icon(Icons.format_list_bulleted),
-      title: const Text('Уроки'),
+      title: Text('Уроки'),
     ),
-    BottomNavigationBarItem(
+    const BottomNavigationBarItem(
       icon: Icon(Icons.calendar_today),
-      title: const Text('Расписание'),
+      title: Text('Расписание'),
     ),
   ];
   Widget navWidget({
@@ -82,7 +83,7 @@ class _MainScreenState extends State<MainScreen> {
       ),
       navWidget(
         index: 3,
-        child: Container(color: Colors.redAccent),
+        child: TimetablePage(),
       ),
     ];
     super.initState();
@@ -97,15 +98,15 @@ class _MainScreenState extends State<MainScreen> {
           children: _screens,
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.of(context).pushNamed(TaskScreen.id),
-        elevation: 0,
-        child: Icon(
-          Icons.add,
-          color: Theme.of(context).accentColor,
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () => Navigator.of(context).pushNamed(TaskScreen.id),
+      //   elevation: 0,
+      //   child: Icon(
+      //     Icons.add,
+      //     color: Theme.of(context).accentColor,
+      //   ),
+      // ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: true,
         showUnselectedLabels: false,

@@ -26,13 +26,13 @@ class _FailureScreenState extends State<FailureScreen> {
           //   tooltip: 'Долги',
           // ),
           IconButton(
-            icon: Icon(Icons.calendar_today),
+            icon: const Icon(Icons.calendar_today),
             onPressed: () {},
           ),
         ],
       ),
       body: ListView(
-        padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+        padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
         children: <Widget>[
           FlatButton.icon(
             onPressed: () {},

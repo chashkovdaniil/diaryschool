@@ -20,7 +20,7 @@ class SelectSubjectDialog extends StatelessWidget {
             'Выбрать предмет',
             style: Theme.of(context)
                 .textTheme
-                .subtitle2
+                .subtitle1
                 .copyWith(color: Theme.of(context).primaryColor),
           ),
           const Spacer(),
@@ -33,7 +33,7 @@ class SelectSubjectDialog extends StatelessWidget {
                 },
               );
             },
-            icon: Icon(Icons.add),
+            icon: const Icon(Icons.add),
           ),
         ],
       ),

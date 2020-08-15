@@ -6,7 +6,6 @@ import 'package:diaryschool/provider/TeacherProvider.dart';
 import 'package:diaryschool/screens/teachers/teacher_card.dart';
 import 'package:diaryschool/screens/teachers/teacher_dialog.dart';
 import 'package:diaryschool/utilities/constants.dart';
-import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
@@ -56,6 +55,11 @@ class _TeachersScreenState extends State<TeachersScreen> {
           const SizedBox(height: 16),
           Consumer<TeacherProvider>(
             builder: (context, provider, child) {
+              if (provider.values.isEmpty) {
+                return Center(
+                  child: Text('Учителей нет'),
+                );
+              }
               return ListView.separated(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,

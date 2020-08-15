@@ -1,7 +1,7 @@
 import 'package:hive/hive.dart';
 
 part 'homework.g.dart';
-@HiveType(typeId: 1)
+@HiveType(typeId: 0)
 class Homework {
   @HiveField(0)
   int subject;
@@ -17,6 +17,8 @@ class Homework {
   String grade;
   @HiveField(6)
   DateTime deadline;
+  @HiveField(7)
+  int uid;
 
   Homework({
     this.subject = 0,
@@ -26,9 +28,11 @@ class Homework {
     this.files,
     this.grade,
     this.deadline,
+    this.uid,
   });
   
   Homework.fromMap(Map<String, dynamic> data) {
+    uid = data['uid'] as int;
     subject = data['subject'] as int;
     isDone = data['isDone'] == 1;
     content = data['content'] as String;

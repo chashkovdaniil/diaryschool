@@ -2,6 +2,8 @@ import 'package:diaryschool/screens/grades/widgets/card_grades.dart';
 import 'package:diaryschool/utilities/constants.dart';
 import 'package:flutter/material.dart';
 
+// TODO: Сделать страницу оценок
+
 class GradesScreen extends StatelessWidget {
   GradesScreen({Key key}) : super(key: key);
 
@@ -40,7 +42,7 @@ class GradesScreen extends StatelessWidget {
         actions: <Widget>[
           IconButton(
             onPressed: () {},
-            icon: Icon(Icons.calendar_today),
+            icon: const Icon(Icons.calendar_today),
           ),
         ],
       ),

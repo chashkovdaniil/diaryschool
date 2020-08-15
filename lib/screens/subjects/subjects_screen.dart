@@ -1,10 +1,8 @@
 import 'package:diaryschool/common_widgets/divider.dart';
 import 'package:diaryschool/models/subject.dart';
-import 'package:diaryschool/models/teacher.dart';
 import 'package:diaryschool/provider/SubjectProvider.dart';
 import 'package:diaryschool/provider/TeacherProvider.dart';
 import 'package:diaryschool/screens/subjects/subject_dialog.dart';
-import 'package:diaryschool/screens/teachers/teacher_dialog.dart';
 import 'package:diaryschool/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -43,6 +41,9 @@ class SubjectsScreen extends StatelessWidget {
             ),
           ),
           Consumer<SubjectProvider>(builder: (context, data, child) {
+            if (data.values.isEmpty) {
+              return Center(child: Text('Нет предметов'));
+            }
             return ListView.separated(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
@@ -69,16 +70,18 @@ class SubjectsScreen extends StatelessWidget {
                     ),
                   ),
                   title: Text(
-                    data.values[index].title,
+                    data.values[index].title.toString(),
                     style: Theme.of(context).textTheme.headline6,
                   ),
                   subtitle: Text(
-                    '${data.values[index].map}, '
-                    '${Provider.of<TeacherProvider>(context).values[data.values[index].teacher].toString()}',
+                   ( data.values[index].map != null
+                        ? '${data.values[index].map}, '
+                        : '')
+                            +'${Provider.of<TeacherProvider>(context).values[data.values[index].teacher].toString()}',
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
                   trailing: IconButton(
-                    icon: Icon(Icons.delete_outline),
+                    icon: const Icon(Icons.delete_outline),
                     onPressed: () {
                       return Provider.of<SubjectProvider>(context,
                               listen: false)
