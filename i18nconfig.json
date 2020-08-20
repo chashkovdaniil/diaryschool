@@ -1,0 +1,12 @@
+{
+    "defaultLocale": "ru-RU",
+    "locales": [
+        "ru-RU"
+    ],
+    "localePath": "i18n",
+    "generatedPath": "lib/generated",
+    "ltr": [
+        "ru-RU"
+    ],
+    "rtl": []
+}

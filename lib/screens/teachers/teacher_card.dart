@@ -40,7 +40,7 @@ class TeacherCard extends StatelessWidget {
         style: Theme.of(context).textTheme.subtitle1,
       ),
       subtitle: Text(
-        'Подробнее'.toUpperCase(),
+        'Редактировать'.toUpperCase(),
         style: Theme.of(context).textTheme.button,
       ),
       trailing: IconButton(

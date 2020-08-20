@@ -1,6 +1,7 @@
 import 'package:hive/hive.dart';
 
 part 'homework.g.dart';
+
 @HiveType(typeId: 0)
 class Homework {
   @HiveField(0)
@@ -30,15 +31,32 @@ class Homework {
     this.deadline,
     this.uid,
   });
-  
+
   Homework.fromMap(Map<String, dynamic> data) {
     uid = data['uid'] as int;
     subject = data['subject'] as int;
     isDone = data['isDone'] == 1;
     content = data['content'] as String;
     grade = data['grade'] as String;
-    date = DateTime.fromMillisecondsSinceEpoch(data['subject'] as int);
-    deadline = DateTime.fromMillisecondsSinceEpoch(data['subject'] as int);
+    date = data['date'] == null
+        ? null
+        : DateTime.fromMillisecondsSinceEpoch(data['date'] as int);
+    deadline = data['deadline'] == null
+        ? null
+        : DateTime.fromMillisecondsSinceEpoch(data['deadline'] as int);
     files = data['files'] as List;
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'uid': uid,
+      'subject': subject,
+      'isDone': isDone,
+      'content': content,
+      'grade': grade,
+      'date': date == null ? null : date.millisecondsSinceEpoch,
+      'deadline': deadline == null ? null : deadline.millisecondsSinceEpoch,
+      'files': files,
+    };
   }
 }

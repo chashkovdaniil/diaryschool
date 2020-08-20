@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:ui';
 
 import 'package:diaryschool/common_widgets/task_bottom_sheet.dart';
@@ -24,14 +25,6 @@ class CardWidget extends StatefulWidget {
 }
 
 class _CardWidgetState extends State<CardWidget> {
-  Homework _homework;
-
-  @override
-  void initState() {
-    _homework = widget.homework;
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     bool showTeacher = widget.filter['teacher'];
@@ -45,21 +38,17 @@ class _CardWidgetState extends State<CardWidget> {
           backgroundColor: Theme.of(context).colorScheme.surface,
           shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
           builder: (_context) => TaskBottomSheet(
-            context: _context,
-            homework: _homework,
+            widget.homework.toMap(),
           ),
         );
       },
       onDoubleTap: () async {
-        _homework.isDone = !_homework.isDone;
-        bool _isDone = await Provider.of<HomeworkProvider>(
+        widget.homework.isDone = !widget.homework.isDone;
+        await Provider.of<HomeworkProvider>(
           context,
           listen: false,
-        ).put(_homework);
-        if (_isDone) {
-          setState(() {});
-          return;
-        }
+        ).put(widget.homework);
+        setState(() {});
         // TODO: Показать диалог об ошибке, если есть
       },
       borderRadius: kBorderRadius,
@@ -78,28 +67,28 @@ class _CardWidgetState extends State<CardWidget> {
                   ListTile(
                     title: Text(
                       Provider.of<SubjectProvider>(context)
-                          .values[_homework.subject]
-                          .title, // _homework.subject делаем запрос в базу, чтобы получить название предмета
+                          .values[widget.homework.subject]
+                          .title, // widget.homework.subject делаем запрос в базу, чтобы получить название предмета
                       maxLines: 1,
                       style: Theme.of(context)
                           .textTheme
                           .headline5
                           .copyWith(color: Theme.of(context).primaryColor),
                     ),
-                    trailing: _homework.grade == null
+                    trailing: widget.homework.grade == null
                         ? null
                         : Text(
-                            '${_homework.grade}',
+                            '${widget.homework.grade}',
                             style: Theme.of(context)
                                 .textTheme
                                 .headline4
                                 .copyWith(
                                     color: Theme.of(context).primaryColor),
                           ),
-                    subtitle: _homework.content == null
+                    subtitle: widget.homework.content == null
                         ? null
                         : Text(
-                            _homework.content,
+                            widget.homework.content,
                             maxLines: 5,
                             softWrap: false,
                             overflow: TextOverflow.ellipsis,
@@ -112,9 +101,9 @@ class _CardWidgetState extends State<CardWidget> {
                       right: 10,
                       bottom: showTeacher ||
                               showRoute ||
-                              (_homework.deadline != null &&
-                                  _homework.isDone == false &&
-                                  _homework.content != null &&
+                              (widget.homework.deadline != null &&
+                                  widget.homework.isDone == false &&
+                                  widget.homework.content != null &&
                                   showDeadline)
                           ? 15
                           : 0,
@@ -125,9 +114,9 @@ class _CardWidgetState extends State<CardWidget> {
                       children: <Widget>[
                         showTeacher ||
                                 showRoute ||
-                                (_homework.deadline != null &&
-                                    _homework.isDone == false &&
-                                    _homework.content != null &&
+                                (widget.homework.deadline != null &&
+                                    widget.homework.isDone == false &&
+                                    widget.homework.content != null &&
                                     showDeadline)
                             ? Column(
                                 children: <Widget>[
@@ -142,7 +131,7 @@ class _CardWidgetState extends State<CardWidget> {
                                 Provider.of<TeacherProvider>(context)
                                     .values[
                                         Provider.of<SubjectProvider>(context)
-                                            .values[_homework.subject]
+                                            .values[widget.homework.subject]
                                             .teacher]
                                     .toString(),
                               )
@@ -151,17 +140,17 @@ class _CardWidgetState extends State<CardWidget> {
                             ? _buildCardInfoItem(
                                 Icons.place,
                                 Provider.of<SubjectProvider>(context)
-                                    .values[_homework.subject]
+                                    .values[widget.homework.subject]
                                     .map,
                               )
                             : const SizedBox.shrink(),
-                        _homework.deadline != null &&
-                                _homework.isDone == false &&
-                                _homework.content != null &&
+                        widget.homework.deadline != null &&
+                                widget.homework.isDone == false &&
+                                widget.homework.content != null &&
                                 showDeadline
                             ? _buildCardInfoItem(
                                 Icons.timer,
-                                getDeadline(_homework.deadline),
+                                getDeadline(widget.homework.deadline),
                               )
                             : const SizedBox.shrink(),
                       ],
@@ -171,7 +160,7 @@ class _CardWidgetState extends State<CardWidget> {
               ),
             ),
           ),
-          _homework.isDone
+          widget.homework.isDone
               ? Positioned.fill(
                   child: BackdropFilter(
                     filter: ImageFilter.blur(
@@ -184,7 +173,7 @@ class _CardWidgetState extends State<CardWidget> {
                   ),
                 )
               : const SizedBox.shrink(),
-          _homework.isDone
+          widget.homework.isDone
               ? Positioned(
                   top: 50,
                   left: MediaQuery.of(context).size.width / 6,
@@ -212,9 +201,12 @@ class _CardWidgetState extends State<CardWidget> {
                 children: <Widget>[
                   Icon(icon),
                   const SizedBox(width: 5),
-                  Text(
-                    title,
-                    style: Theme.of(context).textTheme.subtitle2,
+                  Expanded(
+                    child: Text(
+                      title,
+                      maxLines: 1,
+                      style: Theme.of(context).textTheme.subtitle2,
+                    ),
                   ),
                 ],
               ),
@@ -225,23 +217,16 @@ class _CardWidgetState extends State<CardWidget> {
 
   String getDeadline(DateTime deadline) {
     DateTime _currentDate = DateTime.now();
-    Duration  _rest = _currentDate.difference(deadline);
-    // int _years = deadline.year - _currentDate.year;
-    // int _months = deadline.month - _currentDate.month;
-    // int _days = deadline.day - _currentDate.day;
+    Duration _rest = deadline.difference(_currentDate);
 
-    // if (_years > 0) {
-    //   _result += ' $_years года(лет)';
-    // }
-    
-    // if (_months > 0) {
-    //   _result += ' $_months мес.';
-    // }
-    
-    // if (_days > 0) {
-    //   _result += ' $_days дн.';
-    // }
+    if (_rest.inDays == 0) {
+      DateTime added =
+          _currentDate.add(Duration(milliseconds: _rest.inMilliseconds + 1));
 
+      if (added.day == _currentDate.day) return 'Сегодня';
+      return 'Завтра';
+    }
+    if (_rest.inDays < 0) return 'Просрочено';
     return 'Осталось: ${_rest.inDays} дн.';
   }
 }

@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:developer';
 
+import 'package:diaryschool/provider/SettingsProvider.dart';
 import 'package:diaryschool/screens/grades/grades_screen.dart';
 import 'package:diaryschool/screens/home/home_screen.dart';
 import 'package:diaryschool/screens/task/task_screen.dart';
@@ -7,6 +9,11 @@ import 'package:diaryschool/screens/tasks/tasks_screen.dart';
 import 'package:diaryschool/screens/timetable/timetable_page.dart';
 import 'package:diaryschool/utilities/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 
 class MainScreen extends StatefulWidget {
   MainScreen({Key key}) : super(key: key);
@@ -17,7 +24,11 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int _currentScreen = 0;
+  InitializationSettings initializationSettings;
+
+  final StreamController<int> _screenController = StreamController<int>();
+  Stream<int> _screenStream;
+
   final List<GlobalKey<NavigatorState>> _navigatorKeys = [
     GlobalKey<NavigatorState>(debugLabel: 'Home'),
     GlobalKey<NavigatorState>(debugLabel: 'Grades'),
@@ -66,8 +77,26 @@ class _MainScreenState extends State<MainScreen> {
 
   List<Widget> _screens;
 
+  Future selectNotification(String payload) async {
+    if (payload != null) {
+      debugPrint('notification payload: ' + payload);
+    }
+  }
+
   @override
   void initState() {
+    _screenStream = _screenController.stream.asBroadcastStream();
+
+    AndroidInitializationSettings initializationSettingsAndroid =
+        const AndroidInitializationSettings('app_icon');
+    IOSInitializationSettings initializationSettingsIOS =
+        IOSInitializationSettings(
+            onDidReceiveLocalNotification: (_, _1, _2, _3) async {});
+    initializationSettings = InitializationSettings(
+        initializationSettingsAndroid, initializationSettingsIOS);
+
+    flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onSelectNotification: selectNotification);
     _screens = [
       navWidget(
         index: 0,
@@ -90,39 +119,40 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   @override
+  void dispose() {
+    _screenController.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: IndexedStack(
-          index: _currentScreen,
-          children: _screens,
-        ),
-      ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () => Navigator.of(context).pushNamed(TaskScreen.id),
-      //   elevation: 0,
-      //   child: Icon(
-      //     Icons.add,
-      //     color: Theme.of(context).accentColor,
-      //   ),
-      // ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: BottomNavigationBar(
-        showSelectedLabels: true,
-        showUnselectedLabels: false,
-        elevation: 0,
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: kPrimaryColor,
-        unselectedItemColor: Theme.of(context).colorScheme.onSurface,
-        backgroundColor: Colors.transparent,
-        currentIndex: _currentScreen,
-        onTap: (int value) {
-          setState(() {
-            _currentScreen = value;
-          });
-        },
-        items: bottomNavigationBarItems,
-      ),
+    return StreamProvider(
+      initialData: Provider.of<SettingsProvider>(context).getStartPage,
+      create: (context) => _screenStream,
+      builder: (context, snapshot) {
+        return Scaffold(
+          body: SafeArea(
+            child: IndexedStack(
+              index: Provider.of<int>(context),
+              children: _screens,
+            ),
+          ),
+          bottomNavigationBar: BottomNavigationBar(
+            showSelectedLabels: true,
+            showUnselectedLabels: false,
+            elevation: 0,
+            type: BottomNavigationBarType.fixed,
+            selectedItemColor: kPrimaryColor,
+            unselectedItemColor: Theme.of(context).colorScheme.onSurface,
+            backgroundColor: Colors.transparent,
+            currentIndex: Provider.of<int>(context),
+            onTap: (int value) {
+              _screenController.add(value);
+            },
+            items: bottomNavigationBarItems,
+          ),
+        );
+      },
     );
   }
 }

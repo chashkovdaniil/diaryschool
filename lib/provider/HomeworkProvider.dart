@@ -20,6 +20,7 @@ class HomeworkProvider extends ChangeNotifier
       value.uid = key;
       _result.add(value);
     });
+    // log('result '+_result[_result.length - 2].content);
     return _result;
   }
 
@@ -44,9 +45,8 @@ class HomeworkProvider extends ChangeNotifier
         await _values.put(data.uid, data);
       }
       notifyListeners();
-      return true;
     } catch (e) {
-      return false;
+      throw e;
     }
   }
 }

@@ -21,13 +21,14 @@ class SubjectAdapter extends TypeAdapter<Subject> {
       teacher: fields[1] as int,
     )
       ..map = fields[2] as String
-      ..uid = fields[3] as int;
+      ..uid = fields[3] as int
+      ..grades = (fields[4] as List)?.cast<String>();
   }
 
   @override
   void write(BinaryWriter writer, Subject obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.title)
       ..writeByte(1)
@@ -35,7 +36,9 @@ class SubjectAdapter extends TypeAdapter<Subject> {
       ..writeByte(2)
       ..write(obj.map)
       ..writeByte(3)
-      ..write(obj.uid);
+      ..write(obj.uid)
+      ..writeByte(4)
+      ..write(obj.grades);
   }
 
   @override

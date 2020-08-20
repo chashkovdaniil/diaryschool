@@ -1,9 +1,10 @@
-
 import 'package:diaryschool/models/timetable_row.dart';
+import 'package:diaryschool/provider/SettingsProvider.dart';
 import 'package:diaryschool/provider/SubjectProvider.dart';
 import 'package:diaryschool/provider/TimetableProvider.dart';
 import 'package:diaryschool/screens/timetable/timetable_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 
 class TimetablePage extends StatefulWidget {
@@ -34,6 +35,19 @@ class _TimetablePageState extends State<TimetablePage> {
   ];
 
   double _currentDay = 1;
+  OverlayEntry _overlayEntry;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (Provider.of<SettingsProvider>(context).getFirstRunTimetablePage &&
+        Provider.of<int>(context) == 3) {
+      _overlayEntry = firstRun(context);
+      SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+        Overlay.of(context).insert(_overlayEntry);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +123,7 @@ class _TimetablePageState extends State<TimetablePage> {
                                     timetable: _timetable[index]);
                               },
                             );
-                            setState((){});
+                            setState(() {});
                           },
                         ),
                       );
@@ -150,6 +164,50 @@ class _TimetablePageState extends State<TimetablePage> {
           ),
         ],
       ),
+    );
+  }
+
+  OverlayEntry firstRun(BuildContext context) {
+    return OverlayEntry(
+      builder: (context) {
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 30),
+          color: Colors.black.withOpacity(0.3),
+          child: Center(
+            child: Container(
+              padding: const EdgeInsets.fromLTRB(10, 15, 10, 10),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surface,
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'Текущий урок подсвечивается тусклым цветом.'
+                    'Ниже находится ползунок для выбора дня недели.',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                  FlatButton(
+                    onPressed: () {
+                      Provider.of<SettingsProvider>(
+                        context,
+                        listen: false,
+                      ).setFirstRunTimetablePage();
+                      _overlayEntry.remove();
+                    },
+                    child: Text(
+                      'Закрыть',
+                      style: Theme.of(context).textTheme.button,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

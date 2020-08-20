@@ -42,6 +42,10 @@ Future<void> main() async {
   final Box<Homework> homeworks = await Hive.openBox<Homework>('homeworks');
   final Box<TimetableRow> timetable =
       await Hive.openBox<TimetableRow>('timetable');
+  // await homeworks.clear();
+  // await subjects.clear();
+  // await teachers.clear();
+  // await timetable.clear();
   final Box settings = await Hive.openBox('settings');
 
   InAppPurchaseConnection.enablePendingPurchases();
@@ -102,7 +106,6 @@ class DiarySchoolApp extends StatelessWidget {
         },
         routes: {
           MainScreen.id: (context) => MainScreen(),
-          TaskScreen.id: (context) => TaskScreen(),
           TeachersScreen.id: (context) => const TeachersScreen(),
           SubjectsScreen.id: (context) => const SubjectsScreen(),
           HelpScreen.id: (context) => const HelpScreen(),
@@ -137,7 +140,6 @@ class DiarySchoolApp extends StatelessWidget {
             color: Color(0xffE0E0E0),
           ),
           primaryColor: kColorRed.shade700,
-          accentColor: Colors.white,
           primaryColorDark: kColorRed.shade700,
           buttonTheme: const ButtonThemeData(
             highlightColor: Colors.transparent,
@@ -221,6 +223,9 @@ class DiarySchoolApp extends StatelessWidget {
           ),
         ),
         theme: ThemeData(
+          buttonBarTheme: const ButtonBarThemeData(
+            buttonTextTheme: ButtonTextTheme.normal,
+          ),
           cursorColor: kColorRed.shade700,
           appBarTheme: AppBarTheme(
             color: Colors.white,
@@ -254,7 +259,6 @@ class DiarySchoolApp extends StatelessWidget {
           ),
           primarySwatch: kColorRed,
           secondaryHeaderColor: kColorRed.shade700,
-          accentColor: Colors.white,
           primaryColor: kColorRed.shade700,
           fontFamily: GoogleFonts.getFont('Open Sans').fontFamily,
           textTheme: TextTheme(
@@ -296,7 +300,7 @@ class DiarySchoolApp extends StatelessWidget {
           colorScheme: ColorScheme(
             primary: kColorRed.shade700,
             primaryVariant: kColorRed.shade700,
-            onPrimary: Colors.white,
+            onPrimary: kColorRed.shade300,
             surface: Colors.white,
             onSurface: kColorBlack,
             background: Colors.white,

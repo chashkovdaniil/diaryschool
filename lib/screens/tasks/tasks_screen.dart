@@ -3,13 +3,16 @@ import 'dart:developer';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:diaryschool/common_widgets/card_widget.dart';
 import 'package:diaryschool/models/homework.dart';
+import 'package:diaryschool/models/subject.dart';
 import 'package:diaryschool/provider/HomeworkProvider.dart';
 import 'package:diaryschool/provider/SettingsProvider.dart';
+import 'package:diaryschool/provider/SubjectProvider.dart';
 import 'package:diaryschool/screens/task/task_screen.dart';
 import 'package:diaryschool/screens/tasks/widgets/filter_dialog.dart';
 import 'package:diaryschool/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 
 class TasksScreen extends StatefulWidget {
@@ -20,17 +23,31 @@ class TasksScreen extends StatefulWidget {
 }
 
 class _TasksScreenState extends State<TasksScreen> {
-  Map<String, bool> _filter;
-  DateTime currentDate = DateTime.now();
-  int currentWeekday;
   final List<String> daysOfWeek = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
   final DateTime firstDayOfCurrentDate =
       DateTime.now().add(Duration(days: -DateTime.now().weekday + 1));
+  Map<String, bool> _filter;
+  DateTime currentDate = DateTime.now();
+  int currentWeekday;
+
+  OverlayEntry _overlayEntry;
 
   @override
   void initState() {
     currentWeekday = currentDate.weekday;
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (Provider.of<SettingsProvider>(context).getFirstRunTasksPage &&
+        Provider.of<int>(context) == 2) {
+      _overlayEntry = firstRun(context);
+      SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+        Overlay.of(context).insert(_overlayEntry);
+      });
+    }
+    super.didChangeDependencies();
   }
 
   @override
@@ -66,7 +83,7 @@ class _TasksScreenState extends State<TasksScreen> {
       body: Column(
         children: <Widget>[
           const SizedBox(height: 10),
-          _homeworks.isNotEmpty
+          _homeworks.isNotEmpty && _homeworks != null
               ? CarouselSlider.builder(
                   itemCount: _homeworks.length,
                   itemBuilder: (BuildContext context, int index) {
@@ -90,12 +107,17 @@ class _TasksScreenState extends State<TasksScreen> {
               : const Center(
                   child: Text('Нет заданий'),
                 ),
-                const Spacer(),
+          const Spacer(),
           FlatButton.icon(
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => TaskScreen(),
+                  builder: (context) => TaskScreen(
+                    Homework(
+                      date: currentDate,
+                      subject: defaultSubject(context),
+                    ).toMap(),
+                  ),
                 ),
               );
             },
@@ -171,6 +193,74 @@ class _TasksScreenState extends State<TasksScreen> {
           // ),
         ],
       ),
+    );
+  }
+
+  int defaultSubject(BuildContext context) {
+    List<Subject> subjects = Provider.of<SubjectProvider>(context).values;
+    // TODO: реализовать подачу предмета в зависимости от расписания
+    if (subjects.isNotEmpty) {
+      return 0;
+    }
+  }
+
+  OverlayEntry firstRun(BuildContext context) {
+    return OverlayEntry(
+      builder: (context) {
+        final List<String> tips = [
+          'На этой странице вы можете просматривать и добавлять домашнее задание за день',
+          'Снизу находится ползунок, двигая который, вы можете выбирать день недели.\n'
+              'Также рядом с числом находится кнопка выбора даты.',
+          'После добавления заданий Вы увидете карточки, которые можно просматривать свайпами вправо и влево.\n'
+              'Двойной тап по карточке позволет пометить задание как выполненное',
+          'Вправом углу находится фильтр, который позволяет, какие данные показывать.',
+        ];
+        int currentTip = 0;
+        return StatefulBuilder(builder: (context, setState) {
+          return Container(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            color: Colors.black.withOpacity(0.3),
+            child: Center(
+              child: Container(
+                padding: const EdgeInsets.fromLTRB(10, 15, 10, 10),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.surface,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      tips[currentTip],
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.subtitle1,
+                    ),
+                    FlatButton(
+                      onPressed: () {
+                        if (currentTip == tips.length - 1) {
+                          Provider.of<SettingsProvider>(
+                            context,
+                            listen: false,
+                          ).setFirstRunTasksPage();
+                          _overlayEntry.remove();
+                          return;
+                        }
+                        setState(() {
+                          currentTip += 1;
+                        });
+                      },
+                      child: Text(
+                        (currentTip == tips.length - 1) ? 'Закрыть' : 'Далее',
+                        style: Theme.of(context).textTheme.button,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
+      },
     );
   }
 }

@@ -6,6 +6,8 @@ import 'package:diaryschool/utilities/constants.dart';
 import 'package:flutter/cupertino.dart' show CupertinoPageRoute;
 import 'package:flutter/material.dart';
 
+// TODO: добавить рекламу
+
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key key}) : super(key: key);
 
@@ -88,10 +90,10 @@ class HomeScreen extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             children: [
               // MenuTile(
-                // onTap: () => Navigator.pushNamed(
-                //   context,
-                //   TeachersScreen.id,
-                // ),
+              // onTap: () => Navigator.pushNamed(
+              //   context,
+              //   TeachersScreen.id,
+              // ),
               //   icon: Icons.speaker_notes,
               //   title: 'Заметки',
               // ),
@@ -112,21 +114,21 @@ class HomeScreen extends StatelessWidget {
                 title: 'Предметы',
               ),
               // MenuTile(
-                // onTap: () => Navigator.pushNamed(
-                //   context,
-                //   HelpScreen.id,
-                // ),
+              // onTap: () => Navigator.pushNamed(
+              //   context,
+              //   HelpScreen.id,
+              // ),
               //   icon: Icons.help_outline,
               //   title: 'Помощь',
               // ),
               // MenuTile(
-                // onTap: () {
-                //   return Navigator.of(context).push(
-                //     MaterialPageRoute(
-                //       builder: (context) => const ArticlesScreen(),
-                //     ),
-                //   );
-                // },
+              // onTap: () {
+              //   return Navigator.of(context).push(
+              //     MaterialPageRoute(
+              //       builder: (context) => const ArticlesScreen(),
+              //     ),
+              //   );
+              // },
               //   icon: Icons.art_track,
               //   title: 'Статьи',
               // ),

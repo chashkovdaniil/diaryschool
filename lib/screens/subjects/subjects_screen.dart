@@ -83,6 +83,7 @@ class SubjectsScreen extends StatelessWidget {
                   trailing: IconButton(
                     icon: const Icon(Icons.delete_outline),
                     onPressed: () {
+                      // TODO: сделать предупреждение, что есть дз с таким предметом или учителем
                       return Provider.of<SubjectProvider>(context,
                               listen: false)
                           .delete(index);

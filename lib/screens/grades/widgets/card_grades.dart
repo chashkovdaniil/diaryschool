@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 class CardGrades extends StatelessWidget {
   final String subject;
   final List grades;
+  final double score;
 
-  CardGrades({Key key, this.subject, this.grades}) : super(key: key);
+  CardGrades({Key key, this.subject, this.grades, this.score})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,10 +18,10 @@ class CardGrades extends StatelessWidget {
             style: Theme.of(context).textTheme.headline6,
           ),
           subtitle: Text(
-            grades.join(' '),
+            grades.isEmpty ? 'Нет оценок' : grades.join(' '),
             style: Theme.of(context).textTheme.subtitle2,
           ),
-          trailing: Text('4,5',
+          trailing: Text((score ?? 0).toString(),
               style: Theme.of(context)
                   .textTheme
                   .headline6

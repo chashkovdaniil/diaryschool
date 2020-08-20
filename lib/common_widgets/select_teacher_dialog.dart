@@ -13,6 +13,7 @@ class SelectTeacherDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<Teacher> _list = context.watch<TeacherProvider>().values;
     return AlertDialog(
       title: Row(
         children: <Widget>[
@@ -37,22 +38,20 @@ class SelectTeacherDialog extends StatelessWidget {
           ),
         ],
       ),
-      content: Consumer<TeacherProvider>(
-        builder: (context, data, child) {
-          return ListView.builder(
-            shrinkWrap: true,
-            itemBuilder: (context, index) => ListTile(
-              dense: true,
-              onTap: () => Navigator.of(context).pop(index),
-              title: Text(
-                data.values[index].toString(),
-                style: Theme.of(context).textTheme.subtitle1,
+      content: _list.isEmpty
+          ? Text('Список пуст')
+          : ListView.builder(
+              shrinkWrap: true,
+              itemBuilder: (context, index) => ListTile(
+                dense: true,
+                onTap: () => Navigator.of(context).pop(index),
+                title: Text(
+                  _list[index].toString(),
+                  style: Theme.of(context).textTheme.subtitle1,
+                ),
               ),
+              itemCount: _list.length,
             ),
-            itemCount: data.values.length,
-          );
-        },
-      ),
       actions: <Widget>[
         FlatButton(
           onPressed: () => Navigator.of(context).pop(),

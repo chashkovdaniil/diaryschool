@@ -1,47 +1,93 @@
+import 'dart:developer';
+
+import 'package:diaryschool/models/homework.dart';
+import 'package:diaryschool/models/subject.dart';
+import 'package:diaryschool/provider/HomeworkProvider.dart';
+import 'package:diaryschool/provider/SettingsProvider.dart';
+import 'package:diaryschool/provider/SubjectProvider.dart';
 import 'package:diaryschool/screens/grades/widgets/card_grades.dart';
 import 'package:diaryschool/utilities/constants.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
-// TODO: Сделать страницу оценок
-
-class GradesScreen extends StatelessWidget {
+class GradesScreen extends StatefulWidget {
   GradesScreen({Key key}) : super(key: key);
 
-  final List<Map<String, dynamic>> grades = [
-    {
-      'subject': 'Математика',
-      'grades': [5,4,3,2,2,2,3,4,5,5,5,4,5,4,3,2,2,3,3,5,4,4,3,3,2,2]
-    },
-    {
-      'subject': 'Русский язык',
-      'grades': [5, 4, 3, 2, 2, 2, 3, 4, 5, 5, 5, 4]
-    },
-    {
-      'subject': 'Математика',
-      'grades': [5, 4, 3, 2, 2, 2, 3, 4, 5, 5, 5, 4]
-    },
-    {
-      'subject': 'Математика',
-      'grades': [5, 4, 3, 2, 2, 2, 3, 4, 5, 5, 5, 4]
-    },
-    {
-      'subject': 'Математика',
-      'grades': [5, 4, 3, 2, 2, 2, 3, 4, 5, 5, 5, 4]
-    },
-    {
-      'subject': 'Математика',
-      'grades': [5, 4, 3, 2, 2, 2, 3, 4, 5, 5, 5, 4]
-    },
+  @override
+  _GradesScreenState createState() => _GradesScreenState();
+}
+
+class _GradesScreenState extends State<GradesScreen> {
+  GlobalKey calendarKey = GlobalKey();
+  OverlayEntry _overlayEntry;
+
+  List<DateTime> rangeDate = [
+    DateTime(DateTime.now().year, DateTime.now().month, 1),
+    DateTime(DateTime.now().year, (DateTime.now().month + 1) % 13, 1),
   ];
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (Provider.of<SettingsProvider>(context).getFirstRunGradesPage &&
+        Provider.of<int>(context) == 1) {
+      _overlayEntry = firstRunStep1(context);
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        Overlay.of(context).insert(_overlayEntry);
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _overlayEntry.remove();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    List<Homework> homeworks =
+        context.watch<HomeworkProvider>().values.where((e) {
+      if (e.date.millisecondsSinceEpoch <=
+              rangeDate[1].millisecondsSinceEpoch &&
+          e.date.millisecondsSinceEpoch >=
+              rangeDate[0].millisecondsSinceEpoch) {
+        return true;
+      }
+      return false;
+    }).toList();
+
+    List<Subject> subjects = context.watch<SubjectProvider>().values.map((s) {
+      Subject subject = Subject.fromMap(s.toMap());
+      homeworks.forEach((h) {
+        if (h.subject == s.uid && h.grade != null) {
+          subject.grades.add(h.grade);
+          log('true');
+        }
+      });
+
+      return subject;
+    }).toList();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Оценки'),
         actions: <Widget>[
           IconButton(
-            onPressed: () {},
+            key: calendarKey,
+            onPressed: () async {
+              DateTimeRange _range = await showDateRangePicker(
+                context: context,
+                firstDate: DateTime(2019),
+                lastDate: DateTime(2100),
+              );
+              if (_range != null) {
+                rangeDate[0] = _range.start;
+                rangeDate[1] = _range.end;
+                log(_range.start.toString());
+                // setState(() {});
+              }
+            },
             icon: const Icon(Icons.calendar_today),
           ),
         ],
@@ -53,18 +99,119 @@ class GradesScreen extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: kDefaultPadding),
             child: Center(
               child: Text(
-                '1.02.2020 - 10.02.2020',
+                '${rangeDate[0].day}.${rangeDate[0].month}.${rangeDate[0].year}'
+                ' - '
+                '${rangeDate[1].day}.${rangeDate[1].month}.${rangeDate[1].year}',
                 style: Theme.of(context).textTheme.headline6,
               ),
             ),
           ),
-          ...grades
-              .map((e) => CardGrades(
-                  subject: e['subject'].toString(),
-                  grades: e['grades'] as List))
-              .toList(),
+          if (subjects.isEmpty) Center(child: Text('Нет оценок')),
+          ...subjects.map((e) {
+            return CardGrades(
+              subject: e.title,
+              grades: e.grades,
+              score: e.score,
+            );
+          }).toList(),
         ],
       ),
+    );
+  }
+
+  OverlayEntry firstRunStep1(BuildContext context) {
+    return OverlayEntry(
+      builder: (context) {
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 30),
+          color: Colors.black.withOpacity(0.3),
+          child: Center(
+            child: Container(
+              padding: const EdgeInsets.fromLTRB(10, 15, 10, 10),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surface,
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'На этой странице вы можете посмотреть оценки за выбранный вами интервал, по умолчанию берется текущий месяц.',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                  FlatButton(
+                    onPressed: () {
+                      _overlayEntry.remove();
+                      _overlayEntry = firstRunStep2(context);
+                      Overlay.of(context).insert(_overlayEntry);
+                    },
+                    child: Text(
+                      'Далее',
+                      style: Theme.of(context).textTheme.button,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  OverlayEntry firstRunStep2(BuildContext context) {
+    return OverlayEntry(
+      builder: (context) {
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 30),
+          color: Colors.black.withOpacity(0.3),
+          child: Stack(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).padding.top + 10,
+                  right: 32,
+                ),
+                child: Container(
+                  padding: const EdgeInsets.fromLTRB(10, 15, 10, 10),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.surface,
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      bottomLeft: Radius.circular(15),
+                      bottomRight: Radius.circular(15),
+                    ),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Справа в углу находится кнопка, после нажатия на неё, вы сможете выбрать период, за который надо показать оценки.',
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.subtitle1,
+                      ),
+                      FlatButton(
+                        onPressed: () {
+                          Provider.of<SettingsProvider>(
+                            context,
+                            listen: false,
+                          ).setFirstRunGradesPage();
+                          _overlayEntry.remove();
+                        },
+                        child: Text(
+                          'Закрыть',
+                          style: Theme.of(context).textTheme.button,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

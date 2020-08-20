@@ -8,6 +8,29 @@ class SettingsProvider extends ChangeNotifier {
     _values = values;
   }
 
+  TimeOfDay timeNotification  () {
+    try {
+      return _values.get(
+        'timeNotification',
+        defaultValue: const TimeOfDay(
+          hour: 0,
+          minute: 0,
+        ),
+      ) as TimeOfDay;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future setTimeNotification(TimeOfDay val) async {
+    try {
+      await _values.put('timeNotification', val);
+      notifyListeners();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   bool turnNotification() {
     try {
       return _values.get('turnNotification', defaultValue: false) as bool;
@@ -15,12 +38,14 @@ class SettingsProvider extends ChangeNotifier {
       rethrow;
     }
   }
+
   Future<bool> turningNotification(bool val) async {
     try {
       await _values.put('turnNotification', val);
+      notifyListeners();
       return true;
     } catch (e) {
-      rethrow;
+      return false;
     }
   }
 
@@ -55,4 +80,36 @@ class SettingsProvider extends ChangeNotifier {
       return false;
     }
   }
+
+  int get getStartPage {
+    return _values.get('startPage', defaultValue: 2) as int;
+  }
+  Future setStartPage (int index) async {
+    try {
+      await _values.put('startPage', index);
+      notifyListeners();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  bool get getFirstRunGradesPage {
+    return _values.get('firstRunGradesPage', defaultValue: true) as bool;
+  }
+  Future<void> setFirstRunGradesPage () async => await _values.put('firstRunGradesPage', false);
+
+  bool get getFirstRunTasksPage {
+    return _values.get('firstRunTasksPage', defaultValue: true) as bool;
+  }
+  Future<void> setFirstRunTasksPage () async => await _values.put('firstRunTasksPage', false);
+  
+  bool get getFirstRunTimetablePage {
+    return _values.get('firstRunTimetablePage', defaultValue: true) as bool;
+  }
+  Future<void> setFirstRunTimetablePage () async => await _values.put('firstRunTimetablePage', false);
+  
+  bool get getFirstRunTaskPage {
+    return _values.get('firstRunTaskPage', defaultValue: true) as bool;
+  }
+  Future<void> setFirstRunTaskPage () async => await _values.put('firstRunTaskPage', false);
 }
