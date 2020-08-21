@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:diaryschool/common_widgets/select_teacher_dialog.dart';
+import 'package:diaryschool/generated/i18n.dart';
 import 'package:diaryschool/models/subject.dart';
 import 'package:diaryschool/provider/SubjectProvider.dart';
 import 'package:diaryschool/provider/TeacherProvider.dart';
@@ -25,7 +26,7 @@ class _SubjectDialogState extends State<SubjectDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Предмет'),
+      title: Text(I18n.of(context).subject),
       content: Form(
         key: _formKey,
         child: ListView(
@@ -34,19 +35,19 @@ class _SubjectDialogState extends State<SubjectDialog> {
             TextFormField(
               validator: (value) {
                 if (value.isEmpty) {
-                  return 'Укажите название';
+                  return I18n.of(context).enterTitle;
                 }
                 return null;
               },
               initialValue: widget.subject.title,
-              decoration: const InputDecoration(hintText: 'Название'),
+              decoration: InputDecoration(hintText: I18n.of(context).subject),
               onChanged: (value) {
                 widget.subject.title = value;
               },
             ),
             TextFormField(
               initialValue: widget.subject.map,
-              decoration: const InputDecoration(hintText: 'Кабинет или аудитория'),
+              decoration: InputDecoration(hintText: I18n.of(context).cabinet),
               onChanged: (value) {
                 setState(() {
                   widget.subject.map = value;
@@ -56,7 +57,7 @@ class _SubjectDialogState extends State<SubjectDialog> {
             FormField<int>(
               validator: (int value) {
                 if (value == null) {
-                  return 'Укажите учителя!';
+                  return I18n.of(context).enterTeacher;
                 }
                 return null;
               },
@@ -95,7 +96,7 @@ class _SubjectDialogState extends State<SubjectDialog> {
                         ),
                         child: Text(
                           widget.subject.teacher == null
-                              ? 'Указать учителя'
+                              ? I18n.of(context).teacher
                               : Provider.of<TeacherProvider>(context)
                                   .values[widget.subject.teacher]
                                   .toString(),
@@ -126,7 +127,7 @@ class _SubjectDialogState extends State<SubjectDialog> {
       actions: <Widget>[
         FlatButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: Text('Отмена'.toUpperCase()),
+          child: Text(I18n.of(context).cancel.toUpperCase()),
         ),
         FlatButton(
           onPressed: () {
@@ -140,7 +141,7 @@ class _SubjectDialogState extends State<SubjectDialog> {
               return Navigator.of(context).pop();
             }
           },
-          child: Text('Сохранить'.toUpperCase()),
+          child: Text(I18n.of(context).save.toUpperCase()),
         ),
       ],
     );

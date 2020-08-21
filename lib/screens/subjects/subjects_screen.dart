@@ -1,4 +1,5 @@
 import 'package:diaryschool/common_widgets/divider.dart';
+import 'package:diaryschool/generated/i18n.dart';
 import 'package:diaryschool/models/subject.dart';
 import 'package:diaryschool/provider/SubjectProvider.dart';
 import 'package:diaryschool/provider/TeacherProvider.dart';
@@ -15,7 +16,7 @@ class SubjectsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Предметы'),
+        title: Text(I18n.of(context).subjects),
       ),
       body: ListView(
         children: <Widget>[
@@ -35,14 +36,14 @@ class SubjectsScreen extends StatelessWidget {
                 color: Theme.of(context).primaryColor,
               ),
               label: Text(
-                'Добавить предмет'.toUpperCase(),
+                I18n.of(context).add.toUpperCase(),
                 style: Theme.of(context).textTheme.button,
               ),
             ),
           ),
           Consumer<SubjectProvider>(builder: (context, data, child) {
             if (data.values.isEmpty) {
-              return Center(child: Text('Нет предметов'));
+              return Center(child: Text(I18n.of(context).noSubjects));
             }
             return ListView.separated(
               physics: const NeverScrollableScrollPhysics(),

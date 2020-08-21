@@ -1,9 +1,9 @@
+import 'package:diaryschool/generated/i18n.dart';
 import 'package:diaryschool/provider/SettingsProvider.dart';
 import 'package:diaryschool/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
-import '../../utilities/notifications.dart';
 
 import 'widgets/color_tile.dart';
 
@@ -13,32 +13,46 @@ FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 class SettingsScreen extends StatelessWidget {
   SettingsScreen({Key key}) : super(key: key);
 
-  final List<String> _pages = [
-    'Главная',
-    'Оценки',
-    'Задания',
-    'Расписание',
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final List<String> _pages = [
+      I18n.of(context).homeNav,
+      I18n.of(context).gradesNav,
+      I18n.of(context).tasksNav,
+      I18n.of(context).timetableNav,
+    ];
+    final List<Map<String, String>> languages = [
+      {
+        'locale': 'en-US',
+        'lang': 'English',
+      },
+      {
+        'locale': 'ru-RU',
+        'lang': 'Русский',
+      },
+      {
+        'locale': 'ru-UA',
+        'lang': 'Украинский',
+      },
+    ];
     TimeOfDay _timeNofitications =
         Provider.of<SettingsProvider>(context).timeNotification();
     return Scaffold(
       appBar: AppBar(
-        title: Text('Настройки'),
+        title: Text(I18n.of(context).settings),
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
         children: <Widget>[
           ListTile(
-            title: Text('Напоминание'),
+            title: Text(I18n.of(context).notification),
             trailing: Switch(
               activeColor: kColorRed,
               value: Provider.of<SettingsProvider>(context).turnNotification(),
               onChanged: (val) async {
                 if (val == true) {
                   await enableNotification(
+                    context,
                     Time(
                       _timeNofitications.hour,
                       _timeNofitications.minute,
@@ -55,7 +69,7 @@ class SettingsScreen extends StatelessWidget {
           ),
           Provider.of<SettingsProvider>(context).turnNotification()
               ? ListTile(
-                  title: Text('Время напоминания'),
+                  title: Text(I18n.of(context).timeNotification),
                   trailing: Text(
                     '${Provider.of<SettingsProvider>(context).timeNotification().hour}'
                     ':'
@@ -72,6 +86,7 @@ class SettingsScreen extends StatelessWidget {
                           .setTimeNotification(TimeOfDay.now());
 
                       await enableNotification(
+                        context,
                         Time(
                           TimeOfDay.now().hour,
                           TimeOfDay.now().minute,
@@ -80,6 +95,7 @@ class SettingsScreen extends StatelessWidget {
                       );
                     } else {
                       await enableNotification(
+                        context,
                         Time(
                           _time.hour,
                           _time.minute,
@@ -154,7 +170,7 @@ class SettingsScreen extends StatelessWidget {
           // ),
           // TODO: сделать смену начального экрана
           ListTile(
-            title: Text('Начальный экран'),
+            title: Text(I18n.of(context).startScreen),
             trailing: Container(
               child: Text(
                 _pages[Provider.of<SettingsProvider>(context).getStartPage],
@@ -166,7 +182,7 @@ class SettingsScreen extends StatelessWidget {
                 barrierDismissible: false,
                 builder: (context) {
                   return AlertDialog(
-                    title: const Text('Выберите страницу'),
+                    title: Text(I18n.of(context).selectPage),
                     content: ListView.builder(
                       shrinkWrap: true,
                       itemCount: _pages.length,
@@ -193,7 +209,53 @@ class SettingsScreen extends StatelessWidget {
           // ),
           // TODO: сделать получение данных о приложении (версия, номер сборки)
           ListTile(
-            title: Text('О приложении'),
+            title: Text(I18n.of(context).language),
+            trailing: Text(Provider.of<SettingsProvider>(context)
+                .getLanguage
+                .languageCode),
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: Text(I18n.of(context).language),
+                    content: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: languages.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          dense: true,
+                          title: Text(languages[index]['lang']),
+                          onTap: () {
+                            Locale _locale = Locale(
+                              languages[index]['locale'].split('-')[0],
+                              languages[index]['locale'].split('-')[1],
+                            );
+                            Provider.of<SettingsProvider>(
+                              context,
+                              listen: false,
+                            ).setLanguage(_locale);
+                            I18n.locale = _locale;
+                            Navigator.of(context).pop();
+                          },
+                        );
+                      },
+                    ),
+                    actions: [
+                      FlatButton(
+                        child: Text(I18n.of(context).close),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+          ),
+          ListTile(
+            title: Text(I18n.of(context).aboutApp),
             onTap: () {
               showDialog(
                 context: context,
@@ -211,28 +273,28 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  Future enableNotification(Time time) async {
+  Future enableNotification(BuildContext context, Time time) async {
     FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
         FlutterLocalNotificationsPlugin();
     AndroidNotificationDetails androidPlatformChannelSpecifics =
         AndroidNotificationDetails(
       '0',
-      'Сбор рюкзака',
-      'remindAboutPackBag',
-      // enableVibration: true,
-      // enableLights: true,
-      // playSound: true,
-      // visibility: NotificationVisibility.Public,
+      I18n.of(context).packingBag,
+      I18n.of(context).notification,
+      enableVibration: true,
+      enableLights: true,
+      playSound: true,
+      visibility: NotificationVisibility.Public,
     );
     IOSNotificationDetails iOSPlatformChannelSpecifics =
-        IOSNotificationDetails();
+        const IOSNotificationDetails();
     NotificationDetails platformChannelSpecifics = NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
 
     await flutterLocalNotificationsPlugin.showDailyAtTime(
       0,
-      'show daily title',
-      'Daily notification shown at approximately',
+      I18n.of(context).timePackBag,
+      I18n.of(context).packBag,
       time,
       platformChannelSpecifics,
     );

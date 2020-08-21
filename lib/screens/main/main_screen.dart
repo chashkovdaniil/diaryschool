@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:diaryschool/generated/i18n.dart';
 import 'package:diaryschool/provider/SettingsProvider.dart';
 import 'package:diaryschool/screens/grades/grades_screen.dart';
 import 'package:diaryschool/screens/home/home_screen.dart';
@@ -34,27 +35,6 @@ class _MainScreenState extends State<MainScreen> {
     GlobalKey<NavigatorState>(debugLabel: 'Grades'),
     GlobalKey<NavigatorState>(debugLabel: 'Tasks'),
     GlobalKey<NavigatorState>(debugLabel: 'Timetable'),
-  ];
-  final List<BottomNavigationBarItem> bottomNavigationBarItems = [
-    const BottomNavigationBarItem(
-      icon: Icon(Icons.home),
-      title: Text('Главная'),
-    ),
-    const BottomNavigationBarItem(
-      icon: Icon(
-        Icons.trending_up,
-        size: 24,
-      ),
-      title: Text('Оценки'),
-    ),
-    const BottomNavigationBarItem(
-      icon: Icon(Icons.format_list_bulleted),
-      title: Text('Уроки'),
-    ),
-    const BottomNavigationBarItem(
-      icon: Icon(Icons.calendar_today),
-      title: Text('Расписание'),
-    ),
   ];
   Widget navWidget({
     @required final int index,
@@ -126,6 +106,27 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final List<BottomNavigationBarItem> bottomNavigationBarItems = [
+      BottomNavigationBarItem(
+        icon: const Icon(Icons.home),
+        title: Text(I18n.of(context).homeNav),
+      ),
+      BottomNavigationBarItem(
+        icon: const Icon(
+          Icons.trending_up,
+          size: 24,
+        ),
+        title: Text(I18n.of(context).gradesNav),
+      ),
+      BottomNavigationBarItem(
+        icon: const Icon(Icons.format_list_bulleted),
+        title: Text(I18n.of(context).tasksNav),
+      ),
+      BottomNavigationBarItem(
+        icon: const Icon(Icons.calendar_today),
+        title: Text(I18n.of(context).timetableNav),
+      ),
+    ];
     return StreamProvider(
       initialData: Provider.of<SettingsProvider>(context).getStartPage,
       create: (context) => _screenStream,

@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:diaryschool/generated/i18n.dart';
 import 'package:diaryschool/models/teacher.dart';
 import 'package:diaryschool/provider/TeacherProvider.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class _TeacherDialogState extends State<TeacherDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Добавить учителя'),
+      title: Text(I18n.of(context).teacher),
       content: Form(
         key: _formKey,
         child: ListView(
@@ -33,7 +34,7 @@ class _TeacherDialogState extends State<TeacherDialog> {
           children: <Widget>[
             TextFormField(
               initialValue: widget.teacher.name,
-              decoration: InputDecoration(hintText: 'Имя'),
+              decoration: InputDecoration(hintText: I18n.of(context).firstName),
               onChanged: (value) {
                 setState(() {
                   widget.teacher.name = value;
@@ -41,14 +42,14 @@ class _TeacherDialogState extends State<TeacherDialog> {
               },
               validator: (value) {
                 if (value.isEmpty) {
-                  return 'Укажите имя';
+                  return I18n.of(context).fillField;
                 }
                 return null;
               },
             ),
             TextFormField(
               initialValue: widget.teacher.surname,
-              decoration: InputDecoration(hintText: 'Фамилия'),
+              decoration: InputDecoration(hintText: I18n.of(context).lastName),
               onChanged: (value) {
                 setState(() {
                   widget.teacher.surname = value;
@@ -57,7 +58,8 @@ class _TeacherDialogState extends State<TeacherDialog> {
             ),
             TextFormField(
               initialValue: widget.teacher.middleName,
-              decoration: InputDecoration(hintText: 'Отчество'),
+              decoration:
+                  InputDecoration(hintText: I18n.of(context).middleName),
               onChanged: (value) {
                 setState(() {
                   widget.teacher.middleName = value;
@@ -65,7 +67,7 @@ class _TeacherDialogState extends State<TeacherDialog> {
               },
               validator: (value) {
                 if (value.isEmpty) {
-                  return 'Укажите отчество';
+                  return I18n.of(context).fillField;
                 }
                 return null;
               },
@@ -73,7 +75,7 @@ class _TeacherDialogState extends State<TeacherDialog> {
             TextFormField(
               initialValue: widget.teacher.email,
               keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(hintText: 'Email'),
+              decoration: InputDecoration(hintText: I18n.of(context).email),
               onChanged: (value) {
                 setState(() {
                   widget.teacher.email = value;
@@ -85,7 +87,7 @@ class _TeacherDialogState extends State<TeacherDialog> {
                   ? ''
                   : widget.teacher.phone.toString(),
               keyboardType: TextInputType.phone,
-              decoration: InputDecoration(hintText: 'Телефон'),
+              decoration: InputDecoration(hintText: I18n.of(context).phone),
               onChanged: (value) {
                 setState(() {
                   widget.teacher.phone = int.parse(value);
@@ -98,7 +100,7 @@ class _TeacherDialogState extends State<TeacherDialog> {
       actions: <Widget>[
         FlatButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: Text('Отмена'.toUpperCase()),
+          child: Text(I18n.of(context).cancel.toUpperCase()),
         ),
         FlatButton(
           onPressed: () {
@@ -109,7 +111,7 @@ class _TeacherDialogState extends State<TeacherDialog> {
             }
             log('error');
           },
-          child: Text('Сохранить'.toUpperCase()),
+          child: Text(I18n.of(context).save.toUpperCase()),
         ),
       ],
     );

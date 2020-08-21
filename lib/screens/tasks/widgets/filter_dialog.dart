@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:diaryschool/generated/i18n.dart';
 import 'package:diaryschool/provider/SettingsProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,12 +19,12 @@ class _FilterDialogState extends State<FilterDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Фильтр'),
+      title: Text(I18n.of(context).filter),
       content: ListView(
         shrinkWrap: true,
         children: <Widget>[
           ListTile(
-            title: const Text('Учитель'),
+            title: Text(I18n.of(context).teacher),
             trailing: Checkbox(
               value: widget.filter['teacher'],
               activeColor: Theme.of(context).primaryColor,
@@ -46,7 +47,7 @@ class _FilterDialogState extends State<FilterDialog> {
           //   ),
           // ),
           ListTile(
-            title: const Text('Дедлайн'),
+            title: Text(I18n.of(context).deadline),
             trailing: Checkbox(
               value: widget.filter['deadline'],
               activeColor: Theme.of(context).primaryColor,
@@ -70,7 +71,7 @@ class _FilterDialogState extends State<FilterDialog> {
           //   ),
           // ),
           ListTile(
-            title: const Text('Путь'),
+            title: Text(I18n.of(context).path),
             trailing: Checkbox(
               value: widget.filter['route'],
               activeColor: Theme.of(context).primaryColor,
@@ -86,14 +87,14 @@ class _FilterDialogState extends State<FilterDialog> {
       actions: [
         FlatButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Отмена'),
+          child: Text(I18n.of(context).cancel),
         ),
         FlatButton(
           onPressed: () {
             context.read<SettingsProvider>().setFilter(widget.filter);
             Navigator.pop(context);
           },
-          child: const Text('Применить'),
+          child: Text(I18n.of(context).save),
         ),
       ],
     );

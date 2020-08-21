@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:diaryschool/common_widgets/select_subject_dialog.dart';
+import 'package:diaryschool/generated/i18n.dart';
 import 'package:diaryschool/models/homework.dart';
 import 'package:diaryschool/provider/HomeworkProvider.dart';
 import 'package:diaryschool/provider/SettingsProvider.dart';
@@ -64,7 +65,7 @@ class _TaskScreenState extends State<TaskScreen> {
               initialValue: _homework.subject,
               validator: (val) {
                 if (val == null && _homework.subject == null) {
-                  return 'Выберите предмет!';
+                  return I18n.of(context).fillField;
                 }
                 return null;
               },
@@ -103,7 +104,7 @@ class _TaskScreenState extends State<TaskScreen> {
                 child: Row(
                   children: <Widget>[
                     Text(
-                      'Дата:',
+                      '${I18n.of(context).date}:',
                     ),
                     const SizedBox(width: 10),
                     Expanded(
@@ -138,12 +139,12 @@ class _TaskScreenState extends State<TaskScreen> {
                 child: TextFormField(
                   validator: (val) {
                     if (val.isEmpty) {
-                      return 'Заполните поле!';
+                      return I18n.of(context).fillField;
                     }
                     return null;
                   },
-                  decoration: const InputDecoration(
-                    hintText: 'Введите задание',
+                  decoration: InputDecoration(
+                    hintText: I18n.of(context).enterTask,
                     enabledBorder: InputBorder.none,
                     focusedBorder: InputBorder.none,
                     border: InputBorder.none,
@@ -236,7 +237,7 @@ class _TaskScreenState extends State<TaskScreen> {
                       }
                     },
                     child: Text(
-                      'Сохранить',
+                      I18n.of(context).save,
                       style: Theme.of(context).textTheme.button.copyWith(
                             color: Theme.of(context).colorScheme.surface,
                           ),
@@ -263,7 +264,7 @@ class _TaskScreenState extends State<TaskScreen> {
       builder: (context) {
         List<Widget> tips = [
           Text(
-            'Внизу экрана находится панель.',
+            I18n.of(context).tipTask1,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.subtitle1,
           ),
@@ -273,7 +274,7 @@ class _TaskScreenState extends State<TaskScreen> {
               Icon(Icons.star),
               Expanded(
                 child: Text(
-                  '- нажмите, чтобы установить оценку',
+                  I18n.of(context).tipTask2,
                   style: Theme.of(context).textTheme.subtitle1,
                 ),
               ),
@@ -285,7 +286,7 @@ class _TaskScreenState extends State<TaskScreen> {
               Icon(Icons.timer),
               Expanded(
                 child: Text(
-                  '- нажмите, чтобы установить делайн',
+                  I18n.of(context).tipTask3,
                   style: Theme.of(context).textTheme.subtitle1,
                 ),
               ),
@@ -297,7 +298,7 @@ class _TaskScreenState extends State<TaskScreen> {
               Icon(Icons.done),
               Expanded(
                 child: Text(
-                  '- нажмите, чтобы пометить задание как выполненное (цвет иконки станет красный).',
+                  I18n.of(context).tipTask4,
                   style: Theme.of(context).textTheme.subtitle1,
                 ),
               ),
@@ -335,7 +336,9 @@ class _TaskScreenState extends State<TaskScreen> {
                         });
                       },
                       child: Text(
-                        (currentTip == tips.length - 1) ? 'Закрыть' : 'Далее',
+                        (currentTip == tips.length - 1)
+                            ? I18n.of(context).close
+                            : I18n.of(context).save,
                         style: Theme.of(context).textTheme.button,
                       ),
                     ),
@@ -391,7 +394,7 @@ class SubjectField extends FormField<int> {
                     Row(
                       children: <Widget>[
                         Text(
-                          'Предмет:',
+                          '${I18n.of(context).subject}:',
                         ),
                         const SizedBox(width: 10),
                         Expanded(
@@ -410,7 +413,7 @@ class SubjectField extends FormField<int> {
                                     Provider.of<SubjectProvider>(context)
                                             .values
                                             .isEmpty
-                                        ? 'Добавьте предмет!'
+                                        ? I18n.of(context).addSubject
                                         : Provider.of<SubjectProvider>(context)
                                             .values[homework.subject ?? 0]
                                             .title,

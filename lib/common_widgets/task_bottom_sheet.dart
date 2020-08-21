@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:diaryschool/generated/i18n.dart';
 import 'package:diaryschool/models/homework.dart';
 import 'package:diaryschool/provider/HomeworkProvider.dart';
 import 'package:diaryschool/provider/SubjectProvider.dart';
@@ -76,15 +77,15 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                   TextFormField(
                     maxLines: 5,
                     initialValue: _homework.content,
-                    decoration: const InputDecoration(
-                      labelText: 'Введите задание',
+                    decoration: InputDecoration(
+                      labelText: I18n.of(context).enterTask,
                     ),
                     onChanged: (val) {
                       _homework.content = val;
                     },
                     validator: (value) {
                       if (value.isEmpty) {
-                        return 'Заполните поле!';
+                        return I18n.of(context).fillField;
                       }
                       return null;
                     },
@@ -92,7 +93,7 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                   ),
                   FlatButton(
                     child: Text(
-                      'Сохранить'.toUpperCase(),
+                      I18n.of(context).save.toUpperCase(),
                       style: Theme.of(context).textTheme.button,
                     ),
                     onPressed: () {

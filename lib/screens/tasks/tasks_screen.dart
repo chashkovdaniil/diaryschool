@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:diaryschool/common_widgets/card_widget.dart';
+import 'package:diaryschool/generated/i18n.dart';
 import 'package:diaryschool/models/homework.dart';
 import 'package:diaryschool/models/subject.dart';
 import 'package:diaryschool/provider/HomeworkProvider.dart';
@@ -23,7 +24,6 @@ class TasksScreen extends StatefulWidget {
 }
 
 class _TasksScreenState extends State<TasksScreen> {
-  final List<String> daysOfWeek = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
   final DateTime firstDayOfCurrentDate =
       DateTime.now().add(Duration(days: -DateTime.now().weekday + 1));
   Map<String, bool> _filter;
@@ -52,6 +52,15 @@ class _TasksScreenState extends State<TasksScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final List<String> daysOfWeek = [
+      I18n.of(context).mon,
+      I18n.of(context).tues,
+      I18n.of(context).wed,
+      I18n.of(context).thurs,
+      I18n.of(context).fri,
+      I18n.of(context).sat,
+      I18n.of(context).sun
+    ];
     List<Homework> _homeworks =
         context.watch<HomeworkProvider>().values.where((element) {
       if (element.date.year == currentDate.year &&
@@ -65,7 +74,7 @@ class _TasksScreenState extends State<TasksScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Задания'),
+        title: Text(I18n.of(context).tasksNav),
         actions: <Widget>[
           IconButton(
             onPressed: () {
@@ -104,8 +113,8 @@ class _TasksScreenState extends State<TasksScreen> {
                     disableCenter: false,
                   ),
                 )
-              : const Center(
-                  child: Text('Нет заданий'),
+              : Center(
+                  child: Text(I18n.of(context).noTasks),
                 ),
           const Spacer(),
           FlatButton.icon(
@@ -122,7 +131,7 @@ class _TasksScreenState extends State<TasksScreen> {
               );
             },
             icon: const Icon(Icons.add),
-            label: Text('Добавить'),
+            label: Text(I18n.of(context).add),
           ),
           Container(
             color: Theme.of(context).colorScheme.background,
@@ -208,12 +217,10 @@ class _TasksScreenState extends State<TasksScreen> {
     return OverlayEntry(
       builder: (context) {
         final List<String> tips = [
-          'На этой странице вы можете просматривать и добавлять домашнее задание за день',
-          'Снизу находится ползунок, двигая который, вы можете выбирать день недели.\n'
-              'Также рядом с числом находится кнопка выбора даты.',
-          'После добавления заданий Вы увидете карточки, которые можно просматривать свайпами вправо и влево.\n'
-              'Двойной тап по карточке позволет пометить задание как выполненное',
-          'Вправом углу находится фильтр, который позволяет, какие данные показывать.',
+          I18n.of(context).tipTasks1,
+          I18n.of(context).tipTasks2,
+          I18n.of(context).tipTasks3,
+          I18n.of(context).tipTasks4,
         ];
         int currentTip = 0;
         return StatefulBuilder(builder: (context, setState) {
@@ -250,7 +257,9 @@ class _TasksScreenState extends State<TasksScreen> {
                         });
                       },
                       child: Text(
-                        (currentTip == tips.length - 1) ? 'Закрыть' : 'Далее',
+                        (currentTip == tips.length - 1)
+                            ? I18n.of(context).close
+                            : I18n.of(context).next,
                         style: Theme.of(context).textTheme.button,
                       ),
                     ),

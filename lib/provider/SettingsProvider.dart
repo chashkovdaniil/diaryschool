@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
@@ -8,7 +10,7 @@ class SettingsProvider extends ChangeNotifier {
     _values = values;
   }
 
-  TimeOfDay timeNotification  () {
+  TimeOfDay timeNotification() {
     try {
       return _values.get(
         'timeNotification',
@@ -84,7 +86,8 @@ class SettingsProvider extends ChangeNotifier {
   int get getStartPage {
     return _values.get('startPage', defaultValue: 2) as int;
   }
-  Future setStartPage (int index) async {
+
+  Future setStartPage(int index) async {
     try {
       await _values.put('startPage', index);
       notifyListeners();
@@ -96,20 +99,44 @@ class SettingsProvider extends ChangeNotifier {
   bool get getFirstRunGradesPage {
     return _values.get('firstRunGradesPage', defaultValue: true) as bool;
   }
-  Future<void> setFirstRunGradesPage () async => await _values.put('firstRunGradesPage', false);
+
+  Future<void> setFirstRunGradesPage() async =>
+      await _values.put('firstRunGradesPage', false);
 
   bool get getFirstRunTasksPage {
     return _values.get('firstRunTasksPage', defaultValue: true) as bool;
   }
-  Future<void> setFirstRunTasksPage () async => await _values.put('firstRunTasksPage', false);
-  
+
+  Future<void> setFirstRunTasksPage() async =>
+      await _values.put('firstRunTasksPage', false);
+
   bool get getFirstRunTimetablePage {
     return _values.get('firstRunTimetablePage', defaultValue: true) as bool;
   }
-  Future<void> setFirstRunTimetablePage () async => await _values.put('firstRunTimetablePage', false);
-  
+
+  Future<void> setFirstRunTimetablePage() async =>
+      await _values.put('firstRunTimetablePage', false);
+
   bool get getFirstRunTaskPage {
     return _values.get('firstRunTaskPage', defaultValue: true) as bool;
   }
-  Future<void> setFirstRunTaskPage () async => await _values.put('firstRunTaskPage', false);
+
+  Future<void> setFirstRunTaskPage() async =>
+      await _values.put('firstRunTaskPage', false);
+
+  Locale get getLanguage {
+    List<String> deviceLanguage = Platform.localeName.split("_");
+    List<String> locale = (_values.get(
+      'language',
+      defaultValue: deviceLanguage[0] + '-' + deviceLanguage[1],
+    ) as String)
+        .split('-');
+    return Locale(locale[0], locale[1]);
+  }
+
+  Future<void> setLanguage(Locale locale) async {
+    await _values.put(
+        'language', locale.languageCode + '-' + locale.countryCode);
+    notifyListeners();
+  }
 }

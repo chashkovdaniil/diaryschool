@@ -1,3 +1,4 @@
+import 'package:diaryschool/generated/i18n.dart';
 import 'package:diaryschool/models/subject.dart';
 import 'package:diaryschool/provider/SubjectProvider.dart';
 import 'package:diaryschool/screens/subjects/subject_dialog.dart';
@@ -18,7 +19,7 @@ class SelectSubjectDialog extends StatelessWidget {
       title: Row(
         children: <Widget>[
           Text(
-            'Выбрать предмет',
+            I18n.of(context).selectSubject,
             style: Theme.of(context)
                 .textTheme
                 .subtitle1
@@ -39,7 +40,7 @@ class SelectSubjectDialog extends StatelessWidget {
         ],
       ),
       content: _list.isEmpty
-          ? Text('Список пуст')
+          ? Text(I18n.of(context).emptyList)
           : ListView.builder(
               shrinkWrap: true,
               itemBuilder: (context, index) => ListTile(
@@ -55,7 +56,7 @@ class SelectSubjectDialog extends StatelessWidget {
       actions: <Widget>[
         FlatButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: Text('Закрыть'.toUpperCase()),
+          child: Text(I18n.of(context).close.toUpperCase()),
         ),
       ],
     );

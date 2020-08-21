@@ -1,3 +1,4 @@
+import 'package:diaryschool/generated/i18n.dart';
 import 'package:diaryschool/screens/home/widgets/menu_tile.dart';
 import 'package:diaryschool/screens/settings/settings_screen.dart';
 import 'package:diaryschool/screens/subjects/subjects_screen.dart';
@@ -15,7 +16,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Главная'),
+        title: Text(I18n.of(context).home),
         actions: <Widget>[
           // TODO: сделать поиск
           // IconButton(
@@ -75,7 +76,7 @@ class HomeScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(kDefaultPadding - 5),
             child: Text(
-              'Меню',
+              I18n.of(context).menu,
               style: Theme.of(context).textTheme.overline,
             ),
           ),
@@ -103,7 +104,7 @@ class HomeScreen extends StatelessWidget {
                   TeachersScreen.id,
                 ),
                 icon: Icons.people,
-                title: 'Учителя',
+                title: I18n.of(context).teachers,
               ),
               MenuTile(
                 onTap: () => Navigator.pushNamed(
@@ -111,7 +112,7 @@ class HomeScreen extends StatelessWidget {
                   SubjectsScreen.id,
                 ),
                 icon: Icons.list,
-                title: 'Предметы',
+                title: I18n.of(context).subjects,
               ),
               // MenuTile(
               // onTap: () => Navigator.pushNamed(

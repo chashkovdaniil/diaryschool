@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:diaryschool/common_widgets/select_subject_dialog.dart';
+import 'package:diaryschool/generated/i18n.dart';
 import 'package:diaryschool/models/timetable_row.dart';
 import 'package:diaryschool/provider/SubjectProvider.dart';
 import 'package:diaryschool/provider/TimetableProvider.dart';
@@ -20,7 +21,7 @@ class _TimetableDialogState extends State<TimetableDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Расписание'),
+      title: Text(I18n.of(context).timetableNav),
       content: Form(
         key: _formKey,
         child: ListView(
@@ -30,7 +31,7 @@ class _TimetableDialogState extends State<TimetableDialog> {
               initialValue: widget.timetable.start,
               validator: (value) {
                 if (value == null) {
-                  return 'Укажите начало урока';
+                  return I18n.of(context).fillField;
                 }
                 return null;
               },
@@ -67,8 +68,8 @@ class _TimetableDialogState extends State<TimetableDialog> {
                         ),
                         child: Text(
                           widget.timetable.start == null
-                              ? 'Начало урока'
-                              : 'Начало - ${widget.timetable.start.hour}:${widget.timetable.start.minute}',
+                              ? I18n.of(context).startLesson
+                              : '${I18n.of(context).beginning} - ${widget.timetable.start.hour}:${widget.timetable.start.minute}',
                           overflow: TextOverflow.fade,
                         ),
                       ),
@@ -93,7 +94,7 @@ class _TimetableDialogState extends State<TimetableDialog> {
               initialValue: widget.timetable.end,
               validator: (value) {
                 if (value == null) {
-                  return 'Укажите конец урока';
+                  return I18n.of(context).fillField;
                 }
                 return null;
               },
@@ -130,8 +131,8 @@ class _TimetableDialogState extends State<TimetableDialog> {
                         ),
                         child: Text(
                           widget.timetable.end == null
-                              ? 'Конец урока'
-                              : 'Конец - ${widget.timetable.end.hour}:${widget.timetable.end.minute}',
+                              ? I18n.of(context).endLesson
+                              : '${I18n.of(context).end} - ${widget.timetable.end.hour}:${widget.timetable.end.minute}',
                           overflow: TextOverflow.fade,
                         ),
                       ),
@@ -156,7 +157,7 @@ class _TimetableDialogState extends State<TimetableDialog> {
               initialValue: widget.timetable.subject,
               validator: (int value) {
                 if (value == null) {
-                  return 'Выберите предмет';
+                  return I18n.of(context).selectSubject;
                 }
                 return null;
               },
@@ -173,7 +174,7 @@ class _TimetableDialogState extends State<TimetableDialog> {
                         );
                         if (_subject != null) {
                           widget.timetable.subject = _subject;
-                          state.setValue(_subject);
+                          state.didChange(_subject);
                           setState(() {});
                         }
                       },
@@ -195,7 +196,7 @@ class _TimetableDialogState extends State<TimetableDialog> {
                         ),
                         child: Text(
                           widget.timetable.subject == null
-                              ? 'Выбрать предмет'
+                              ? I18n.of(context).selectSubject
                               : Provider.of<SubjectProvider>(context)
                                   .values[widget.timetable.subject]
                                   .title,
@@ -225,13 +226,13 @@ class _TimetableDialogState extends State<TimetableDialog> {
       actions: [
         FlatButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: Text('Отмена'.toUpperCase()),
+          child: Text(I18n.of(context).cancel.toUpperCase()),
         ),
         FlatButton(
           onPressed: () {
             if (_formKey.currentState.validate()) {
               // TODO: сделать проверку на чередуемость времени
-              
+
               Provider.of<TimetableProvider>(
                 context,
                 listen: false,
@@ -241,7 +242,7 @@ class _TimetableDialogState extends State<TimetableDialog> {
               return Navigator.of(context).pop();
             }
           },
-          child: Text('Сохранить'.toUpperCase()),
+          child: Text(I18n.of(context).save.toUpperCase()),
         ),
       ],
     );

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:diaryschool/common_widgets/divider.dart';
+import 'package:diaryschool/generated/i18n.dart';
 import 'package:diaryschool/models/teacher.dart';
 import 'package:diaryschool/provider/TeacherProvider.dart';
 import 'package:diaryschool/screens/teachers/teacher_card.dart';
@@ -27,7 +28,7 @@ class _TeachersScreenState extends State<TeachersScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Учителя'),
+        title: Text(I18n.of(context).teachers),
       ),
       body: ListView(
         children: <Widget>[
@@ -47,7 +48,7 @@ class _TeachersScreenState extends State<TeachersScreen> {
                 color: Theme.of(context).primaryColor,
               ),
               label: Text(
-                'Добавить учителя'.toUpperCase(),
+                I18n.of(context).add.toUpperCase(),
                 style: Theme.of(context).textTheme.button,
               ),
             ),
@@ -57,7 +58,7 @@ class _TeachersScreenState extends State<TeachersScreen> {
             builder: (context, provider, child) {
               if (provider.values.isEmpty) {
                 return Center(
-                  child: Text('Учителей нет'),
+                  child: Text(I18n.of(context).noTeachers),
                 );
               }
               return ListView.separated(

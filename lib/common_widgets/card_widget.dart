@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:ui';
 
 import 'package:diaryschool/common_widgets/task_bottom_sheet.dart';
+import 'package:diaryschool/generated/i18n.dart';
 import 'package:diaryschool/models/homework.dart';
 import 'package:diaryschool/provider/HomeworkProvider.dart';
 import 'package:diaryschool/provider/SubjectProvider.dart';
@@ -180,7 +181,7 @@ class _CardWidgetState extends State<CardWidget> {
                   child: Container(
                     transform: Matrix4.rotationZ(0.5),
                     child: Text(
-                      '[ Сделано ]',
+                      '[ ${I18n.of(context).done} ]',
                       textScaleFactor: 2,
                       style: Theme.of(context).textTheme.headline6,
                     ),
@@ -223,10 +224,10 @@ class _CardWidgetState extends State<CardWidget> {
       DateTime added =
           _currentDate.add(Duration(milliseconds: _rest.inMilliseconds + 1));
 
-      if (added.day == _currentDate.day) return 'Сегодня';
-      return 'Завтра';
+      if (added.day == _currentDate.day) return I18n.of(context).today;
+      return I18n.of(context).tomorrow;
     }
-    if (_rest.inDays < 0) return 'Просрочено';
-    return 'Осталось: ${_rest.inDays} дн.';
+    if (_rest.inDays < 0) return I18n.of(context).expired;
+    return '${I18n.of(context).left}: ${_rest.inDays} ${I18n.of(context).days}';
   }
 }

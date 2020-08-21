@@ -33,35 +33,3 @@ const kDefaultShadow = [
     blurRadius: 8,
   ),
 ];
-const Map<int, String> kMonthIntToString = {
-  1: 'Янв',
-  2: 'Фев',
-  3: 'Мар',
-  4: 'Апр',
-  5: 'Май',
-  6: 'Июнь',
-  7: 'Июль',
-  8: 'Авг',
-  9: 'Сен',
-  10: 'Окт',
-  11: 'Ноя',
-  12: 'Дек',
-};
-const Map<int, String> kDayOfWeekOnString = {
-  1: 'Понедельник',
-  2: 'Вторник',
-  3: 'Среда',
-  4: 'Четверг',
-  5: 'Пятница',
-  6: 'Суббота',
-  7: 'Воскресенье'
-};
-const Map<int, String> kShortDayOfWeekOnString = {
-  1: 'Пн',
-  2: 'Вт',
-  3: 'Ср',
-  4: 'Чт',
-  5: 'Пт',
-  6: 'Сб',
-  7: 'Вс'
-};

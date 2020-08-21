@@ -1,3 +1,4 @@
+import 'package:diaryschool/generated/i18n.dart';
 import 'package:diaryschool/models/timetable_row.dart';
 import 'package:diaryschool/provider/SettingsProvider.dart';
 import 'package:diaryschool/provider/SubjectProvider.dart';
@@ -15,25 +16,6 @@ class TimetablePage extends StatefulWidget {
 }
 
 class _TimetablePageState extends State<TimetablePage> {
-  final List<String> shortDaysOfWeek = [
-    'Пн',
-    'Вт',
-    'Ср',
-    'Чт',
-    'Пт',
-    'Сб',
-    'Вс'
-  ];
-  final List<String> daysOfWeek = [
-    'Понедельник',
-    'Вторник',
-    'Среда',
-    'Четверг',
-    'Пятница',
-    'Суббота',
-    'Воскресенье',
-  ];
-
   double _currentDay = 1;
   OverlayEntry _overlayEntry;
 
@@ -51,6 +33,15 @@ class _TimetablePageState extends State<TimetablePage> {
 
   @override
   Widget build(BuildContext context) {
+    final List<String> daysOfWeek = [
+      I18n.of(context).monday,
+      I18n.of(context).tuesday,
+      I18n.of(context).wednesday,
+      I18n.of(context).thursday,
+      I18n.of(context).friday,
+      I18n.of(context).saturday,
+      I18n.of(context).sunday,
+    ];
     List<TimetableRow> _timetable =
         context.watch<TimetableProvider>().values.where((element) {
       if (element.dayOfWeek == _currentDay) {
@@ -60,7 +51,7 @@ class _TimetablePageState extends State<TimetablePage> {
     }).toList();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Расписание'),
+        title: Text(I18n.of(context).timetableNav),
       ),
       body: Column(
         children: [
@@ -69,7 +60,9 @@ class _TimetablePageState extends State<TimetablePage> {
             style: Theme.of(context).textTheme.headline6,
           ),
           _timetable.isEmpty
-              ? Expanded(child: Text('Нет расписания'))
+              ? Expanded(
+                  child: Text(I18n.of(context).noTimetable),
+                )
               : Expanded(
                   child: ListView.builder(
                     shrinkWrap: true,
@@ -146,7 +139,7 @@ class _TimetablePageState extends State<TimetablePage> {
               setState(() {});
             },
             icon: const Icon(Icons.add),
-            label: const Text('Добавить'),
+            label: Text(I18n.of(context).add),
           ),
           Container(
             child: Slider.adaptive(
@@ -184,8 +177,7 @@ class _TimetablePageState extends State<TimetablePage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'Текущий урок подсвечивается тусклым цветом.'
-                    'Ниже находится ползунок для выбора дня недели.',
+                    I18n.of(context).tipTimetable,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
@@ -198,7 +190,7 @@ class _TimetablePageState extends State<TimetablePage> {
                       _overlayEntry.remove();
                     },
                     child: Text(
-                      'Закрыть',
+                      I18n.of(context).close,
                       style: Theme.of(context).textTheme.button,
                     ),
                   ),

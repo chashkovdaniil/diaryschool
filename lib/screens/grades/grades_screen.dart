@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:diaryschool/generated/i18n.dart';
 import 'package:diaryschool/models/homework.dart';
 import 'package:diaryschool/models/subject.dart';
 import 'package:diaryschool/provider/HomeworkProvider.dart';
@@ -63,7 +64,6 @@ class _GradesScreenState extends State<GradesScreen> {
       homeworks.forEach((h) {
         if (h.subject == s.uid && h.grade != null) {
           subject.grades.add(h.grade);
-          log('true');
         }
       });
 
@@ -71,7 +71,7 @@ class _GradesScreenState extends State<GradesScreen> {
     }).toList();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Оценки'),
+        title: Text(I18n.of(context).gradesNav),
         actions: <Widget>[
           IconButton(
             key: calendarKey,
@@ -106,7 +106,7 @@ class _GradesScreenState extends State<GradesScreen> {
               ),
             ),
           ),
-          if (subjects.isEmpty) Center(child: Text('Нет оценок')),
+          if (subjects.isEmpty) Center(child: Text(I18n.of(context).noGrades)),
           ...subjects.map((e) {
             return CardGrades(
               subject: e.title,
@@ -136,7 +136,7 @@ class _GradesScreenState extends State<GradesScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'На этой странице вы можете посмотреть оценки за выбранный вами интервал, по умолчанию берется текущий месяц.',
+                    I18n.of(context).tipGrades1,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
@@ -147,7 +147,7 @@ class _GradesScreenState extends State<GradesScreen> {
                       Overlay.of(context).insert(_overlayEntry);
                     },
                     child: Text(
-                      'Далее',
+                      I18n.of(context).next,
                       style: Theme.of(context).textTheme.button,
                     ),
                   ),
@@ -187,7 +187,7 @@ class _GradesScreenState extends State<GradesScreen> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        'Справа в углу находится кнопка, после нажатия на неё, вы сможете выбрать период, за который надо показать оценки.',
+                    I18n.of(context).tipGrades2,
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.subtitle1,
                       ),
@@ -200,7 +200,7 @@ class _GradesScreenState extends State<GradesScreen> {
                           _overlayEntry.remove();
                         },
                         child: Text(
-                          'Закрыть',
+                          I18n.of(context).close,
                           style: Theme.of(context).textTheme.button,
                         ),
                       ),
