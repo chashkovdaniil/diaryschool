@@ -1,11 +1,11 @@
 import 'dart:developer';
 
-import 'package:diaryschool/generated/i18n.dart';
-import 'package:diaryschool/models/homework.dart';
-import 'package:diaryschool/provider/HomeworkProvider.dart';
-import 'package:diaryschool/provider/SubjectProvider.dart';
-import 'package:diaryschool/screens/task/task_screen.dart';
-import 'package:diaryschool/utilities/constants.dart';
+import 'package:edum/generated/i18n.dart';
+import 'package:edum/models/homework.dart';
+import 'package:edum/provider/HomeworkProvider.dart';
+import 'package:edum/provider/SubjectProvider.dart';
+import 'package:edum/screens/task/task_screen.dart';
+import 'package:edum/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

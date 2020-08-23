@@ -1,4 +1,4 @@
-import 'package:diaryschool/screens/help/q_screen.dart';
+import 'package:edum/screens/help/q_screen.dart';
 import 'package:flutter/material.dart';
 
 class HelpScreen extends StatelessWidget {

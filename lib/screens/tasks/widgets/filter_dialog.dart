@@ -1,7 +1,7 @@
 import 'dart:developer';
 
-import 'package:diaryschool/generated/i18n.dart';
-import 'package:diaryschool/provider/SettingsProvider.dart';
+import 'package:edum/generated/i18n.dart';
+import 'package:edum/provider/SettingsProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

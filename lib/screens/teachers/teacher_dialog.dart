@@ -1,8 +1,8 @@
 import 'dart:developer';
 
-import 'package:diaryschool/generated/i18n.dart';
-import 'package:diaryschool/models/teacher.dart';
-import 'package:diaryschool/provider/TeacherProvider.dart';
+import 'package:edum/generated/i18n.dart';
+import 'package:edum/models/teacher.dart';
+import 'package:edum/provider/TeacherProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';

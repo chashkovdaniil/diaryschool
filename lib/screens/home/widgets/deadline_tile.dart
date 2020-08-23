@@ -1,4 +1,4 @@
-import 'package:diaryschool/utilities/constants.dart';
+import 'package:edum/utilities/constants.dart';
 import 'package:flutter/material.dart';
 
 class DeadlineTile extends StatelessWidget {

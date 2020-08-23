@@ -1,8 +1,8 @@
-import 'package:diaryschool/generated/i18n.dart';
-import 'package:diaryschool/models/teacher.dart';
-import 'package:diaryschool/provider/TeacherProvider.dart';
-import 'package:diaryschool/screens/teachers/teacher_dialog.dart';
-import 'package:diaryschool/utilities/constants.dart';
+import 'package:edum/generated/i18n.dart';
+import 'package:edum/models/teacher.dart';
+import 'package:edum/provider/TeacherProvider.dart';
+import 'package:edum/screens/teachers/teacher_dialog.dart';
+import 'package:edum/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

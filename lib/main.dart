@@ -1,25 +1,26 @@
 import 'dart:io';
 import 'dart:ui';
 
-import 'package:diaryschool/generated/i18n.dart';
-import 'package:diaryschool/models/homework.dart';
-import 'package:diaryschool/models/subject.dart';
-import 'package:diaryschool/models/teacher.dart';
-import 'package:diaryschool/models/time_of_day_adaper.dart';
-import 'package:diaryschool/models/timetable_row.dart';
-import 'package:diaryschool/provider/HomeworkProvider.dart';
-import 'package:diaryschool/provider/SettingsProvider.dart';
-import 'package:diaryschool/provider/SubjectProvider.dart';
-import 'package:diaryschool/provider/TeacherProvider.dart';
-import 'package:diaryschool/provider/TimetableProvider.dart';
-import 'package:diaryschool/screens/failure/failure_screen.dart';
-import 'package:diaryschool/screens/help/help_screen.dart';
-import 'package:diaryschool/screens/main/main_screen.dart';
-import 'package:diaryschool/screens/subjects/subjects_screen.dart';
-import 'package:diaryschool/screens/task/task_screen.dart';
-import 'package:diaryschool/screens/tasks/tasks_screen.dart';
-import 'package:diaryschool/screens/teachers/teachers_screen.dart';
-import 'package:diaryschool/utilities/constants.dart';
+import 'package:edum/generated/i18n.dart';
+import 'package:edum/models/homework.dart';
+import 'package:edum/models/subject.dart';
+import 'package:edum/models/teacher.dart';
+import 'package:edum/models/time_of_day_adaper.dart';
+import 'package:edum/models/timetable_row.dart';
+import 'package:edum/provider/HomeworkProvider.dart';
+import 'package:edum/provider/SettingsProvider.dart';
+import 'package:edum/provider/SubjectProvider.dart';
+import 'package:edum/provider/TeacherProvider.dart';
+import 'package:edum/provider/TimetableProvider.dart';
+import 'package:edum/screens/failure/failure_screen.dart';
+import 'package:edum/screens/help/help_screen.dart';
+import 'package:edum/screens/main/main_screen.dart';
+import 'package:edum/screens/subjects/subjects_screen.dart';
+import 'package:edum/screens/task/task_screen.dart';
+import 'package:edum/screens/tasks/tasks_screen.dart';
+import 'package:edum/screens/teachers/teachers_screen.dart';
+import 'package:edum/utilities/constants.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -32,6 +33,8 @@ import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  await Firebase.initializeApp();
   await Hive.initFlutter((await getApplicationDocumentsDirectory()).path);
   Hive
     ..registerAdapter(SubjectAdapter())
@@ -50,9 +53,8 @@ Future<void> main() async {
   // await teachers.clear();
   // await timetable.clear();
   final Box settings = await Hive.openBox('settings');
-
   InAppPurchaseConnection.enablePendingPurchases();
-  runApp(DiarySchoolApp(
+  runApp(EdumApp(
     teachers: teachers,
     subjects: subjects,
     homeworks: homeworks,
@@ -61,14 +63,14 @@ Future<void> main() async {
   ));
 }
 
-class DiarySchoolApp extends StatelessWidget {
+class EdumApp extends StatelessWidget {
   final Box<Teacher> teachers;
   final Box<Subject> subjects;
   final Box<Homework> homeworks;
   final Box<TimetableRow> timetable;
   final Box settings;
 
-  DiarySchoolApp({
+  EdumApp({
     Key key,
     this.teachers,
     this.subjects,
@@ -239,6 +241,9 @@ class DiarySchoolApp extends StatelessWidget {
             ),
           ),
           theme: ThemeData(
+            sliderTheme: SliderThemeData(
+              valueIndicatorColor: kColorRed.shade100,
+            ),
             buttonBarTheme: const ButtonBarThemeData(
               buttonTextTheme: ButtonTextTheme.normal,
             ),

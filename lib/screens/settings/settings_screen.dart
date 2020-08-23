@@ -1,8 +1,9 @@
-import 'package:diaryschool/generated/i18n.dart';
-import 'package:diaryschool/provider/SettingsProvider.dart';
-import 'package:diaryschool/utilities/constants.dart';
+import 'package:edum/generated/i18n.dart';
+import 'package:edum/provider/SettingsProvider.dart';
+import 'package:edum/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import 'widgets/color_tile.dart';
@@ -260,9 +261,14 @@ class SettingsScreen extends StatelessWidget {
               showDialog(
                 context: context,
                 builder: (context) {
-                  return const AboutDialog(
-                    applicationName: 'Школьный дневник',
+                  return AboutDialog(
+                    applicationName: 'Edum',
                     applicationVersion: '4.0.0',
+                    applicationIcon: SvgPicture.asset(
+                      'assets/svg/Icon.svg',
+                      width: 48,
+                      height: 48,
+                    ),
                   );
                 },
               );

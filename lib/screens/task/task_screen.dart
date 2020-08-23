@@ -1,13 +1,13 @@
 import 'dart:developer';
 
-import 'package:diaryschool/common_widgets/select_subject_dialog.dart';
-import 'package:diaryschool/generated/i18n.dart';
-import 'package:diaryschool/models/homework.dart';
-import 'package:diaryschool/provider/HomeworkProvider.dart';
-import 'package:diaryschool/provider/SettingsProvider.dart';
-import 'package:diaryschool/provider/SubjectProvider.dart';
-import 'package:diaryschool/screens/task/widgets/grade_field.dart';
-import 'package:diaryschool/utilities/constants.dart';
+import 'package:edum/common_widgets/select_subject_dialog.dart';
+import 'package:edum/generated/i18n.dart';
+import 'package:edum/models/homework.dart';
+import 'package:edum/provider/HomeworkProvider.dart';
+import 'package:edum/provider/SettingsProvider.dart';
+import 'package:edum/provider/SubjectProvider.dart';
+import 'package:edum/screens/task/widgets/grade_field.dart';
+import 'package:edum/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
@@ -34,6 +34,7 @@ class _TaskScreenState extends State<TaskScreen> {
   @override
   void initState() {
     _homework = Homework.fromMap(widget.homework);
+    log(_homework.isDone.toString());
     super.initState();
   }
 

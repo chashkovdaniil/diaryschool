@@ -1,10 +1,10 @@
 import 'dart:developer';
 
-import 'package:diaryschool/common_widgets/select_teacher_dialog.dart';
-import 'package:diaryschool/generated/i18n.dart';
-import 'package:diaryschool/models/subject.dart';
-import 'package:diaryschool/provider/SubjectProvider.dart';
-import 'package:diaryschool/provider/TeacherProvider.dart';
+import 'package:edum/common_widgets/select_teacher_dialog.dart';
+import 'package:edum/generated/i18n.dart';
+import 'package:edum/models/subject.dart';
+import 'package:edum/provider/SubjectProvider.dart';
+import 'package:edum/provider/TeacherProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

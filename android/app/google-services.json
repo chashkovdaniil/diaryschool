@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "815933775318",
+    "firebase_url": "https://diary-school-ff43a.firebaseio.com",
+    "project_id": "diary-school-ff43a",
+    "storage_bucket": "diary-school-ff43a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:815933775318:android:83b1a6529070105fb6d877",
+        "android_client_info": {
+          "package_name": "chashkov.edum"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "815933775318-dhpnjfrlbp1dt2i2qtqiuva5b4n31ga3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "chashkov.edum",
+            "certificate_hash": "bc93bdcf220269d4690f21cfb2e658f07113bbb0"
+          }
+        },
+        {
+          "client_id": "815933775318-q89h8ntg0gv22s3a3jndfodq7hm72t91.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuV40gkfvGa6y0mK_B57EAVgcFK0Vc970"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "815933775318-q89h8ntg0gv22s3a3jndfodq7hm72t91.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

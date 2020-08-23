@@ -1,5 +1,5 @@
 
-import 'package:diaryschool/generated/i18n.dart';
+import 'package:edum/generated/i18n.dart';
 import 'package:flutter/material.dart';
 
 class GradeField extends StatefulWidget {
@@ -16,8 +16,11 @@ class _GradeFieldState extends State<GradeField> {
     return AlertDialog(
       title: Text(I18n.of(context).grade),
       content: TextFormField(
-        initialValue: widget.grade ?? '0',
+        initialValue: widget.grade,
         maxLength: 2,
+        decoration: InputDecoration(
+          hintText: 'Поставьте оценку'
+        ),
         keyboardType: TextInputType.number,
         onChanged: (value) => grade = value.trim(),
         // decoration: InputDecoration(),

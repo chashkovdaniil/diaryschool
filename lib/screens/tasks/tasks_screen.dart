@@ -1,16 +1,19 @@
 import 'dart:developer';
+import 'dart:math' show Random;
 
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:diaryschool/common_widgets/card_widget.dart';
-import 'package:diaryschool/generated/i18n.dart';
-import 'package:diaryschool/models/homework.dart';
-import 'package:diaryschool/models/subject.dart';
-import 'package:diaryschool/provider/HomeworkProvider.dart';
-import 'package:diaryschool/provider/SettingsProvider.dart';
-import 'package:diaryschool/provider/SubjectProvider.dart';
-import 'package:diaryschool/screens/task/task_screen.dart';
-import 'package:diaryschool/screens/tasks/widgets/filter_dialog.dart';
-import 'package:diaryschool/utilities/constants.dart';
+import 'package:edum/common_widgets/card_widget.dart';
+import 'package:edum/generated/i18n.dart';
+import 'package:edum/models/homework.dart';
+import 'package:edum/models/subject.dart';
+import 'package:edum/provider/HomeworkProvider.dart';
+import 'package:edum/provider/SettingsProvider.dart';
+import 'package:edum/provider/SubjectProvider.dart';
+import 'package:edum/screens/failure/failure_screen.dart';
+import 'package:edum/screens/task/task_screen.dart';
+import 'package:edum/screens/tasks/widgets/filter_dialog.dart';
+import 'package:edum/utilities/constants.dart';
+import 'package:flutter/cupertino.dart' show CupertinoPageRoute;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
@@ -78,6 +81,18 @@ class _TasksScreenState extends State<TasksScreen> {
         actions: <Widget>[
           IconButton(
             onPressed: () {
+              Navigator.of(context).pushReplacement(
+                CupertinoPageRoute(
+                  builder: (context) {
+                    return FailureScreen();
+                  },
+                ),
+              );
+            },
+            icon: const Icon(Icons.sms_failed),
+          ),
+          IconButton(
+            onPressed: () {
               showDialog(
                 context: context,
                 builder: (context) => FilterDialog(
@@ -98,7 +113,8 @@ class _TasksScreenState extends State<TasksScreen> {
                   itemBuilder: (BuildContext context, int index) {
                     return CardWidget(
                       key: ValueKey(
-                          _homeworks[index].date.millisecondsSinceEpoch),
+                        _homeworks[index].date.millisecondsSinceEpoch,
+                      ),
                       filter: _filter,
                       homework: _homeworks[index],
                     );
@@ -187,19 +203,6 @@ class _TasksScreenState extends State<TasksScreen> {
               ],
             ),
           ),
-          // ListView.builder(
-          //   shrinkWrap: true,
-          //   physics: const NeverScrollableScrollPhysics(),
-          //   itemCount: _homeworks.length,
-          //   itemBuilder: (context, index) {
-          //     return CardWidget(
-          //       key: ValueKey(_homeworks[index].date.millisecondsSinceEpoch),
-          //       filter: _filter,
-          //       homework: _homeworks[index],
-          //       index: index,
-          //     );
-          //   },
-          // ),
         ],
       ),
     );

@@ -1,14 +1,14 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:diaryschool/generated/i18n.dart';
-import 'package:diaryschool/provider/SettingsProvider.dart';
-import 'package:diaryschool/screens/grades/grades_screen.dart';
-import 'package:diaryschool/screens/home/home_screen.dart';
-import 'package:diaryschool/screens/task/task_screen.dart';
-import 'package:diaryschool/screens/tasks/tasks_screen.dart';
-import 'package:diaryschool/screens/timetable/timetable_page.dart';
-import 'package:diaryschool/utilities/constants.dart';
+import 'package:edum/generated/i18n.dart';
+import 'package:edum/provider/SettingsProvider.dart';
+import 'package:edum/screens/grades/grades_screen.dart';
+import 'package:edum/screens/home/home_screen.dart';
+import 'package:edum/screens/task/task_screen.dart';
+import 'package:edum/screens/tasks/tasks_screen.dart';
+import 'package:edum/screens/timetable/timetable_page.dart';
+import 'package:edum/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -43,12 +43,9 @@ class _MainScreenState extends State<MainScreen> {
       WillPopScope(
         child: child,
         onWillPop: () async {
-          if (Navigator.of(context).canPop()) {
-            Navigator.of(context).pop();
-            return false;
-          }
           if (_navigatorKeys[index].currentState.canPop()) {
             _navigatorKeys[index].currentState.pop();
+            log('aaaaaa');
             return false;
           }
           return true;
@@ -59,6 +56,7 @@ class _MainScreenState extends State<MainScreen> {
 
   Future selectNotification(String payload) async {
     if (payload != null) {
+      _screenController.add(2);
       debugPrint('notification payload: ' + payload);
     }
   }
@@ -88,7 +86,16 @@ class _MainScreenState extends State<MainScreen> {
       ),
       navWidget(
         index: 2,
-        child: TasksScreen(),
+        child: Navigator(
+          key: _navigatorKeys[2],
+          onGenerateRoute: (RouteSettings _rs) {
+            return MaterialPageRoute(
+              builder: (context) {
+                return TasksScreen();
+              },
+            );
+          },
+        ),
       ),
       navWidget(
         index: 3,

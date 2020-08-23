@@ -1,5 +1,5 @@
-import 'package:diaryschool/screens/articles/article_screen.dart';
-import 'package:diaryschool/utilities/constants.dart';
+import 'package:edum/screens/articles/article_screen.dart';
+import 'package:edum/utilities/constants.dart';
 import 'package:flutter/material.dart';
 
 class ArticlesScreen extends StatelessWidget {

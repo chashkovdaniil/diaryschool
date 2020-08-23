@@ -1,7 +1,7 @@
 import 'dart:developer';
 
-import 'package:diaryschool/models/subject.dart';
-import 'package:diaryschool/provider/SchoolProvider.dart';
+import 'package:edum/models/subject.dart';
+import 'package:edum/provider/SchoolProvider.dart';
 import 'package:hive/hive.dart';
 import 'package:flutter/widgets.dart';
 

@@ -1,7 +1,7 @@
-import 'package:diaryschool/generated/i18n.dart';
-import 'package:diaryschool/models/subject.dart';
-import 'package:diaryschool/provider/SubjectProvider.dart';
-import 'package:diaryschool/screens/subjects/subject_dialog.dart';
+import 'package:edum/generated/i18n.dart';
+import 'package:edum/models/subject.dart';
+import 'package:edum/provider/SubjectProvider.dart';
+import 'package:edum/screens/subjects/subject_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

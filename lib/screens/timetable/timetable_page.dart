@@ -1,9 +1,9 @@
-import 'package:diaryschool/generated/i18n.dart';
-import 'package:diaryschool/models/timetable_row.dart';
-import 'package:diaryschool/provider/SettingsProvider.dart';
-import 'package:diaryschool/provider/SubjectProvider.dart';
-import 'package:diaryschool/provider/TimetableProvider.dart';
-import 'package:diaryschool/screens/timetable/timetable_dialog.dart';
+import 'package:edum/generated/i18n.dart';
+import 'package:edum/models/timetable_row.dart';
+import 'package:edum/provider/SettingsProvider.dart';
+import 'package:edum/provider/SubjectProvider.dart';
+import 'package:edum/provider/TimetableProvider.dart';
+import 'package:edum/screens/timetable/timetable_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';

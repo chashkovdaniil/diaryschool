@@ -35,7 +35,7 @@ class Homework {
   Homework.fromMap(Map<String, dynamic> data) {
     uid = data['uid'] as int;
     subject = data['subject'] as int;
-    isDone = data['isDone'] == 1;
+    isDone = data['isDone'] as bool;
     content = data['content'] as String;
     grade = data['grade'] as String;
     date = data['date'] == null

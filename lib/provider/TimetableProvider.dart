@@ -1,7 +1,7 @@
 import 'dart:developer';
 
-import 'package:diaryschool/models/timetable_row.dart';
-import 'package:diaryschool/provider/SchoolProvider.dart';
+import 'package:edum/models/timetable_row.dart';
+import 'package:edum/provider/SchoolProvider.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hive/hive.dart';
 

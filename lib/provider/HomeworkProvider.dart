@@ -1,7 +1,7 @@
 import 'dart:developer';
 
-import 'package:diaryschool/models/homework.dart';
-import 'package:diaryschool/provider/SchoolProvider.dart';
+import 'package:edum/models/homework.dart';
+import 'package:edum/provider/SchoolProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 

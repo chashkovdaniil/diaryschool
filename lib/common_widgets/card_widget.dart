@@ -1,13 +1,13 @@
 import 'dart:developer';
 import 'dart:ui';
 
-import 'package:diaryschool/common_widgets/task_bottom_sheet.dart';
-import 'package:diaryschool/generated/i18n.dart';
-import 'package:diaryschool/models/homework.dart';
-import 'package:diaryschool/provider/HomeworkProvider.dart';
-import 'package:diaryschool/provider/SubjectProvider.dart';
-import 'package:diaryschool/provider/TeacherProvider.dart';
-import 'package:diaryschool/utilities/constants.dart';
+import 'package:edum/common_widgets/task_bottom_sheet.dart';
+import 'package:edum/generated/i18n.dart';
+import 'package:edum/models/homework.dart';
+import 'package:edum/provider/HomeworkProvider.dart';
+import 'package:edum/provider/SubjectProvider.dart';
+import 'package:edum/provider/TeacherProvider.dart';
+import 'package:edum/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -49,7 +49,7 @@ class _CardWidgetState extends State<CardWidget> {
           context,
           listen: false,
         ).put(widget.homework);
-        setState(() {});
+        // setState(() {});
         // TODO: Показать диалог об ошибке, если есть
       },
       borderRadius: kBorderRadius,
@@ -161,33 +161,35 @@ class _CardWidgetState extends State<CardWidget> {
               ),
             ),
           ),
-          widget.homework.isDone
-              ? Positioned.fill(
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(
-                      sigmaX: 5,
-                      sigmaY: 5,
-                    ),
-                    child: Container(
-                      color: Colors.black.withOpacity(0),
-                    ),
+          if (widget.homework.isDone) ...[
+            Positioned.fill(
+              child: ClipRRect(
+                child: BackdropFilter(
+                  key: ValueKey(widget.homework.date.millisecondsSinceEpoch),
+                  filter: ImageFilter.blur(
+                    sigmaX: 5,
+                    sigmaY: 5,
                   ),
-                )
-              : const SizedBox.shrink(),
-          widget.homework.isDone
-              ? Positioned(
-                  top: 50,
-                  left: MediaQuery.of(context).size.width / 6,
                   child: Container(
-                    transform: Matrix4.rotationZ(0.5),
-                    child: Text(
-                      '[ ${I18n.of(context).done} ]',
-                      textScaleFactor: 2,
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
+                    key: ValueKey(widget.homework.date.millisecondsSinceEpoch),
+                    color: Colors.black.withOpacity(0),
                   ),
-                )
-              : const SizedBox.shrink(),
+                ),
+              ),
+            ),
+            Positioned(
+              top: 50,
+              left: MediaQuery.of(context).size.width / 6,
+              child: Container(
+                transform: Matrix4.rotationZ(0.5),
+                child: Text(
+                  '[ ${I18n.of(context).done} ]',
+                  textScaleFactor: 2,
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+              ),
+            ),
+          ],
         ],
       ),
     );

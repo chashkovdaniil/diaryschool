@@ -1,5 +1,5 @@
-import 'package:diaryschool/models/teacher.dart';
-import 'package:diaryschool/provider/SchoolProvider.dart';
+import 'package:edum/models/teacher.dart';
+import 'package:edum/provider/SchoolProvider.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hive/hive.dart';
 

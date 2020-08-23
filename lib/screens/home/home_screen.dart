@@ -1,9 +1,9 @@
-import 'package:diaryschool/generated/i18n.dart';
-import 'package:diaryschool/screens/home/widgets/menu_tile.dart';
-import 'package:diaryschool/screens/settings/settings_screen.dart';
-import 'package:diaryschool/screens/subjects/subjects_screen.dart';
-import 'package:diaryschool/screens/teachers/teachers_screen.dart';
-import 'package:diaryschool/utilities/constants.dart';
+import 'package:edum/generated/i18n.dart';
+import 'package:edum/screens/home/widgets/menu_tile.dart';
+import 'package:edum/screens/settings/settings_screen.dart';
+import 'package:edum/screens/subjects/subjects_screen.dart';
+import 'package:edum/screens/teachers/teachers_screen.dart';
+import 'package:edum/utilities/constants.dart';
 import 'package:flutter/cupertino.dart' show CupertinoPageRoute;
 import 'package:flutter/material.dart';
 

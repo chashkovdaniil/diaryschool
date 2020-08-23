@@ -67,5 +67,20 @@
   "fillField": "Fill in the field",
   "enterTeacher": "Specify a teacher",
   "enterTitle": "Enter a title",
-  "tipTimetable": "The current lesson is dimmed. Below is a slider to select the day of the week."
+  "tipTimetable": "The current lesson is dimmed. Below is a slider to select the day of the week.","packingBag": "Packing a backpack",
+  "timePackBag": "Time to pack your portfolio!",
+  "packBag": "Pack your portfolio!",
+  "tipGrades1": "On this page you can see the grades for the interval you selected, the default is the current month.",
+  "tipGrades2": "On the right in the corner there is a button, after clicking on it, you can choose the period for which you want to show grades.",
+  "tipTask1": "There is a panel at the bottom of the screen.",
+  "tipTask2": "- click to set rating",
+  "tipTask3": "- click to install deline,",
+  "tipTask4": "- click to mark the task as completed (the icon turns red).",
+  "addSubject": "Add Subject",
+  "tipTasks1": "On this page you can view and add the day's homework",
+  "tipTasks2": "At the bottom there is a slider that you can move to select the day of the week. \nAlso next to the number is a date selection button.",
+  "tipTasks3": "After adding tasks you will see cards that can be viewed by swiping to the right and left. \nDouble tap on the card will mark the task as completed",
+  "tipTasks4": "In the right corner there is a filter that allows you what data to show.",
+  "beginning": "Beginning",
+  "end": "End"
 }

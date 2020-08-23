@@ -421,6 +421,54 @@ class _I18n_en_US extends I18n {
   /// "The current lesson is dimmed. Below is a slider to select the day of the week."
   @override
   String get tipTimetable => "The current lesson is dimmed. Below is a slider to select the day of the week.";
+  /// "Packing a backpack"
+  @override
+  String get packingBag => "Packing a backpack";
+  /// "Time to pack your portfolio!"
+  @override
+  String get timePackBag => "Time to pack your portfolio!";
+  /// "Pack your portfolio!"
+  @override
+  String get packBag => "Pack your portfolio!";
+  /// "On this page you can see the grades for the interval you selected, the default is the current month."
+  @override
+  String get tipGrades1 => "On this page you can see the grades for the interval you selected, the default is the current month.";
+  /// "On the right in the corner there is a button, after clicking on it, you can choose the period for which you want to show grades."
+  @override
+  String get tipGrades2 => "On the right in the corner there is a button, after clicking on it, you can choose the period for which you want to show grades.";
+  /// "There is a panel at the bottom of the screen."
+  @override
+  String get tipTask1 => "There is a panel at the bottom of the screen.";
+  /// "- click to set rating"
+  @override
+  String get tipTask2 => "- click to set rating";
+  /// "- click to install deline,"
+  @override
+  String get tipTask3 => "- click to install deline,";
+  /// "- click to mark the task as completed (the icon turns red)."
+  @override
+  String get tipTask4 => "- click to mark the task as completed (the icon turns red).";
+  /// "Add Subject"
+  @override
+  String get addSubject => "Add Subject";
+  /// "On this page you can view and add the day's homework"
+  @override
+  String get tipTasks1 => "On this page you can view and add the day's homework";
+  /// "At the bottom there is a slider that you can move to select the day of the week. \nAlso next to the number is a date selection button."
+  @override
+  String get tipTasks2 => "At the bottom there is a slider that you can move to select the day of the week. \nAlso next to the number is a date selection button.";
+  /// "After adding tasks you will see cards that can be viewed by swiping to the right and left. \nDouble tap on the card will mark the task as completed"
+  @override
+  String get tipTasks3 => "After adding tasks you will see cards that can be viewed by swiping to the right and left. \nDouble tap on the card will mark the task as completed";
+  /// "In the right corner there is a filter that allows you what data to show."
+  @override
+  String get tipTasks4 => "In the right corner there is a filter that allows you what data to show.";
+  /// "Beginning"
+  @override
+  String get beginning => "Beginning";
+  /// "End"
+  @override
+  String get end => "End";
 
   @override
   TextDirection get textDirection => TextDirection.ltr;
@@ -899,6 +947,54 @@ class _I18n_en_GB extends _I18n_en_US {
   /// "The current lesson is dimmed. Below is a slider to select the day of the week."
   @override
   String get tipTimetable => "The current lesson is dimmed. Below is a slider to select the day of the week.";
+  /// "Packing a backpack"
+  @override
+  String get packingBag => "Packing a backpack";
+  /// "Time to pack your portfolio!"
+  @override
+  String get timePackBag => "Time to pack your portfolio!";
+  /// "Pack your portfolio!"
+  @override
+  String get packBag => "Pack your portfolio!";
+  /// "On this page you can see the grades for the interval you selected, the default is the current month."
+  @override
+  String get tipGrades1 => "On this page you can see the grades for the interval you selected, the default is the current month.";
+  /// "On the right in the corner there is a button, after clicking on it, you can choose the period for which you want to show grades."
+  @override
+  String get tipGrades2 => "On the right in the corner there is a button, after clicking on it, you can choose the period for which you want to show grades.";
+  /// "There is a panel at the bottom of the screen."
+  @override
+  String get tipTask1 => "There is a panel at the bottom of the screen.";
+  /// "- click to set rating"
+  @override
+  String get tipTask2 => "- click to set rating";
+  /// "- click to install deline,"
+  @override
+  String get tipTask3 => "- click to install deline,";
+  /// "- click to mark the task as completed (the icon turns red)."
+  @override
+  String get tipTask4 => "- click to mark the task as completed (the icon turns red).";
+  /// "Add Subject"
+  @override
+  String get addSubject => "Add Subject";
+  /// "On this page you can view and add the day's homework"
+  @override
+  String get tipTasks1 => "On this page you can view and add the day's homework";
+  /// "At the bottom there is a slider that you can move to select the day of the week. \nAlso next to the number is a date selection button."
+  @override
+  String get tipTasks2 => "At the bottom there is a slider that you can move to select the day of the week. \nAlso next to the number is a date selection button.";
+  /// "After adding tasks you will see cards that can be viewed by swiping to the right and left. \nDouble tap on the card will mark the task as completed"
+  @override
+  String get tipTasks3 => "After adding tasks you will see cards that can be viewed by swiping to the right and left. \nDouble tap on the card will mark the task as completed";
+  /// "In the right corner there is a filter that allows you what data to show."
+  @override
+  String get tipTasks4 => "In the right corner there is a filter that allows you what data to show.";
+  /// "Beginning"
+  @override
+  String get beginning => "Beginning";
+  /// "End"
+  @override
+  String get end => "End";
 
   @override
   TextDirection get textDirection => TextDirection.ltr;

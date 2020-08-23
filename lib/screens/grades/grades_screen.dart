@@ -1,13 +1,13 @@
 import 'dart:developer';
 
-import 'package:diaryschool/generated/i18n.dart';
-import 'package:diaryschool/models/homework.dart';
-import 'package:diaryschool/models/subject.dart';
-import 'package:diaryschool/provider/HomeworkProvider.dart';
-import 'package:diaryschool/provider/SettingsProvider.dart';
-import 'package:diaryschool/provider/SubjectProvider.dart';
-import 'package:diaryschool/screens/grades/widgets/card_grades.dart';
-import 'package:diaryschool/utilities/constants.dart';
+import 'package:edum/generated/i18n.dart';
+import 'package:edum/models/homework.dart';
+import 'package:edum/models/subject.dart';
+import 'package:edum/provider/HomeworkProvider.dart';
+import 'package:edum/provider/SettingsProvider.dart';
+import 'package:edum/provider/SubjectProvider.dart';
+import 'package:edum/screens/grades/widgets/card_grades.dart';
+import 'package:edum/utilities/constants.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
@@ -85,7 +85,7 @@ class _GradesScreenState extends State<GradesScreen> {
                 rangeDate[0] = _range.start;
                 rangeDate[1] = _range.end;
                 log(_range.start.toString());
-                // setState(() {});
+                setState(() {});
               }
             },
             icon: const Icon(Icons.calendar_today),
