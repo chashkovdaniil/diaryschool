@@ -1,22 +1,20 @@
-import 'dart:developer';
-import 'dart:math' show Random;
-
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:edum/common_widgets/card_widget.dart';
-import 'package:edum/generated/i18n.dart';
-import 'package:edum/models/homework.dart';
-import 'package:edum/models/subject.dart';
-import 'package:edum/provider/HomeworkProvider.dart';
-import 'package:edum/provider/SettingsProvider.dart';
-import 'package:edum/provider/SubjectProvider.dart';
-import 'package:edum/screens/failure/failure_screen.dart';
-import 'package:edum/screens/task/task_screen.dart';
-import 'package:edum/screens/tasks/widgets/filter_dialog.dart';
-import 'package:edum/utilities/constants.dart';
+import 'package:carousel_slider/carousel_slider.dart' show CarouselOptions, CarouselSlider;
+import 'package:diaryschool/common_widgets/card_widget.dart' show CardWidget;
+import 'package:diaryschool/generated/i18n.dart' show I18n;
+import 'package:diaryschool/models/homework.dart' show Homework;
+import 'package:diaryschool/models/subject.dart' show Subject;
+import 'package:diaryschool/provider/HomeworkProvider.dart' show HomeworkProvider;
+import 'package:diaryschool/provider/SettingsProvider.dart' show SettingsProvider;
+import 'package:diaryschool/provider/SubjectProvider.dart' show SubjectProvider;
+import 'package:diaryschool/provider/TeacherProvider.dart' show TeacherProvider;
+import 'package:diaryschool/screens/failure/failure_screen.dart' show FailureScreen;
+import 'package:diaryschool/screens/task/task_screen.dart' show TaskScreen;
+import 'package:diaryschool/screens/tasks/widgets/filter_dialog.dart' show FilterDialog;
+import 'package:diaryschool/utilities/constants.dart' show kDefaultPadding;
 import 'package:flutter/cupertino.dart' show CupertinoPageRoute;
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/scheduler.dart';
+import 'package:flutter/material.dart' show AppBar, BorderRadius, BoxDecoration, BuildContext, Center, Colors, Column, Container, EdgeInsets, Expanded, FlatButton, Icon, IconButton, Icons, Key, MainAxisAlignment, MainAxisSize, MaterialPageRoute, Navigator, Overlay, OverlayEntry, Row, Scaffold, SizedBox, Slider, Spacer, State, StatefulBuilder, StatefulWidget, Text, TextAlign, Theme, ValueKey, Widget, showDatePicker, showDialog;
+import 'package:flutter/rendering.dart' show BorderRadius, BoxDecoration, EdgeInsets, MainAxisAlignment, MainAxisSize, TextAlign;
+import 'package:flutter/scheduler.dart' show SchedulerBinding;
 import 'package:provider/provider.dart';
 
 class TasksScreen extends StatefulWidget {
@@ -89,7 +87,7 @@ class _TasksScreenState extends State<TasksScreen> {
                 ),
               );
             },
-            icon: const Icon(Icons.sms_failed),
+            icon: const Icon(Icons.swap_horiz),
           ),
           IconButton(
             onPressed: () {
@@ -117,6 +115,9 @@ class _TasksScreenState extends State<TasksScreen> {
                       ),
                       filter: _filter,
                       homework: _homeworks[index],
+                      teacher: Provider.of<TeacherProvider>(context)
+                          .teacher(_homeworks[index].subject)
+                          .toString(),
                     );
                   },
                   options: CarouselOptions(
@@ -129,9 +130,11 @@ class _TasksScreenState extends State<TasksScreen> {
                     disableCenter: false,
                   ),
                 )
-              : Center(
-                  child: Text(I18n.of(context).noTasks),
-                ),
+              : Expanded(
+                              child: Center(
+                    child: Text(I18n.of(context).noTasks),
+                  ),
+              ),
           const Spacer(),
           FlatButton.icon(
             onPressed: () {
@@ -196,7 +199,6 @@ class _TasksScreenState extends State<TasksScreen> {
                           days: -(currentDate.weekday - value.round()),
                         ),
                       );
-                      log(currentDate.toString());
                     });
                   },
                 ),
@@ -214,6 +216,7 @@ class _TasksScreenState extends State<TasksScreen> {
     if (subjects.isNotEmpty) {
       return 0;
     }
+    return subjects.length;
   }
 
   OverlayEntry firstRun(BuildContext context) {
@@ -224,6 +227,7 @@ class _TasksScreenState extends State<TasksScreen> {
           I18n.of(context).tipTasks2,
           I18n.of(context).tipTasks3,
           I18n.of(context).tipTasks4,
+          I18n.of(context).tipTasks5,
         ];
         int currentTip = 0;
         return StatefulBuilder(builder: (context, setState) {

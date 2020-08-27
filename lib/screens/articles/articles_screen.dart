@@ -1,6 +1,6 @@
-import 'package:edum/screens/articles/article_screen.dart';
-import 'package:edum/utilities/constants.dart';
-import 'package:flutter/material.dart';
+import 'package:diaryschool/screens/articles/article_screen.dart' show ArticleScreen;
+import 'package:diaryschool/utilities/constants.dart' show kBorderRadius, kDefaultPadding;
+import 'package:flutter/material.dart' show AppBar, BoxDecoration, BuildContext, Card, Colors, Column, Container, EdgeInsets, Icon, IconButton, Icons, InkWell, Key, ListView, MaterialPageRoute, Navigator, Padding, RoundedRectangleBorder, Row, Scaffold, Spacer, StatelessWidget, Text, Widget;
 
 class ArticlesScreen extends StatelessWidget {
   const ArticlesScreen({Key key}) : super(key: key);
@@ -9,10 +9,10 @@ class ArticlesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Статьи'),
+        title: const Text('Статьи'),
       ),
       body: ListView.builder(
-        padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+        padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
         itemCount: 10,
         itemBuilder: (context, id) {
           return Padding(
@@ -24,7 +24,7 @@ class ArticlesScreen extends StatelessWidget {
                 onTap: () {
                   return Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => ArticleScreen(),
+                      builder: (context) => const ArticleScreen(),
                     ),
                   );
                 },
@@ -38,14 +38,14 @@ class ArticlesScreen extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.all(kDefaultPadding / 2),
+                      padding: const EdgeInsets.all(kDefaultPadding / 2),
                       child: Row(
                         children: <Widget>[
-                          Text('Как перебороть страх?'),
+                          const Text('Как перебороть страх?'),
                           const Spacer(),
                           IconButton(
                             onPressed: () {},
-                            icon: Icon(Icons.arrow_forward),
+                            icon: const Icon(Icons.arrow_forward),
                           ),
                         ],
                       ),

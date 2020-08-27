@@ -1,6 +1,6 @@
-import 'package:edum/models/teacher.dart';
-import 'package:edum/provider/SchoolProvider.dart';
-import 'package:flutter/widgets.dart';
+import 'package:diaryschool/models/teacher.dart' show Teacher;
+import 'package:diaryschool/provider/SchoolProvider.dart' show SchoolProvider;
+import 'package:flutter/widgets.dart' show ChangeNotifier;
 import 'package:hive/hive.dart';
 
 class TeacherProvider extends ChangeNotifier
@@ -19,6 +19,17 @@ class TeacherProvider extends ChangeNotifier
       _teachers.add(value);
     });
     return _teachers;
+  }
+
+  Teacher teacher(int uid) {
+    try {
+      return values[uid];
+    } on RangeError {
+      return Teacher(
+        name: 'Не',
+        middleName: 'cуществует',
+      );
+    }
   }
 
   @override

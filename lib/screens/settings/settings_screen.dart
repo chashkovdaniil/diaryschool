@@ -1,12 +1,10 @@
-import 'package:edum/generated/i18n.dart';
-import 'package:edum/provider/SettingsProvider.dart';
-import 'package:edum/utilities/constants.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:diaryschool/generated/i18n.dart' show I18n;
+import 'package:diaryschool/provider/SettingsProvider.dart' show SettingsProvider;
+import 'package:diaryschool/utilities/constants.dart' show kColorRed, kDefaultPadding;
+import 'package:flutter/material.dart' show AboutDialog, AlertDialog, AppBar, BuildContext, Container, EdgeInsets, FlatButton, Key, ListTile, ListView, Locale, Navigator, Scaffold, SizedBox, StatelessWidget, Switch, Text, TimeOfDay, Widget, showDialog, showTimePicker;
+import 'package:flutter_local_notifications/flutter_local_notifications.dart' show AndroidNotificationDetails, FlutterLocalNotificationsPlugin, IOSNotificationDetails, NotificationDetails, NotificationVisibility, Time;
+import 'package:flutter_svg/svg.dart' show SvgPicture;
 import 'package:provider/provider.dart';
-
-import 'widgets/color_tile.dart';
 
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -262,7 +260,7 @@ class SettingsScreen extends StatelessWidget {
                 context: context,
                 builder: (context) {
                   return AboutDialog(
-                    applicationName: 'Edum',
+                    applicationName: 'diaryschool',
                     applicationVersion: '4.0.0',
                     applicationIcon: SvgPicture.asset(
                       'assets/svg/Icon.svg',

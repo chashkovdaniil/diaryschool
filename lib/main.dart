@@ -1,39 +1,39 @@
-import 'dart:io';
-import 'dart:ui';
+import 'dart:ui' show Brightness, Color, FontWeight;
 
-import 'package:edum/generated/i18n.dart';
-import 'package:edum/models/homework.dart';
-import 'package:edum/models/subject.dart';
-import 'package:edum/models/teacher.dart';
-import 'package:edum/models/time_of_day_adaper.dart';
-import 'package:edum/models/timetable_row.dart';
-import 'package:edum/provider/HomeworkProvider.dart';
-import 'package:edum/provider/SettingsProvider.dart';
-import 'package:edum/provider/SubjectProvider.dart';
-import 'package:edum/provider/TeacherProvider.dart';
-import 'package:edum/provider/TimetableProvider.dart';
-import 'package:edum/screens/failure/failure_screen.dart';
-import 'package:edum/screens/help/help_screen.dart';
-import 'package:edum/screens/main/main_screen.dart';
-import 'package:edum/screens/subjects/subjects_screen.dart';
-import 'package:edum/screens/task/task_screen.dart';
-import 'package:edum/screens/tasks/tasks_screen.dart';
-import 'package:edum/screens/teachers/teachers_screen.dart';
-import 'package:edum/utilities/constants.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:diaryschool/generated/i18n.dart' show I18n;
+import 'package:diaryschool/models/homework.dart' show Homework, HomeworkAdapter;
+import 'package:diaryschool/models/note.dart' show Note, NoteAdapter;
+import 'package:diaryschool/models/subject.dart' show Subject, SubjectAdapter;
+import 'package:diaryschool/models/teacher.dart' show Teacher, TeacherAdapter;
+import 'package:diaryschool/models/time_of_day_adaper.dart' show TimeOfDayAdapter;
+import 'package:diaryschool/models/timetable_row.dart' show TimetableRow, TimetableRowAdapter;
+import 'package:diaryschool/provider/HomeworkProvider.dart' show HomeworkProvider;
+import 'package:diaryschool/provider/NotesProvider.dart' show NotesProvider;
+import 'package:diaryschool/provider/SettingsProvider.dart' show SettingsProvider;
+import 'package:diaryschool/provider/SubjectProvider.dart' show SubjectProvider;
+import 'package:diaryschool/provider/TeacherProvider.dart' show TeacherProvider;
+import 'package:diaryschool/provider/TimetableProvider.dart' show TimetableProvider;
+import 'package:diaryschool/screens/failure/failure_screen.dart' show FailureScreen;
+import 'package:diaryschool/screens/help/help_screen.dart' show HelpScreen;
+import 'package:diaryschool/screens/main/main_screen.dart' show MainScreen;
+import 'package:diaryschool/screens/subjects/subjects_screen.dart' show SubjectsScreen;
+import 'package:diaryschool/screens/tasks/tasks_screen.dart' show TasksScreen;
+import 'package:diaryschool/screens/teachers/teachers_screen.dart' show TeachersScreen;
+import 'package:diaryschool/utilities/constants.dart' show kBorderRadius, kColorBlack, kColorRed;
+import 'package:firebase_core/firebase_core.dart' show Firebase;
+import 'package:flutter/foundation.dart' show Key;
+import 'package:flutter/material.dart' show AppBarTheme, BorderSide, Brightness, BuildContext, ButtonBarThemeData, ButtonTextTheme, ButtonThemeData, Color, ColorScheme, Colors, DialogTheme, FontWeight, IconThemeData, InputDecorationTheme, Key, MaterialApp, MediaQuery, RoundedRectangleBorder, SliderThemeData, StatelessWidget, TextStyle, TextTheme, ThemeData, UnderlineInputBorder, Widget, WidgetsFlutterBinding, runApp;
+import 'package:flutter_localizations/flutter_localizations.dart' show GlobalCupertinoLocalizations, GlobalMaterialLocalizations, GlobalWidgetsLocalizations;
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:in_app_purchase/in_app_purchase.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:in_app_purchase/in_app_purchase.dart' show InAppPurchaseConnection;
+import 'package:google_fonts/google_fonts.dart' show GoogleFonts;
+import 'package:path_provider/path_provider.dart' show getApplicationDocumentsDirectory;
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   await Firebase.initializeApp();
   await Hive.initFlutter((await getApplicationDocumentsDirectory()).path);
   Hive
@@ -41,11 +41,13 @@ Future<void> main() async {
     ..registerAdapter(HomeworkAdapter())
     ..registerAdapter(TeacherAdapter())
     ..registerAdapter(TimetableRowAdapter())
-    ..registerAdapter(TimeOfDayAdapter());
+    ..registerAdapter(TimeOfDayAdapter())
+    ..registerAdapter(NoteAdapter());
 
   final Box<Teacher> teachers = await Hive.openBox<Teacher>('teachers');
   final Box<Subject> subjects = await Hive.openBox<Subject>('subjects');
   final Box<Homework> homeworks = await Hive.openBox<Homework>('homeworks');
+  final Box<Note> notes = await Hive.openBox<Note>('notes');
   final Box<TimetableRow> timetable =
       await Hive.openBox<TimetableRow>('timetable');
   // await homeworks.clear();
@@ -54,29 +56,32 @@ Future<void> main() async {
   // await timetable.clear();
   final Box settings = await Hive.openBox('settings');
   InAppPurchaseConnection.enablePendingPurchases();
-  runApp(EdumApp(
+  runApp(DiaryschoolApp(
     teachers: teachers,
     subjects: subjects,
     homeworks: homeworks,
     settings: settings,
     timetable: timetable,
+    notes: notes,
   ));
 }
 
-class EdumApp extends StatelessWidget {
+class DiaryschoolApp extends StatelessWidget {
   final Box<Teacher> teachers;
   final Box<Subject> subjects;
   final Box<Homework> homeworks;
   final Box<TimetableRow> timetable;
+  final Box<Note> notes;
   final Box settings;
 
-  EdumApp({
+  DiaryschoolApp({
     Key key,
     this.teachers,
     this.subjects,
     this.homeworks,
     this.settings,
     this.timetable,
+    this.notes,
   }) : super(key: key);
 
   @override
@@ -98,6 +103,9 @@ class EdumApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<TimetableProvider>(
           create: (context) => TimetableProvider(timetable),
+        ),
+        ChangeNotifierProvider<NotesProvider>(
+          create: (context) => NotesProvider(notes),
         ),
       ],
       builder: (context, child) {
@@ -159,10 +167,12 @@ class EdumApp extends StatelessWidget {
             ),
             primaryColor: kColorRed.shade700,
             primaryColorDark: kColorRed.shade700,
-            buttonTheme: const ButtonThemeData(
+            buttonTheme: ButtonThemeData(
+              splashColor: kColorRed.shade100,
               highlightColor: Colors.transparent,
+              shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
             ),
-            dividerColor: const Color(0xffE0E0E0),
+            dividerColor: const Color(0xffE0E0E0).withOpacity(0.2),
             textTheme: TextTheme(
               headline6: TextStyle(
                 fontSize: 20,

@@ -1,16 +1,14 @@
-import 'dart:developer';
-
-import 'package:edum/generated/i18n.dart';
-import 'package:edum/models/homework.dart';
-import 'package:edum/models/subject.dart';
-import 'package:edum/provider/HomeworkProvider.dart';
-import 'package:edum/provider/SettingsProvider.dart';
-import 'package:edum/provider/SubjectProvider.dart';
-import 'package:edum/screens/grades/widgets/card_grades.dart';
-import 'package:edum/utilities/constants.dart';
-import 'package:flutter/scheduler.dart';
+import 'package:diaryschool/generated/i18n.dart' show I18n;
+import 'package:diaryschool/models/homework.dart' show Homework;
+import 'package:diaryschool/models/subject.dart' show Subject;
+import 'package:diaryschool/provider/HomeworkProvider.dart' show HomeworkProvider;
+import 'package:diaryschool/provider/SettingsProvider.dart' show SettingsProvider;
+import 'package:diaryschool/provider/SubjectProvider.dart' show SubjectProvider;
+import 'package:diaryschool/screens/grades/widgets/card_grades.dart' show CardGrades;
+import 'package:diaryschool/utilities/constants.dart' show kDefaultPadding;
+import 'package:flutter/scheduler.dart' show SchedulerBinding;
 import 'package:provider/provider.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' show AppBar, BorderRadius, BoxDecoration, BuildContext, Center, Colors, Column, Container, DateTimeRange, EdgeInsets, FlatButton, GlobalKey, Icon, IconButton, Icons, Key, ListView, MainAxisSize, MediaQuery, Overlay, OverlayEntry, Padding, Radius, Scaffold, Stack, State, StatefulWidget, Text, TextAlign, Theme, Widget, showDateRangePicker;
 
 class GradesScreen extends StatefulWidget {
   GradesScreen({Key key}) : super(key: key);
@@ -84,7 +82,6 @@ class _GradesScreenState extends State<GradesScreen> {
               if (_range != null) {
                 rangeDate[0] = _range.start;
                 rangeDate[1] = _range.end;
-                log(_range.start.toString());
                 setState(() {});
               }
             },

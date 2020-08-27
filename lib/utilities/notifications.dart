@@ -1,10 +1,10 @@
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart' show AndroidNotificationDetails, FlutterLocalNotificationsPlugin, IOSNotificationDetails, NotificationDetails, Time;
 
 Future enableNotification(Time time) async {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
   AndroidNotificationDetails androidPlatformChannelSpecifics =
-      AndroidNotificationDetails(
+      const AndroidNotificationDetails(
     '0',
     'Сбор рюкзака',
     'remindAboutPackBag',
@@ -13,7 +13,7 @@ Future enableNotification(Time time) async {
     // playSound: true,
     // visibility: NotificationVisibility.Public,
   );
-  IOSNotificationDetails iOSPlatformChannelSpecifics = IOSNotificationDetails();
+  IOSNotificationDetails iOSPlatformChannelSpecifics = const IOSNotificationDetails();
   NotificationDetails platformChannelSpecifics = NotificationDetails(
       androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
 

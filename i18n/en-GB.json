@@ -81,6 +81,14 @@
   "tipTasks2": "At the bottom there is a slider that you can move to select the day of the week. \nAlso next to the number is a date selection button.",
   "tipTasks3": "After adding tasks you will see cards that can be viewed by swiping to the right and left. \nDouble tap on the card will mark the task as completed",
   "tipTasks4": "In the right corner there is a filter that allows you what data to show.",
+  "tipTasks5": "Also in the upper right corner there is a button (arrows) for changing the task screen. Tap to toggle between all outstanding assignments and assignments for the current day.",
   "beginning": "Beginning",
-  "end": "End"
+  "end": "End",
+  "notes": "Notes",
+  "note": "Note",
+  "enterText": "Enter text ...",
+  "failure": "Failure",
+  "task": "Task",
+  "rate": "Rate",
+  "doesNotExist": "Does not exist"
 }

@@ -198,10 +198,26 @@ class I18n implements WidgetsLocalizations {
   String get tipTasks3 => "После добавления заданий Вы увидете карточки, которые можно просматривать свайпами вправо и влево.\nДвойной тап по карточке позволет пометить задание как выполненное";
   /// "Вправом углу находится фильтр, который позволяет, какие данные показывать."
   String get tipTasks4 => "Вправом углу находится фильтр, который позволяет, какие данные показывать.";
+  /// "Также в правом верхнем углу находится кнопка (стрелки) смены экрана заданий. Нажмите, чтобы переключаться между всеми невыполненными заданиями и заданиями за текущий день."
+  String get tipTasks5 => "Также в правом верхнем углу находится кнопка (стрелки) смены экрана заданий. Нажмите, чтобы переключаться между всеми невыполненными заданиями и заданиями за текущий день.";
   /// "Начало"
   String get beginning => "Начало";
   /// "Конец"
   String get end => "Конец";
+  /// "Заметки"
+  String get notes => "Заметки";
+  /// "Заметка"
+  String get note => "Заметка";
+  /// "Введите текст..."
+  String get enterText => "Введите текст...";
+  /// "Долги"
+  String get failure => "Долги";
+  /// "Задание"
+  String get task => "Задание";
+  /// "Поставьте оценку"
+  String get rate => "Поставьте оценку";
+  /// "Не существует"
+  String get doesNotExist => "Не существует";
 }
 
 class _I18n_ru_RU extends I18n {
@@ -463,12 +479,36 @@ class _I18n_en_US extends I18n {
   /// "In the right corner there is a filter that allows you what data to show."
   @override
   String get tipTasks4 => "In the right corner there is a filter that allows you what data to show.";
+  /// "Also in the upper right corner there is a button (arrows) for changing the task screen. Tap to toggle between all outstanding assignments and assignments for the current day."
+  @override
+  String get tipTasks5 => "Also in the upper right corner there is a button (arrows) for changing the task screen. Tap to toggle between all outstanding assignments and assignments for the current day.";
   /// "Beginning"
   @override
   String get beginning => "Beginning";
   /// "End"
   @override
   String get end => "End";
+  /// "Notes"
+  @override
+  String get notes => "Notes";
+  /// "Note"
+  @override
+  String get note => "Note";
+  /// "Enter text ..."
+  @override
+  String get enterText => "Enter text ...";
+  /// "Failure"
+  @override
+  String get failure => "Failure";
+  /// "Task"
+  @override
+  String get task => "Task";
+  /// "Rate"
+  @override
+  String get rate => "Rate";
+  /// "Does not exist"
+  @override
+  String get doesNotExist => "Does not exist";
 
   @override
   TextDirection get textDirection => TextDirection.ltr;
@@ -483,129 +523,129 @@ class _I18n_ru_UA extends _I18n_ru_RU {
   /// "Меню"
   @override
   String get menu => "Меню";
-  /// "вчителі"
+  /// "Вчителі"
   @override
-  String get teachers => "вчителі";
-  /// "предмети"
+  String get teachers => "Вчителі";
+  /// "Предмети"
   @override
-  String get subjects => "предмети";
+  String get subjects => "Предмети";
   /// "Головна"
   @override
   String get homeNav => "Головна";
-  /// "оцінки"
+  /// "Оцінки"
   @override
-  String get gradesNav => "оцінки";
-  /// "завдання"
+  String get gradesNav => "Оцінки";
+  /// "Завдання"
   @override
-  String get tasksNav => "завдання";
+  String get tasksNav => "Завдання";
   /// "розклад"
   @override
   String get timetableNav => "розклад";
   /// "Налаштування"
   @override
   String get settings => "Налаштування";
-  /// "нагадування"
+  /// "Нагадування"
   @override
-  String get notification => "нагадування";
-  /// "час нагадування"
+  String get notification => "Нагадування";
+  /// "Час нагадування"
   @override
-  String get timeNotification => "час нагадування";
+  String get timeNotification => "Час нагадування";
   /// "Початковий екран"
   @override
   String get startScreen => "Початковий екран";
   /// "Виберіть сторінку"
   @override
   String get selectPage => "Виберіть сторінку";
-  /// "про програму"
+  /// "Про програму"
   @override
-  String get aboutApp => "про програму";
+  String get aboutApp => "Про програму";
   /// "додати"
   @override
   String get add => "додати";
-  /// "вчителів немає"
+  /// "Вчителів немає"
   @override
-  String get noTeachers => "вчителів немає";
+  String get noTeachers => "Вчителів немає";
   /// "Ім'я"
   @override
   String get firstName => "Ім'я";
-  /// "прізвище"
+  /// "Прізвище"
   @override
-  String get lastName => "прізвище";
-  /// "по батькові"
+  String get lastName => "Прізвище";
+  /// "По батькові"
   @override
-  String get middleName => "по батькові";
+  String get middleName => "По батькові";
   /// "Email"
   @override
   String get email => "Email";
   /// "Номер телефону"
   @override
   String get phone => "Номер телефону";
-  /// "скасування"
+  /// "Скасування"
   @override
-  String get cancel => "скасування";
+  String get cancel => "Скасування";
   /// "Зберегти"
   @override
   String get save => "Зберегти";
-  /// "немає предметів"
+  /// "Немає предметів"
   @override
-  String get noSubjects => "немає предметів";
+  String get noSubjects => "Немає предметів";
   /// "Предмет"
   @override
   String get subject => "Предмет";
-  /// "кабінет або аудиторія"
+  /// "Кабінет або аудиторія"
   @override
-  String get cabinet => "кабінет або аудиторія";
+  String get cabinet => "Кабінет або аудиторія";
   /// "Учитель"
   @override
   String get teacher => "Учитель";
-  /// "вибрати вчителя"
+  /// "Вибрати вчителя"
   @override
-  String get selectTeacher => "вибрати вчителя";
-  /// "закрити"
+  String get selectTeacher => "Вибрати вчителя";
+  /// "Закрити"
   @override
-  String get close => "закрити";
-  /// "список порожній"
+  String get close => "Закрити";
+  /// "Список порожній"
   @override
-  String get emptyList => "список порожній";
-  /// "немає оцінок"
+  String get emptyList => "Список порожній";
+  /// "Немає оцінок"
   @override
-  String get noGrades => "немає оцінок";
-  /// "немає завдань"
+  String get noGrades => "Немає оцінок";
+  /// "Немає завдань"
   @override
-  String get noTasks => "немає завдань";
+  String get noTasks => "Немає завдань";
   /// "Дата"
   @override
   String get date => "Дата";
-  /// "введіть завдання"
+  /// "Введіть завдання"
   @override
-  String get enterTask => "введіть завдання";
+  String get enterTask => "Введіть завдання";
   /// "Готово"
   @override
   String get done => "Готово";
   /// "Дедлайн"
   @override
   String get deadline => "Дедлайн";
-  /// "шлях"
+  /// "Шлях"
   @override
-  String get path => "шлях";
-  /// "понеділок"
+  String get path => "Шлях";
+  /// "Понеділок"
   @override
-  String get monday => "понеділок";
-  /// "вівторок"
+  String get monday => "Понеділок";
+  /// "Вівторок"
   @override
-  String get tuesday => "вівторок";
+  String get tuesday => "Вівторок";
   /// "Середа"
   @override
   String get wednesday => "Середа";
-  /// "четвер"
+  /// "Четвер"
   @override
-  String get thursday => "четвер";
+  String get thursday => "Четвер";
   /// "П'ятниця"
   @override
   String get friday => "П'ятниця";
-  /// "субота"
+  /// "Субота"
   @override
-  String get saturday => "субота";
+  String get saturday => "Субота";
   /// "Неділя"
   @override
   String get sunday => "Неділя";
@@ -630,75 +670,75 @@ class _I18n_ru_UA extends _I18n_ru_RU {
   /// "Вс"
   @override
   String get sun => "Вс";
-  /// "початок уроку"
+  /// "Початок уроку"
   @override
-  String get startLesson => "початок уроку";
-  /// "кінець уроку"
+  String get startLesson => "Початок уроку";
+  /// "Кінець уроку"
   @override
-  String get endLesson => "кінець уроку";
-  /// "вибрати предмет"
+  String get endLesson => "Кінець уроку";
+  /// "Вибрати предмет"
   @override
-  String get selectSubject => "вибрати предмет";
+  String get selectSubject => "Вибрати предмет";
   /// "редагувати"
   @override
   String get edit => "редагувати";
   /// "Далі"
   @override
   String get next => "Далі";
-  /// "фільтр"
+  /// "Фільтр"
   @override
-  String get filter => "фільтр";
-  /// "оцінка"
+  String get filter => "Фільтр";
+  /// "Оцінка"
   @override
-  String get grade => "оцінка";
+  String get grade => "Оцінка";
   /// "Мова"
   @override
   String get language => "Мова";
-  /// "немає розкладу"
+  /// "Немає розкладу"
   @override
-  String get noTimetable => "немає розкладу";
-  /// "сьогодні"
+  String get noTimetable => "Немає розкладу";
+  /// "Сьогодні"
   @override
-  String get today => "сьогодні";
+  String get today => "Сьогодні";
   /// "Завтра"
   @override
   String get tomorrow => "Завтра";
-  /// "прострочено"
+  /// "Прострочено"
   @override
-  String get expired => "прострочено";
+  String get expired => "Прострочено";
   /// "Залишилося"
   @override
   String get left => "Залишилося";
   /// "дн."
   @override
   String get days => "дн.";
-  /// "заповніть поле"
+  /// "Заповніть поле"
   @override
-  String get fillField => "заповніть поле";
-  /// "вкажіть вчителя"
+  String get fillField => "Заповніть поле";
+  /// "Вкажіть вчителя"
   @override
-  String get enterTeacher => "вкажіть вчителя";
-  /// "вкажіть назву"
+  String get enterTeacher => "Вкажіть вчителя";
+  /// "Вкажіть назву"
   @override
-  String get enterTitle => "вкажіть назву";
-  /// "поточний урок підсвічується тьмяним кольором. Нижче знаходиться повзунок для вибору дня тижня."
+  String get enterTitle => "Вкажіть назву";
+  /// "Поточний урок підсвічується тьмяним кольором. Нижче знаходиться повзунок для вибору дня тижня."
   @override
-  String get tipTimetable => "поточний урок підсвічується тьмяним кольором. Нижче знаходиться повзунок для вибору дня тижня.";
-  /// "збір рюкзака"
+  String get tipTimetable => "Поточний урок підсвічується тьмяним кольором. Нижче знаходиться повзунок для вибору дня тижня.";
+  /// "Збір рюкзака"
   @override
-  String get packingBag => "збір рюкзака";
+  String get packingBag => "Збір рюкзака";
   /// "Пора збирати портфель!"
   @override
   String get timePackBag => "Пора збирати портфель!";
-  /// "збирай портфель!"
+  /// "Збирай портфель!"
   @override
-  String get packBag => "збирай портфель!";
-  /// "на цій сторінці ви можете подивитися оцінки за вибраний вами інтервал, за замовчуванням береться поточний місяць."
+  String get packBag => "Збирай портфель!";
+  /// "На цій сторінці ви можете подивитися оцінки за вибраний вами інтервал, за замовчуванням береться поточний місяць."
   @override
-  String get tipGrades1 => "на цій сторінці ви можете подивитися оцінки за вибраний вами інтервал, за замовчуванням береться поточний місяць.";
-  /// "праворуч в кутку знаходиться кнопка, після натискання на неї, ви зможете вибрати період, за який треба показати оцінки."
+  String get tipGrades1 => "На цій сторінці ви можете подивитися оцінки за вибраний вами інтервал, за замовчуванням береться поточний місяць.";
+  /// "Праворуч в кутку знаходиться кнопка, після натискання на неї, ви зможете вибрати період, за який треба показати оцінки."
   @override
-  String get tipGrades2 => "праворуч в кутку знаходиться кнопка, після натискання на неї, ви зможете вибрати період, за який треба показати оцінки.";
+  String get tipGrades2 => "Праворуч в кутку знаходиться кнопка, після натискання на неї, ви зможете вибрати період, за який треба показати оцінки.";
   /// "Внизу екрана знаходиться панель."
   @override
   String get tipTask1 => "Внизу екрана знаходиться панель.";
@@ -714,24 +754,48 @@ class _I18n_ru_UA extends _I18n_ru_RU {
   /// "додайте предмет"
   @override
   String get addSubject => "додайте предмет";
-  /// "на цій сторінці ви можете переглядати і додавати домашнє завдання за день"
+  /// "На цій сторінці ви можете переглядати і додавати домашнє завдання за день"
   @override
-  String get tipTasks1 => "на цій сторінці ви можете переглядати і додавати домашнє завдання за день";
-  /// "знизу знаходиться повзунок, рухаючи який, ви можете вибирати день тижня.\nТакже поруч з числом знаходиться кнопка вибору дати ."
+  String get tipTasks1 => "На цій сторінці ви можете переглядати і додавати домашнє завдання за день";
+  /// "Знизу знаходиться повзунок, рухаючи який, ви можете вибирати день тижня.\nТакже поруч з числом знаходиться кнопка вибору дати ."
   @override
-  String get tipTasks2 => "знизу знаходиться повзунок, рухаючи який, ви можете вибирати день тижня.\nТакже поруч з числом знаходиться кнопка вибору дати .";
-  /// "після додавання завдань ви побачите картки, які можна переглядати свайпами вправо і вліво.\nДвойной тап по картці дозволить помітити завдання як виконане"
+  String get tipTasks2 => "Знизу знаходиться повзунок, рухаючи який, ви можете вибирати день тижня.\nТакже поруч з числом знаходиться кнопка вибору дати .";
+  /// "Після додавання завдань ви побачите картки, які можна переглядати свайпами вправо і вліво.\nДвойной тап по картці дозволить помітити завдання як виконане"
   @override
-  String get tipTasks3 => "після додавання завдань ви побачите картки, які можна переглядати свайпами вправо і вліво.\nДвойной тап по картці дозволить помітити завдання як виконане";
-  /// "праворуч знаходиться фільтр, який дозволяє, які дані показувати."
+  String get tipTasks3 => "Після додавання завдань ви побачите картки, які можна переглядати свайпами вправо і вліво.\nДвойной тап по картці дозволить помітити завдання як виконане";
+  /// "Праворуч знаходиться фільтр, який дозволяє, які дані показувати."
   @override
-  String get tipTasks4 => "праворуч знаходиться фільтр, який дозволяє, які дані показувати.";
-  /// "початок"
+  String get tipTasks4 => "Праворуч знаходиться фільтр, який дозволяє, які дані показувати.";
+  /// "Також в правому верхньому кутку знаходиться кнопка (стрілки) зміни екрану завдань. Натисніть, щоб перемикатися між усіма невиконаними завданнями і завданнями за поточний день."
   @override
-  String get beginning => "початок";
+  String get tipTasks5 => "Також в правому верхньому кутку знаходиться кнопка (стрілки) зміни екрану завдань. Натисніть, щоб перемикатися між усіма невиконаними завданнями і завданнями за поточний день.";
+  /// "Початок"
+  @override
+  String get beginning => "Початок";
   /// "Кінець"
   @override
   String get end => "Кінець";
+  /// "Нотатки"
+  @override
+  String get notes => "Нотатки";
+  /// "Замітка"
+  @override
+  String get note => "Замітка";
+  /// "Введіть текст..."
+  @override
+  String get enterText => "Введіть текст...";
+  /// "Борги"
+  @override
+  String get failure => "Борги";
+  /// "Завдання"
+  @override
+  String get task => "Завдання";
+  /// "Gоставте оцінку"
+  @override
+  String get rate => "Gоставте оцінку";
+  /// "Не існує"
+  @override
+  String get doesNotExist => "Не існує";
 
   @override
   TextDirection get textDirection => TextDirection.ltr;
@@ -989,12 +1053,36 @@ class _I18n_en_GB extends _I18n_en_US {
   /// "In the right corner there is a filter that allows you what data to show."
   @override
   String get tipTasks4 => "In the right corner there is a filter that allows you what data to show.";
+  /// "Also in the upper right corner there is a button (arrows) for changing the task screen. Tap to toggle between all outstanding assignments and assignments for the current day."
+  @override
+  String get tipTasks5 => "Also in the upper right corner there is a button (arrows) for changing the task screen. Tap to toggle between all outstanding assignments and assignments for the current day.";
   /// "Beginning"
   @override
   String get beginning => "Beginning";
   /// "End"
   @override
   String get end => "End";
+  /// "Notes"
+  @override
+  String get notes => "Notes";
+  /// "Note"
+  @override
+  String get note => "Note";
+  /// "Enter text ..."
+  @override
+  String get enterText => "Enter text ...";
+  /// "Failure"
+  @override
+  String get failure => "Failure";
+  /// "Task"
+  @override
+  String get task => "Task";
+  /// "Rate"
+  @override
+  String get rate => "Rate";
+  /// "Does not exist"
+  @override
+  String get doesNotExist => "Does not exist";
 
   @override
   TextDirection get textDirection => TextDirection.ltr;

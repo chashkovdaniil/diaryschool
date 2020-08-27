@@ -1,5 +1,5 @@
-import 'package:edum/utilities/constants.dart';
-import 'package:flutter/material.dart';
+import 'package:diaryschool/utilities/constants.dart' show kDefaultPadding;
+import 'package:flutter/material.dart' show AppBar, BuildContext, EdgeInsets, Icon, IconButton, Icons, Key, Padding, Scaffold, StatelessWidget, Text, Widget;
 class ArticleScreen extends StatelessWidget {
   const ArticleScreen({Key key}) : super(key: key);
 
@@ -7,7 +7,7 @@ class ArticleScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Как перебороть страх?'),
+        title: const Text('Как перебороть страх?'),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.share),

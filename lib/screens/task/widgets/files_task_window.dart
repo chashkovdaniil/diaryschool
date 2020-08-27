@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' show AlertDialog, BuildContext, Colors, Container, FlatButton, GridView, Key, Navigator, SliverGridDelegateWithFixedCrossAxisCount, State, StatefulWidget, Text, Widget;
 
 class FilesTaskWindow extends StatefulWidget {
   FilesTaskWindow({Key key}) : super(key: key);
@@ -10,14 +10,14 @@ class _FilesTaskWindowState extends State<FilesTaskWindow> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Изображения'),
+      title: const Text('Изображения'),
       actions: <Widget>[
         FlatButton(
-          child: Text('Закрыть'),
+          child: const Text('Закрыть'),
           onPressed: () => Navigator.of(context).pop(),
         ),
         FlatButton(
-          child: Text('Добавить'),
+          child: const Text('Добавить'),
           onPressed: () {},
         ),
       ],

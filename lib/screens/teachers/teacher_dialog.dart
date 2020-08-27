@@ -1,10 +1,7 @@
-import 'dart:developer';
-
-import 'package:edum/generated/i18n.dart';
-import 'package:edum/models/teacher.dart';
-import 'package:edum/provider/TeacherProvider.dart';
-import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
+import 'package:diaryschool/generated/i18n.dart' show I18n;
+import 'package:diaryschool/models/teacher.dart' show Teacher;
+import 'package:diaryschool/provider/TeacherProvider.dart' show TeacherProvider;
+import 'package:flutter/material.dart' show AlertDialog, BuildContext, FlatButton, Form, FormState, GlobalKey, InputDecoration, Key, ListView, Navigator, State, StatefulWidget, Text, TextFormField, TextInputType, Widget, required;
 import 'package:provider/provider.dart';
 
 class TeacherDialog extends StatefulWidget {
@@ -109,7 +106,6 @@ class _TeacherDialogState extends State<TeacherDialog> {
                   .put(widget.teacher);
               return Navigator.of(context).pop();
             }
-            log('error');
           },
           child: Text(I18n.of(context).save.toUpperCase()),
         ),

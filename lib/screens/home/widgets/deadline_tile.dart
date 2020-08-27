@@ -1,5 +1,5 @@
-import 'package:edum/utilities/constants.dart';
-import 'package:flutter/material.dart';
+import 'package:diaryschool/utilities/constants.dart' show kBorderRadius, kDefaultPadding, kDefaultShadow;
+import 'package:flutter/material.dart' show BoxDecoration, BuildContext, Column, EdgeInsets, Ink, InkWell, Key, MainAxisAlignment, Padding, StatelessWidget, Text, Theme, VoidCallback, Widget;
 
 class DeadlineTile extends StatelessWidget {
   final VoidCallback onTap;

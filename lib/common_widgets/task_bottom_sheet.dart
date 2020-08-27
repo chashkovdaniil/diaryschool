@@ -1,12 +1,10 @@
-import 'dart:developer';
-
-import 'package:edum/generated/i18n.dart';
-import 'package:edum/models/homework.dart';
-import 'package:edum/provider/HomeworkProvider.dart';
-import 'package:edum/provider/SubjectProvider.dart';
-import 'package:edum/screens/task/task_screen.dart';
-import 'package:edum/utilities/constants.dart';
-import 'package:flutter/material.dart';
+import 'package:diaryschool/generated/i18n.dart' show I18n;
+import 'package:diaryschool/models/homework.dart' show Homework;
+import 'package:diaryschool/provider/HomeworkProvider.dart' show HomeworkProvider;
+import 'package:diaryschool/provider/SubjectProvider.dart' show SubjectProvider;
+import 'package:diaryschool/screens/task/task_screen.dart' show TaskScreen;
+import 'package:diaryschool/utilities/constants.dart' show kDefaultPadding;
+import 'package:flutter/material.dart' show BottomSheet, BuildContext, CloseButton, Column, Container, CrossAxisAlignment, EdgeInsets, Expanded, FlatButton, Form, FormState, GlobalKey, Icon, IconButton, Icons, InputDecoration, Key, MaterialPageRoute, MediaQuery, Navigator, Row, SingleChildScrollView, SizedBox, State, StatefulWidget, Text, TextFormField, Theme, Widget;
 import 'package:provider/provider.dart';
 
 class TaskBottomSheet extends StatefulWidget {

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' show AppBar, BuildContext, Hero, Icon, IconButton, Icons, InputBorder, InputDecoration, Key, ListTile, ListView, Navigator, Scaffold, StatelessWidget, Text, TextFormField, Widget;
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({Key key}) : super(key: key);
@@ -7,9 +7,9 @@ class SearchScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          leading: Hero(
+          leading: const Hero(
             tag: 'search',
-            child: const Icon(Icons.search),
+            child: Icon(Icons.search),
           ),
           title: TextFormField(
             autofocus: true,
@@ -36,7 +36,7 @@ class SearchScreen extends StatelessWidget {
             return ListTile(
               dense: true,
               onTap: () {},
-              title: Text('Ывау, ывау'),
+              title: const Text('Ывау, ывау'),
             );
           },
         ));

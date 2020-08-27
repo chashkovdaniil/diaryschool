@@ -1,18 +1,14 @@
-import 'dart:developer';
-
-import 'package:edum/common_widgets/select_subject_dialog.dart';
-import 'package:edum/generated/i18n.dart';
-import 'package:edum/models/homework.dart';
-import 'package:edum/provider/HomeworkProvider.dart';
-import 'package:edum/provider/SettingsProvider.dart';
-import 'package:edum/provider/SubjectProvider.dart';
-import 'package:edum/screens/task/widgets/grade_field.dart';
-import 'package:edum/utilities/constants.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
+import 'package:diaryschool/common_widgets/select_subject_dialog.dart' show SelectSubjectDialog;
+import 'package:diaryschool/generated/i18n.dart' show I18n;
+import 'package:diaryschool/models/homework.dart' show Homework;
+import 'package:diaryschool/provider/HomeworkProvider.dart' show HomeworkProvider;
+import 'package:diaryschool/provider/SettingsProvider.dart' show SettingsProvider;
+import 'package:diaryschool/provider/SubjectProvider.dart' show SubjectProvider;
+import 'package:diaryschool/screens/task/widgets/grade_field.dart' show GradeField;
+import 'package:diaryschool/utilities/constants.dart' show kBorderRadius, kDefaultPadding;
+import 'package:flutter/material.dart' show AppBar, BorderRadius, BottomAppBar, BoxDecoration, BuildContext, Center, Colors, Column, Container, CrossAxisAlignment, Divider, EdgeInsets, Expanded, FlatButton, Form, FormField, FormFieldState, FormFieldValidator, FormState, GlobalKey, Icon, IconButton, Icons, InkWell, InputBorder, InputDecoration, Key, MainAxisSize, Navigator, Overlay, OverlayEntry, Padding, Row, Scaffold, SizedBox, Spacer, State, StatefulBuilder, StatefulWidget, Text, TextAlign, TextFormField, Theme, Widget, required, showDatePicker, showDialog;
+import 'package:flutter/scheduler.dart' show SchedulerBinding;
 import 'package:provider/provider.dart';
-
-// TODO: сделать подсказки
 
 class TaskScreen extends StatefulWidget {
   final Map<String, dynamic> homework;
@@ -34,7 +30,6 @@ class _TaskScreenState extends State<TaskScreen> {
   @override
   void initState() {
     _homework = Homework.fromMap(widget.homework);
-    log(_homework.isDone.toString());
     super.initState();
   }
 
@@ -53,9 +48,8 @@ class _TaskScreenState extends State<TaskScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Задание'),
+        title: Text(I18n.of(context).task),
       ),
-      //TODO: сделать валидацию
       body: Form(
         key: _formKey,
         child: Column(
@@ -93,9 +87,7 @@ class _TaskScreenState extends State<TaskScreen> {
                 setState(() {
                   if (_date == null) {
                     _homework.date = DateTime.now();
-                    log('yes');
                   } else {
-                    log('yes');
                     _homework.date = _date;
                   }
                 });
@@ -272,7 +264,7 @@ class _TaskScreenState extends State<TaskScreen> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(Icons.star),
+              const Icon(Icons.star),
               Expanded(
                 child: Text(
                   I18n.of(context).tipTask2,
@@ -284,7 +276,7 @@ class _TaskScreenState extends State<TaskScreen> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(Icons.timer),
+              const Icon(Icons.timer),
               Expanded(
                 child: Text(
                   I18n.of(context).tipTask3,
@@ -296,7 +288,7 @@ class _TaskScreenState extends State<TaskScreen> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(Icons.done),
+              const Icon(Icons.done),
               Expanded(
                 child: Text(
                   I18n.of(context).tipTask4,

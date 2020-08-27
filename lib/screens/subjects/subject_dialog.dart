@@ -1,12 +1,10 @@
-import 'dart:developer';
-
-import 'package:edum/common_widgets/select_teacher_dialog.dart';
-import 'package:edum/generated/i18n.dart';
-import 'package:edum/models/subject.dart';
-import 'package:edum/provider/SubjectProvider.dart';
-import 'package:edum/provider/TeacherProvider.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:diaryschool/common_widgets/select_teacher_dialog.dart' show SelectTeacherDialog;
+import 'package:diaryschool/generated/i18n.dart' show I18n;
+import 'package:diaryschool/models/subject.dart' show Subject;
+import 'package:diaryschool/provider/SubjectProvider.dart' show SubjectProvider;
+import 'package:diaryschool/provider/TeacherProvider.dart' show TeacherProvider;
+import 'package:flutter/material.dart' show AlertDialog, Border, BorderSide, BoxDecoration, BuildContext, Colors, Column, Container, CrossAxisAlignment, EdgeInsets, FlatButton, Form, FormField, FormState, GestureDetector, GlobalKey, InputDecoration, Key, ListView, Navigator, Padding, SizedBox, State, StatefulWidget, Text, TextFormField, TextOverflow, Theme, Widget, showDialog;
+import 'package:provider/provider.dart' show Provider;
 
 class SubjectDialog extends StatefulWidget {
   Subject subject;
@@ -74,7 +72,7 @@ class _SubjectDialogState extends State<SubjectDialog> {
                         );
                         if (_teacher != null) {
                           widget.subject.teacher = _teacher;
-                          state.setValue(widget.subject.teacher);
+                          state.didChange(widget.subject.teacher);
                           setState(() {});
                         }
                       },
@@ -98,7 +96,7 @@ class _SubjectDialogState extends State<SubjectDialog> {
                           widget.subject.teacher == null
                               ? I18n.of(context).teacher
                               : Provider.of<TeacherProvider>(context)
-                                  .values[widget.subject.teacher]
+                                  .teacher(widget.subject.teacher)
                                   .toString(),
                           overflow: TextOverflow.fade,
                           // style: Theme.of(context).textTheme,

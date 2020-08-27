@@ -1,7 +1,5 @@
-import 'dart:developer';
-
-import 'package:edum/models/homework.dart';
-import 'package:edum/provider/SchoolProvider.dart';
+import 'package:diaryschool/models/homework.dart';
+import 'package:diaryschool/provider/SchoolProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
@@ -20,7 +18,6 @@ class HomeworkProvider extends ChangeNotifier
       value.uid = key;
       _result.add(value);
     });
-    // log('result '+_result[_result.length - 2].content);
     return _result;
   }
 
@@ -36,17 +33,16 @@ class HomeworkProvider extends ChangeNotifier
   }
 
   @override
-  Future<bool> put(Homework data) async {
+  Future<void> put(Homework data) async {
     try {
       if (data.uid == null) {
         await _values.add(data);
       } else {
-        log('put');
         await _values.put(data.uid, data);
       }
       notifyListeners();
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 }

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:hive/hive.dart';
 
 part 'subject.g.dart';
@@ -21,10 +19,10 @@ class Subject {
 
   double get score {
     if (grades.isNotEmpty && grades != null) {
-      log(grades.toString());
       return grades.map(double.parse).reduce((value, element) => element + value) /
           grades.length;
     }
+    return null;
   }
 
   Subject.fromMap(Map<String, dynamic> e) {

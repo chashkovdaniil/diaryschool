@@ -1,25 +1,28 @@
-import 'dart:developer';
-import 'dart:ui';
+import 'dart:ui' show ImageFilter;
 
-import 'package:edum/common_widgets/task_bottom_sheet.dart';
-import 'package:edum/generated/i18n.dart';
-import 'package:edum/models/homework.dart';
-import 'package:edum/provider/HomeworkProvider.dart';
-import 'package:edum/provider/SubjectProvider.dart';
-import 'package:edum/provider/TeacherProvider.dart';
-import 'package:edum/utilities/constants.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:diaryschool/common_widgets/task_bottom_sheet.dart' show TaskBottomSheet;
+import 'package:diaryschool/generated/i18n.dart' show I18n;
+import 'package:diaryschool/models/homework.dart' show Homework;
+import 'package:diaryschool/provider/HomeworkProvider.dart' show HomeworkProvider;
+import 'package:diaryschool/provider/SubjectProvider.dart' show SubjectProvider;
+import 'package:diaryschool/utilities/constants.dart' show kBorderRadius, kDefaultShadow;
+import 'package:flutter/material.dart' show BackdropFilter, BoxDecoration, BuildContext, ClipRRect, Colors, Column, Container, Divider, EdgeInsets, Expanded, Icon, IconData, Icons, Ink, InkWell, Key, ListTile, ListView, Matrix4, MediaQuery, NeverScrollableScrollPhysics, Padding, Positioned, RoundedRectangleBorder, Row, SizedBox, Stack, State, StatefulWidget, Text, TextOverflow, Theme, ValueKey, Widget, required, showModalBottomSheet;
+import 'package:provider/provider.dart' show Provider;
 
 class CardWidget extends StatefulWidget {
   final Homework homework;
   final Map<String, bool> filter;
+  final String teacher;
 
   CardWidget({
     Key key,
     @required this.homework,
     @required this.filter,
-  }) : super(key: key);
+    @required this.teacher,
+  })  : assert(homework != null),
+        assert(filter != null),
+        assert(teacher != null),
+        super(key: key);
 
   @override
   _CardWidgetState createState() => _CardWidgetState();
@@ -129,19 +132,14 @@ class _CardWidgetState extends State<CardWidget> {
                         showTeacher
                             ? _buildCardInfoItem(
                                 Icons.person,
-                                Provider.of<TeacherProvider>(context)
-                                    .values[
-                                        Provider.of<SubjectProvider>(context)
-                                            .values[widget.homework.subject]
-                                            .teacher]
-                                    .toString(),
+                                widget.teacher,
                               )
                             : const SizedBox.shrink(),
                         showRoute
                             ? _buildCardInfoItem(
                                 Icons.place,
                                 Provider.of<SubjectProvider>(context)
-                                    .values[widget.homework.subject]
+                                    .subject(widget.homework.subject)
                                     .map,
                               )
                             : const SizedBox.shrink(),

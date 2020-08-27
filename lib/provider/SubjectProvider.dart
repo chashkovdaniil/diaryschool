@@ -1,9 +1,8 @@
-import 'dart:developer';
 
-import 'package:edum/models/subject.dart';
-import 'package:edum/provider/SchoolProvider.dart';
+import 'package:diaryschool/models/subject.dart' show Subject;
+import 'package:diaryschool/provider/SchoolProvider.dart' show SchoolProvider;
 import 'package:hive/hive.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/widgets.dart' show ChangeNotifier;
 
 class SubjectProvider extends ChangeNotifier
     implements SchoolProvider<Subject> {
@@ -11,6 +10,15 @@ class SubjectProvider extends ChangeNotifier
 
   SubjectProvider(Box<Subject> box) {
     _values = box;
+  }
+  Subject subject(int uid) {
+    try {
+      return values[uid];
+    } on RangeError {
+      return Subject(
+        title: 'Err: Does not exist',
+      );
+    }
   }
 
   @override

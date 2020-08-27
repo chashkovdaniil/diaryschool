@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:815933775318:android:83b1a6529070105fb6d877",
         "android_client_info": {
-          "package_name": "chashkov.edum"
+          "package_name": "ru.diaryschool"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "815933775318-dhpnjfrlbp1dt2i2qtqiuva5b4n31ga3.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "chashkov.edum",
+            "package_name": "ru.diaryschool",
             "certificate_hash": "bc93bdcf220269d4690f21cfb2e658f07113bbb0"
           }
         },

@@ -1,8 +1,6 @@
-import 'dart:developer';
-
-import 'package:edum/models/timetable_row.dart';
-import 'package:edum/provider/SchoolProvider.dart';
-import 'package:flutter/widgets.dart';
+import 'package:diaryschool/models/timetable_row.dart' show TimetableRow;
+import 'package:diaryschool/provider/SchoolProvider.dart' show SchoolProvider;
+import 'package:flutter/widgets.dart' show ChangeNotifier;
 import 'package:hive/hive.dart';
 
 class TimetableProvider extends ChangeNotifier
@@ -16,7 +14,6 @@ class TimetableProvider extends ChangeNotifier
   @override
   Future<bool> put(TimetableRow timetable) async {
     try {
-      log(timetable.start.toString());
       timetable.uid == null
           ? await _values.add(timetable)
           : await _values.putAt(timetable.uid, timetable);

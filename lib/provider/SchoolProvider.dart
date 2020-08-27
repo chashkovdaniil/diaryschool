@@ -8,6 +8,6 @@ abstract class SchoolProvider<T> {
   }
   
   List<T> get values => _values.values.toList();
-  Future<bool> put(T data);
+  Future<void> put(T data);
   Future<bool> delete(int index);
 }

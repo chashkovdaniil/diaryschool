@@ -1,6 +1,6 @@
-import 'dart:io';
+import 'dart:io' show Platform;
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' show ChangeNotifier, Locale, TimeOfDay;
 import 'package:hive/hive.dart';
 
 class SettingsProvider extends ChangeNotifier {
@@ -125,7 +125,7 @@ class SettingsProvider extends ChangeNotifier {
       await _values.put('firstRunTaskPage', false);
 
   Locale get getLanguage {
-    List<String> deviceLanguage = Platform.localeName.split("_");
+    List<String> deviceLanguage = Platform.localeName.split('_');
     List<String> locale = (_values.get(
       'language',
       defaultValue: deviceLanguage[0] + '-' + deviceLanguage[1],

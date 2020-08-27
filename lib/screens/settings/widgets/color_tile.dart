@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' show BorderRadius, BoxDecoration, BuildContext, Color, Container, Key, StatelessWidget, Widget;
 
 class ColorTile extends StatelessWidget {
   final Color color;

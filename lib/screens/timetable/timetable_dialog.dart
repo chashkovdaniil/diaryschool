@@ -1,11 +1,9 @@
-import 'dart:developer';
-
-import 'package:edum/common_widgets/select_subject_dialog.dart';
-import 'package:edum/generated/i18n.dart';
-import 'package:edum/models/timetable_row.dart';
-import 'package:edum/provider/SubjectProvider.dart';
-import 'package:edum/provider/TimetableProvider.dart';
-import 'package:flutter/material.dart';
+import 'package:diaryschool/common_widgets/select_subject_dialog.dart' show SelectSubjectDialog;
+import 'package:diaryschool/generated/i18n.dart' show I18n;
+import 'package:diaryschool/models/timetable_row.dart' show TimetableRow;
+import 'package:diaryschool/provider/SubjectProvider.dart' show SubjectProvider;
+import 'package:diaryschool/provider/TimetableProvider.dart' show TimetableProvider;
+import 'package:flutter/material.dart' show AlertDialog, Border, BorderSide, BoxDecoration, BuildContext, Colors, Column, Container, EdgeInsets, FlatButton, Form, FormField, FormState, GestureDetector, GlobalKey, Key, ListView, Navigator, Padding, SizedBox, State, StatefulWidget, Text, TextOverflow, Theme, TimeOfDay, Widget, showDialog, showTimePicker;
 import 'package:provider/provider.dart';
 
 class TimetableDialog extends StatefulWidget {
@@ -46,7 +44,7 @@ class _TimetableDialogState extends State<TimetableDialog> {
                         );
                         if (_start != null) {
                           widget.timetable.start = _start;
-                          state.setValue(_start);
+                          state.didChange(_start);
                           setState(() {});
                         }
                       },
@@ -109,7 +107,7 @@ class _TimetableDialogState extends State<TimetableDialog> {
                         );
                         if (_end != null) {
                           widget.timetable.end = _end;
-                          state.setValue(_end);
+                          state.didChange(_end);
                           setState(() {});
                         }
                       },

@@ -1,8 +1,8 @@
-import 'package:edum/generated/i18n.dart';
-import 'package:edum/models/teacher.dart';
-import 'package:edum/provider/TeacherProvider.dart';
-import 'package:edum/screens/teachers/teacher_dialog.dart';
-import 'package:flutter/material.dart';
+import 'package:diaryschool/generated/i18n.dart' show I18n;
+import 'package:diaryschool/models/teacher.dart' show Teacher;
+import 'package:diaryschool/provider/TeacherProvider.dart' show TeacherProvider;
+import 'package:diaryschool/screens/teachers/teacher_dialog.dart' show TeacherDialog;
+import 'package:flutter/material.dart' show AlertDialog, BuildContext, FlatButton, Icon, IconButton, Icons, Key, ListTile, ListView, Navigator, Row, Spacer, StatelessWidget, Text, Theme, Widget, showDialog;
 import 'package:provider/provider.dart';
 
 class SelectTeacherDialog extends StatelessWidget {

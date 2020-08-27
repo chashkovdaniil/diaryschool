@@ -1,8 +1,6 @@
-import 'dart:developer';
-
-import 'package:edum/generated/i18n.dart';
-import 'package:edum/provider/SettingsProvider.dart';
-import 'package:flutter/material.dart';
+import 'package:diaryschool/generated/i18n.dart' show I18n;
+import 'package:diaryschool/provider/SettingsProvider.dart' show SettingsProvider;
+import 'package:flutter/material.dart' show AlertDialog, BuildContext, Checkbox, FlatButton, Key, ListTile, ListView, Navigator, State, StatefulWidget, Text, Theme, Widget, required;
 import 'package:provider/provider.dart';
 
 class FilterDialog extends StatefulWidget {

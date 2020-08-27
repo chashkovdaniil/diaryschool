@@ -1,6 +1,6 @@
-import 'dart:async';
+import 'dart:async' show Future;
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' show BuildContext, Locale, Localizations, LocalizationsDelegate;
 import 'package:flutter/foundation.dart' show SynchronousFuture;
 
 class DLocalizations {

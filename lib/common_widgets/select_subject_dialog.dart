@@ -1,8 +1,8 @@
-import 'package:edum/generated/i18n.dart';
-import 'package:edum/models/subject.dart';
-import 'package:edum/provider/SubjectProvider.dart';
-import 'package:edum/screens/subjects/subject_dialog.dart';
-import 'package:flutter/material.dart';
+import 'package:diaryschool/generated/i18n.dart' show I18n;
+import 'package:diaryschool/models/subject.dart' show Subject;
+import 'package:diaryschool/provider/SubjectProvider.dart' show SubjectProvider;
+import 'package:diaryschool/screens/subjects/subject_dialog.dart' show SubjectDialog;
+import 'package:flutter/material.dart' show AlertDialog, BuildContext, FlatButton, Icon, IconButton, Icons, Key, ListTile, ListView, Navigator, Row, Spacer, StatelessWidget, Text, Theme, Widget, showDialog;
 import 'package:provider/provider.dart';
 
 class SelectSubjectDialog extends StatelessWidget {

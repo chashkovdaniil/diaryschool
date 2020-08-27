@@ -1,4 +1,4 @@
-package chashkov.edum
+package ru.diaryschool
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

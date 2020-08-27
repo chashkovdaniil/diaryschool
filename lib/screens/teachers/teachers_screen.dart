@@ -1,14 +1,12 @@
-import 'dart:developer';
-
-import 'package:edum/common_widgets/divider.dart';
-import 'package:edum/generated/i18n.dart';
-import 'package:edum/models/teacher.dart';
-import 'package:edum/provider/TeacherProvider.dart';
-import 'package:edum/screens/teachers/teacher_card.dart';
-import 'package:edum/screens/teachers/teacher_dialog.dart';
-import 'package:edum/utilities/constants.dart';
+import 'package:diaryschool/common_widgets/divider.dart' show CustomDivider;
+import 'package:diaryschool/generated/i18n.dart' show I18n;
+import 'package:diaryschool/models/teacher.dart' show Teacher;
+import 'package:diaryschool/provider/TeacherProvider.dart' show TeacherProvider;
+import 'package:diaryschool/screens/teachers/teacher_card.dart' show TeacherCard;
+import 'package:diaryschool/screens/teachers/teacher_dialog.dart' show TeacherDialog;
+import 'package:diaryschool/utilities/constants.dart' show kDefaultPadding;
 import 'package:provider/provider.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' show AppBar, BuildContext, Center, EdgeInsets, FlatButton, Icon, Icons, Key, ListView, NeverScrollableScrollPhysics, Padding, Scaffold, SizedBox, State, StatefulWidget, Text, Theme, ValueKey, Widget, showDialog;
 
 class TeachersScreen extends StatefulWidget {
   static String id = 'taskScreen';

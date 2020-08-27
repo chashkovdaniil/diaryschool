@@ -1,13 +1,12 @@
-import 'package:edum/generated/i18n.dart';
-import 'package:edum/screens/home/widgets/menu_tile.dart';
-import 'package:edum/screens/settings/settings_screen.dart';
-import 'package:edum/screens/subjects/subjects_screen.dart';
-import 'package:edum/screens/teachers/teachers_screen.dart';
-import 'package:edum/utilities/constants.dart';
+import 'package:diaryschool/generated/i18n.dart' show I18n;
+import 'package:diaryschool/screens/home/widgets/menu_tile.dart' show MenuTile;
+import 'package:diaryschool/screens/notes/notes_screen.dart' show NotesScreen;
+import 'package:diaryschool/screens/settings/settings_screen.dart' show SettingsScreen;
+import 'package:diaryschool/screens/subjects/subjects_screen.dart' show SubjectsScreen;
+import 'package:diaryschool/screens/teachers/teachers_screen.dart' show TeachersScreen;
+import 'package:diaryschool/utilities/constants.dart' show kDefaultPadding;
 import 'package:flutter/cupertino.dart' show CupertinoPageRoute;
-import 'package:flutter/material.dart';
-
-// TODO: добавить рекламу
+import 'package:flutter/material.dart' show AppBar, BuildContext, EdgeInsets, GridView, Icon, IconButton, Icons, Key, ListView, MaterialPageRoute, Navigator, NeverScrollableScrollPhysics, Padding, Scaffold, SliverGridDelegateWithFixedCrossAxisCount, StatelessWidget, Text, TextDirection, Theme, Widget;
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key key}) : super(key: key);
@@ -90,14 +89,6 @@ class HomeScreen extends StatelessWidget {
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             children: [
-              // MenuTile(
-              // onTap: () => Navigator.pushNamed(
-              //   context,
-              //   TeachersScreen.id,
-              // ),
-              //   icon: Icons.speaker_notes,
-              //   title: 'Заметки',
-              // ),
               MenuTile(
                 onTap: () => Navigator.pushNamed(
                   context,
@@ -113,6 +104,16 @@ class HomeScreen extends StatelessWidget {
                 ),
                 icon: Icons.list,
                 title: I18n.of(context).subjects,
+              ),
+              MenuTile(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => NotesScreen(),
+                  ),
+                ),
+                icon: Icons.note,
+                title: I18n.of(context).notes,
               ),
               // MenuTile(
               // onTap: () => Navigator.pushNamed(

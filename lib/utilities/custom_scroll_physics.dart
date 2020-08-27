@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' show BouncingScrollPhysics, ScrollPhysics;
 
 class CustomScrollPhysics extends BouncingScrollPhysics {
   const CustomScrollPhysics({ScrollPhysics parent}) : super(parent: parent);
