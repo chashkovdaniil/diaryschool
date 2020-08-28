@@ -1,20 +1,20 @@
-import 'package:carousel_slider/carousel_slider.dart' show CarouselOptions, CarouselSlider;
-import 'package:diaryschool/common_widgets/card_widget.dart' show CardWidget;
-import 'package:diaryschool/generated/i18n.dart' show I18n;
-import 'package:diaryschool/models/homework.dart' show Homework;
-import 'package:diaryschool/models/subject.dart' show Subject;
-import 'package:diaryschool/provider/HomeworkProvider.dart' show HomeworkProvider;
-import 'package:diaryschool/provider/SettingsProvider.dart' show SettingsProvider;
-import 'package:diaryschool/provider/SubjectProvider.dart' show SubjectProvider;
-import 'package:diaryschool/provider/TeacherProvider.dart' show TeacherProvider;
-import 'package:diaryschool/screens/failure/failure_screen.dart' show FailureScreen;
-import 'package:diaryschool/screens/task/task_screen.dart' show TaskScreen;
-import 'package:diaryschool/screens/tasks/widgets/filter_dialog.dart' show FilterDialog;
-import 'package:diaryschool/utilities/constants.dart' show kDefaultPadding;
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:diaryschool/common_widgets/card_widget.dart';
+import 'package:diaryschool/generated/i18n.dart';
+import 'package:diaryschool/models/homework.dart';
+import 'package:diaryschool/models/subject.dart';
+import 'package:diaryschool/provider/HomeworkProvider.dart';
+import 'package:diaryschool/provider/SettingsProvider.dart';
+import 'package:diaryschool/provider/SubjectProvider.dart';
+import 'package:diaryschool/provider/TeacherProvider.dart';
+import 'package:diaryschool/screens/failure/failure_screen.dart';
+import 'package:diaryschool/screens/task/task_screen.dart';
+import 'package:diaryschool/screens/tasks/widgets/filter_dialog.dart';
+import 'package:diaryschool/utilities/constants.dart';
 import 'package:flutter/cupertino.dart' show CupertinoPageRoute;
-import 'package:flutter/material.dart' show AppBar, BorderRadius, BoxDecoration, BuildContext, Center, Colors, Column, Container, EdgeInsets, Expanded, FlatButton, Icon, IconButton, Icons, Key, MainAxisAlignment, MainAxisSize, MaterialPageRoute, Navigator, Overlay, OverlayEntry, Row, Scaffold, SizedBox, Slider, Spacer, State, StatefulBuilder, StatefulWidget, Text, TextAlign, Theme, ValueKey, Widget, showDatePicker, showDialog;
-import 'package:flutter/rendering.dart' show BorderRadius, BoxDecoration, EdgeInsets, MainAxisAlignment, MainAxisSize, TextAlign;
-import 'package:flutter/scheduler.dart' show SchedulerBinding;
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 
 class TasksScreen extends StatefulWidget {
@@ -131,10 +131,10 @@ class _TasksScreenState extends State<TasksScreen> {
                   ),
                 )
               : Expanded(
-                              child: Center(
+                  child: Center(
                     child: Text(I18n.of(context).noTasks),
                   ),
-              ),
+                ),
           const Spacer(),
           FlatButton.icon(
             onPressed: () {

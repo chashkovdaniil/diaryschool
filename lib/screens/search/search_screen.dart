@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' show AppBar, BuildContext, Hero, Icon, IconButton, Icons, InputBorder, InputDecoration, Key, ListTile, ListView, Navigator, Scaffold, StatelessWidget, Text, TextFormField, Widget;
+import 'package:flutter/material.dart';
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({Key key}) : super(key: key);

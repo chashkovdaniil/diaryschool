@@ -1,6 +1,6 @@
-import 'package:diaryschool/screens/articles/article_screen.dart' show ArticleScreen;
-import 'package:diaryschool/utilities/constants.dart' show kBorderRadius, kDefaultPadding;
-import 'package:flutter/material.dart' show AppBar, BoxDecoration, BuildContext, Card, Colors, Column, Container, EdgeInsets, Icon, IconButton, Icons, InkWell, Key, ListView, MaterialPageRoute, Navigator, Padding, RoundedRectangleBorder, Row, Scaffold, Spacer, StatelessWidget, Text, Widget;
+import 'package:diaryschool/screens/articles/article_screen.dart';
+import 'package:diaryschool/utilities/constants.dart';
+import 'package:flutter/material.dart';
 
 class ArticlesScreen extends StatelessWidget {
   const ArticlesScreen({Key key}) : super(key: key);

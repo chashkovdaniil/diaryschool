@@ -1,4 +1,4 @@
-import 'package:flutter_local_notifications/flutter_local_notifications.dart' show AndroidNotificationDetails, FlutterLocalNotificationsPlugin, IOSNotificationDetails, NotificationDetails, Time;
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 Future enableNotification(Time time) async {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =

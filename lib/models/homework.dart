@@ -54,8 +54,8 @@ class Homework {
       'isDone': isDone,
       'content': content,
       'grade': grade,
-      'date': date == null ? null : date.millisecondsSinceEpoch,
-      'deadline': deadline == null ? null : deadline.millisecondsSinceEpoch,
+      'date': date?.millisecondsSinceEpoch,
+      'deadline': deadline?.millisecondsSinceEpoch,
       'files': files,
     };
   }

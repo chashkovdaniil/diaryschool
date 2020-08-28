@@ -1,9 +1,9 @@
-import 'package:diaryschool/generated/i18n.dart' show I18n;
-import 'package:diaryschool/models/note.dart' show Note;
-import 'package:diaryschool/provider/NotesProvider.dart' show NotesProvider;
-import 'package:diaryschool/utilities/constants.dart' show kDefaultPadding;
-import 'package:flutter/material.dart' show AppBar, BottomAppBar, BuildContext, Column, Divider, EdgeInsets, Expanded, FlatButton, Form, FormState, GestureDetector, GlobalKey, InputBorder, InputDecoration, Key, MainAxisAlignment, Navigator, Padding, Row, Scaffold, SizedBox, State, StatefulWidget, Text, TextFormField, Theme, Widget, showDatePicker;
-import 'package:provider/provider.dart' show Provider;
+import 'package:diaryschool/generated/i18n.dart';
+import 'package:diaryschool/models/note.dart';
+import 'package:diaryschool/provider/NotesProvider.dart';
+import 'package:diaryschool/utilities/constants.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:diaryschool/utilities/Extensions.dart';
 
 class NoteScreen extends StatefulWidget {
@@ -61,10 +61,10 @@ class _NoteScreenState extends State<NoteScreen> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextFormField(
-                  initialValue: widget.note.title,
-                  onChanged: (val) {
-                    widget.note.title = val;
-                  },
+                initialValue: widget.note.title,
+                onChanged: (val) {
+                  widget.note.title = val;
+                },
                 validator: (val) {
                   return val.isEmpty ? I18n.of(context).fillField : null;
                 },
@@ -108,7 +108,8 @@ class _NoteScreenState extends State<NoteScreen> {
             BottomAppBar(
               elevation: 0,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [

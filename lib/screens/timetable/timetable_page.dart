@@ -1,11 +1,11 @@
-import 'package:diaryschool/generated/i18n.dart' show I18n;
-import 'package:diaryschool/models/timetable_row.dart' show TimetableRow;
-import 'package:diaryschool/provider/SettingsProvider.dart' show SettingsProvider;
-import 'package:diaryschool/provider/SubjectProvider.dart' show SubjectProvider;
-import 'package:diaryschool/provider/TimetableProvider.dart' show TimetableProvider;
-import 'package:diaryschool/screens/timetable/timetable_dialog.dart' show TimetableDialog;
-import 'package:flutter/material.dart' show AppBar, BorderRadius, BoxDecoration, BuildContext, Center, Colors, Column, Container, EdgeInsets, Expanded, FlatButton, Icon, IconButton, Icons, Key, ListTile, ListView, MainAxisSize, Material, Overlay, OverlayEntry, Scaffold, Slider, State, StatefulWidget, Text, TextAlign, Theme, TimeOfDay, Widget, showDialog;
-import 'package:flutter/scheduler.dart' show SchedulerBinding;
+import 'package:diaryschool/generated/i18n.dart';
+import 'package:diaryschool/models/timetable_row.dart';
+import 'package:diaryschool/provider/SettingsProvider.dart';
+import 'package:diaryschool/provider/SubjectProvider.dart';
+import 'package:diaryschool/provider/TimetableProvider.dart';
+import 'package:diaryschool/screens/timetable/timetable_dialog.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 
 class TimetablePage extends StatefulWidget {

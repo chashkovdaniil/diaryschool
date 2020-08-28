@@ -1,5 +1,5 @@
-import 'package:diaryschool/generated/i18n.dart' show I18n;
-import 'package:flutter/material.dart' show BuildContext, Column, Divider, Key, ListTile, StatelessWidget, Text, Theme, Widget;
+import 'package:diaryschool/generated/i18n.dart';
+import 'package:flutter/material.dart';
 
 class CardGrades extends StatelessWidget {
   final String subject;

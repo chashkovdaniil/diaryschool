@@ -1,9 +1,9 @@
-import 'package:diaryschool/generated/i18n.dart' show I18n;
-import 'package:diaryschool/models/note.dart' show Note;
-import 'package:diaryschool/provider/NotesProvider.dart' show NotesProvider;
-import 'package:diaryschool/screens/notes/note_screen.dart' show NoteScreen;
-import 'package:diaryschool/utilities/constants.dart' show kBorderRadius, kDefaultPadding;
-import 'package:flutter/material.dart' show AppBar, BuildContext, Card, Center, EdgeInsets, FloatingActionButton, Icon, IconButton, Icons, Key, ListTile, ListView, MaterialPageRoute, Navigator, RoundedRectangleBorder, Scaffold, StatelessWidget, Text, Theme, Widget;
+import 'package:diaryschool/generated/i18n.dart';
+import 'package:diaryschool/models/note.dart';
+import 'package:diaryschool/provider/NotesProvider.dart';
+import 'package:diaryschool/screens/notes/note_screen.dart';
+import 'package:diaryschool/utilities/constants.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class NotesScreen extends StatelessWidget {

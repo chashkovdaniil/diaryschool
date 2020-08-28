@@ -1,15 +1,15 @@
-import 'dart:async' show Future, Stream, StreamController;
+import 'dart:async';
 
-import 'package:diaryschool/generated/i18n.dart' show I18n;
-import 'package:diaryschool/provider/SettingsProvider.dart' show SettingsProvider;
-import 'package:diaryschool/screens/grades/grades_screen.dart' show GradesScreen;
-import 'package:diaryschool/screens/home/home_screen.dart' show HomeScreen;
-import 'package:diaryschool/screens/tasks/tasks_screen.dart' show TasksScreen;
-import 'package:diaryschool/screens/timetable/timetable_page.dart' show TimetablePage;
-import 'package:diaryschool/utilities/constants.dart' show kPrimaryColor;
-import 'package:flutter/material.dart' show BottomNavigationBar, BottomNavigationBarItem, BottomNavigationBarType, BuildContext, Colors, GlobalKey, Icon, Icons, IndexedStack, Key, MaterialPageRoute, Navigator, NavigatorState, RouteSettings, SafeArea, Scaffold, State, StatefulWidget, Text, Theme, Widget, WillPopScope, debugPrint, required;
-import 'package:provider/provider.dart' show Provider, StreamProvider;
-import 'package:flutter_local_notifications/flutter_local_notifications.dart' show AndroidInitializationSettings, FlutterLocalNotificationsPlugin, IOSInitializationSettings, InitializationSettings;
+import 'package:diaryschool/generated/i18n.dart';
+import 'package:diaryschool/provider/SettingsProvider.dart';
+import 'package:diaryschool/screens/grades/grades_screen.dart';
+import 'package:diaryschool/screens/home/home_screen.dart';
+import 'package:diaryschool/screens/tasks/tasks_screen.dart';
+import 'package:diaryschool/screens/timetable/timetable_page.dart';
+import 'package:diaryschool/utilities/constants.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();

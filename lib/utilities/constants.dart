@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' show BorderRadius, BoxShadow, Color, Colors, MaterialColor, Offset;
+import 'package:flutter/material.dart';
 
 const kColorRed = MaterialColor(0xffd13438, {
   100: Color(0xffFDCED4),

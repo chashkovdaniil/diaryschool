@@ -1,4 +1,4 @@
-import 'package:diaryschool/models/homework.dart' show Homework;
+import 'package:diaryschool/models/homework.dart';
 
 class TaskScreenArgs {
   final String titleSubject;

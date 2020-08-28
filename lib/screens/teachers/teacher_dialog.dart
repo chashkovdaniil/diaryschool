@@ -1,7 +1,7 @@
-import 'package:diaryschool/generated/i18n.dart' show I18n;
-import 'package:diaryschool/models/teacher.dart' show Teacher;
-import 'package:diaryschool/provider/TeacherProvider.dart' show TeacherProvider;
-import 'package:flutter/material.dart' show AlertDialog, BuildContext, FlatButton, Form, FormState, GlobalKey, InputDecoration, Key, ListView, Navigator, State, StatefulWidget, Text, TextFormField, TextInputType, Widget, required;
+import 'package:diaryschool/generated/i18n.dart';
+import 'package:diaryschool/models/teacher.dart';
+import 'package:diaryschool/provider/TeacherProvider.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class TeacherDialog extends StatefulWidget {
@@ -38,10 +38,7 @@ class _TeacherDialogState extends State<TeacherDialog> {
                 });
               },
               validator: (value) {
-                if (value.isEmpty) {
-                  return I18n.of(context).fillField;
-                }
-                return null;
+                return (value.isEmpty) ? I18n.of(context).fillField : null;
               },
             ),
             TextFormField(

@@ -1,12 +1,12 @@
-import 'package:diaryschool/generated/i18n.dart' show I18n;
-import 'package:diaryschool/models/homework.dart' show Homework;
-import 'package:diaryschool/provider/HomeworkProvider.dart' show HomeworkProvider;
-import 'package:diaryschool/provider/SubjectProvider.dart' show SubjectProvider;
-import 'package:diaryschool/screens/task/task_screen.dart' show TaskScreen;
-import 'package:diaryschool/screens/tasks/tasks_screen.dart' show TasksScreen;
-import 'package:diaryschool/utilities/constants.dart' show kBorderRadius, kDefaultPadding, kDefaultShadow;
+import 'package:diaryschool/generated/i18n.dart';
+import 'package:diaryschool/models/homework.dart';
+import 'package:diaryschool/provider/HomeworkProvider.dart';
+import 'package:diaryschool/provider/SubjectProvider.dart';
+import 'package:diaryschool/screens/task/task_screen.dart';
+import 'package:diaryschool/screens/tasks/tasks_screen.dart';
+import 'package:diaryschool/utilities/constants.dart';
 import 'package:flutter/cupertino.dart' show CupertinoPageRoute;
-import 'package:flutter/material.dart' show AppBar, BoxDecoration, BuildContext, Center, EdgeInsets, Icon, IconButton, Icons, Ink, Key, ListTile, ListView, MaterialPageRoute, Navigator, Padding, RoundedRectangleBorder, Scaffold, State, StatefulWidget, Text, Theme, Widget;
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class FailureScreen extends StatefulWidget {

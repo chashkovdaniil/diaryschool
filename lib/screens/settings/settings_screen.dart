@@ -1,9 +1,9 @@
-import 'package:diaryschool/generated/i18n.dart' show I18n;
-import 'package:diaryschool/provider/SettingsProvider.dart' show SettingsProvider;
-import 'package:diaryschool/utilities/constants.dart' show kColorRed, kDefaultPadding;
-import 'package:flutter/material.dart' show AboutDialog, AlertDialog, AppBar, BuildContext, Container, EdgeInsets, FlatButton, Key, ListTile, ListView, Locale, Navigator, Scaffold, SizedBox, StatelessWidget, Switch, Text, TimeOfDay, Widget, showDialog, showTimePicker;
-import 'package:flutter_local_notifications/flutter_local_notifications.dart' show AndroidNotificationDetails, FlutterLocalNotificationsPlugin, IOSNotificationDetails, NotificationDetails, NotificationVisibility, Time;
-import 'package:flutter_svg/svg.dart' show SvgPicture;
+import 'package:diaryschool/generated/i18n.dart';
+import 'package:diaryschool/provider/SettingsProvider.dart';
+import 'package:diaryschool/utilities/constants.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -86,25 +86,17 @@ class SettingsScreen extends StatelessWidget {
 
                       await enableNotification(
                         context,
-                        Time(
-                          TimeOfDay.now().hour,
-                          TimeOfDay.now().minute,
-                          0,
-                        ),
+                        Time(TimeOfDay.now().hour, TimeOfDay.now().minute, 0),
                       );
-                    } else {
-                      await enableNotification(
-                        context,
-                        Time(
-                          _time.hour,
-                          _time.minute,
-                          0,
-                        ),
-                      );
-                      await Provider.of<SettingsProvider>(context,
-                              listen: false)
-                          .setTimeNotification(_time);
+                      return;
                     }
+                    await enableNotification(
+                      context,
+                      Time(_time.hour, _time.minute, 0),
+                    );
+                    await Provider.of<SettingsProvider>(context, listen: false)
+                        .setTimeNotification(_time);
+                    return;
                   },
                 )
               : const SizedBox.shrink(),

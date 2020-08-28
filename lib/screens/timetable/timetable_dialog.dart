@@ -1,9 +1,9 @@
-import 'package:diaryschool/common_widgets/select_subject_dialog.dart' show SelectSubjectDialog;
-import 'package:diaryschool/generated/i18n.dart' show I18n;
-import 'package:diaryschool/models/timetable_row.dart' show TimetableRow;
-import 'package:diaryschool/provider/SubjectProvider.dart' show SubjectProvider;
-import 'package:diaryschool/provider/TimetableProvider.dart' show TimetableProvider;
-import 'package:flutter/material.dart' show AlertDialog, Border, BorderSide, BoxDecoration, BuildContext, Colors, Column, Container, EdgeInsets, FlatButton, Form, FormField, FormState, GestureDetector, GlobalKey, Key, ListView, Navigator, Padding, SizedBox, State, StatefulWidget, Text, TextOverflow, Theme, TimeOfDay, Widget, showDialog, showTimePicker;
+import 'package:diaryschool/common_widgets/select_subject_dialog.dart';
+import 'package:diaryschool/generated/i18n.dart';
+import 'package:diaryschool/models/timetable_row.dart';
+import 'package:diaryschool/provider/SubjectProvider.dart';
+import 'package:diaryschool/provider/TimetableProvider.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class TimetableDialog extends StatefulWidget {
@@ -28,10 +28,7 @@ class _TimetableDialogState extends State<TimetableDialog> {
             FormField<TimeOfDay>(
               initialValue: widget.timetable.start,
               validator: (value) {
-                if (value == null) {
-                  return I18n.of(context).fillField;
-                }
-                return null;
+                return (value == null) ? I18n.of(context).fillField : null;
               },
               builder: (state) {
                 return Column(
@@ -91,10 +88,7 @@ class _TimetableDialogState extends State<TimetableDialog> {
             FormField<TimeOfDay>(
               initialValue: widget.timetable.end,
               validator: (value) {
-                if (value == null) {
-                  return I18n.of(context).fillField;
-                }
-                return null;
+                return (value == null) ? I18n.of(context).fillField : null;
               },
               builder: (state) {
                 return Column(
@@ -154,10 +148,7 @@ class _TimetableDialogState extends State<TimetableDialog> {
             FormField<int>(
               initialValue: widget.timetable.subject,
               validator: (int value) {
-                if (value == null) {
-                  return I18n.of(context).selectSubject;
-                }
-                return null;
+                return (value == null) ? I18n.of(context).selectSubject : null;
               },
               builder: (state) {
                 return Column(

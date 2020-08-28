@@ -1,13 +1,13 @@
-import 'package:diaryschool/common_widgets/select_subject_dialog.dart' show SelectSubjectDialog;
-import 'package:diaryschool/generated/i18n.dart' show I18n;
-import 'package:diaryschool/models/homework.dart' show Homework;
-import 'package:diaryschool/provider/HomeworkProvider.dart' show HomeworkProvider;
-import 'package:diaryschool/provider/SettingsProvider.dart' show SettingsProvider;
-import 'package:diaryschool/provider/SubjectProvider.dart' show SubjectProvider;
-import 'package:diaryschool/screens/task/widgets/grade_field.dart' show GradeField;
-import 'package:diaryschool/utilities/constants.dart' show kBorderRadius, kDefaultPadding;
-import 'package:flutter/material.dart' show AppBar, BorderRadius, BottomAppBar, BoxDecoration, BuildContext, Center, Colors, Column, Container, CrossAxisAlignment, Divider, EdgeInsets, Expanded, FlatButton, Form, FormField, FormFieldState, FormFieldValidator, FormState, GlobalKey, Icon, IconButton, Icons, InkWell, InputBorder, InputDecoration, Key, MainAxisSize, Navigator, Overlay, OverlayEntry, Padding, Row, Scaffold, SizedBox, Spacer, State, StatefulBuilder, StatefulWidget, Text, TextAlign, TextFormField, Theme, Widget, required, showDatePicker, showDialog;
-import 'package:flutter/scheduler.dart' show SchedulerBinding;
+import 'package:diaryschool/common_widgets/select_subject_dialog.dart';
+import 'package:diaryschool/generated/i18n.dart';
+import 'package:diaryschool/models/homework.dart';
+import 'package:diaryschool/provider/HomeworkProvider.dart';
+import 'package:diaryschool/provider/SettingsProvider.dart';
+import 'package:diaryschool/provider/SubjectProvider.dart';
+import 'package:diaryschool/screens/task/widgets/grade_field.dart';
+import 'package:diaryschool/utilities/constants.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 
 class TaskScreen extends StatefulWidget {
@@ -59,10 +59,9 @@ class _TaskScreenState extends State<TaskScreen> {
               homework: _homework,
               initialValue: _homework.subject,
               validator: (val) {
-                if (val == null && _homework.subject == null) {
-                  return I18n.of(context).fillField;
-                }
-                return null;
+                return (val == null && _homework.subject == null)
+                    ? I18n.of(context).fillField
+                    : null;
               },
             ),
             const Divider(
@@ -87,9 +86,9 @@ class _TaskScreenState extends State<TaskScreen> {
                 setState(() {
                   if (_date == null) {
                     _homework.date = DateTime.now();
-                  } else {
-                    _homework.date = _date;
+                    return;
                   }
+                  _homework.date = _date;
                 });
               },
               child: Padding(
@@ -131,10 +130,7 @@ class _TaskScreenState extends State<TaskScreen> {
                 padding: const EdgeInsets.all(kDefaultPadding / 2),
                 child: TextFormField(
                   validator: (val) {
-                    if (val.isEmpty) {
-                      return I18n.of(context).fillField;
-                    }
-                    return null;
+                    return (val.isEmpty) ? I18n.of(context).fillField : null;
                   },
                   decoration: InputDecoration(
                     hintText: I18n.of(context).enterTask,

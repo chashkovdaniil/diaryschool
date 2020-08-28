@@ -1,5 +1,5 @@
-import 'package:diaryschool/utilities/constants.dart' show kBorderRadius, kDefaultShadow;
-import 'package:flutter/material.dart' show BoxDecoration, BuildContext, Column, Icon, IconData, Ink, InkWell, Key, MainAxisAlignment, StatelessWidget, Text, Theme, VoidCallback, Widget;
+import 'package:diaryschool/utilities/constants.dart';
+import 'package:flutter/material.dart';
 
 class MenuTile extends StatelessWidget {
   final VoidCallback onTap;

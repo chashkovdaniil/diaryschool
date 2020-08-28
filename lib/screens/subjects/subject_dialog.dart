@@ -1,10 +1,10 @@
-import 'package:diaryschool/common_widgets/select_teacher_dialog.dart' show SelectTeacherDialog;
-import 'package:diaryschool/generated/i18n.dart' show I18n;
-import 'package:diaryschool/models/subject.dart' show Subject;
-import 'package:diaryschool/provider/SubjectProvider.dart' show SubjectProvider;
-import 'package:diaryschool/provider/TeacherProvider.dart' show TeacherProvider;
-import 'package:flutter/material.dart' show AlertDialog, Border, BorderSide, BoxDecoration, BuildContext, Colors, Column, Container, CrossAxisAlignment, EdgeInsets, FlatButton, Form, FormField, FormState, GestureDetector, GlobalKey, InputDecoration, Key, ListView, Navigator, Padding, SizedBox, State, StatefulWidget, Text, TextFormField, TextOverflow, Theme, Widget, showDialog;
-import 'package:provider/provider.dart' show Provider;
+import 'package:diaryschool/common_widgets/select_teacher_dialog.dart';
+import 'package:diaryschool/generated/i18n.dart';
+import 'package:diaryschool/models/subject.dart';
+import 'package:diaryschool/provider/SubjectProvider.dart';
+import 'package:diaryschool/provider/TeacherProvider.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SubjectDialog extends StatefulWidget {
   Subject subject;
@@ -32,10 +32,7 @@ class _SubjectDialogState extends State<SubjectDialog> {
           children: <Widget>[
             TextFormField(
               validator: (value) {
-                if (value.isEmpty) {
-                  return I18n.of(context).enterTitle;
-                }
-                return null;
+                return value.isEmpty ? I18n.of(context).enterTitle : null;
               },
               initialValue: widget.subject.title,
               decoration: InputDecoration(hintText: I18n.of(context).subject),
@@ -54,10 +51,7 @@ class _SubjectDialogState extends State<SubjectDialog> {
             ),
             FormField<int>(
               validator: (int value) {
-                if (value == null) {
-                  return I18n.of(context).enterTeacher;
-                }
-                return null;
+                return value == null ? I18n.of(context).enterTeacher : null;
               },
               initialValue: widget.subject.teacher,
               builder: (state) {

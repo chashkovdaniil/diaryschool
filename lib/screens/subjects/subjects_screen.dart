@@ -1,11 +1,11 @@
-import 'package:diaryschool/common_widgets/divider.dart' show CustomDivider;
-import 'package:diaryschool/generated/i18n.dart' show I18n;
-import 'package:diaryschool/models/subject.dart' show Subject;
-import 'package:diaryschool/provider/SubjectProvider.dart' show SubjectProvider;
-import 'package:diaryschool/provider/TeacherProvider.dart' show TeacherProvider;
-import 'package:diaryschool/screens/subjects/subject_dialog.dart' show SubjectDialog;
-import 'package:diaryschool/utilities/constants.dart' show kBorderRadius, kDefaultPadding;
-import 'package:flutter/material.dart' show AppBar, BoxDecoration, BuildContext, Center, Colors, Container, EdgeInsets, FlatButton, Icon, IconButton, Icons, Key, ListTile, ListView, NeverScrollableScrollPhysics, Padding, Scaffold, StatelessWidget, Text, Theme, Widget, showDialog;
+import 'package:diaryschool/common_widgets/divider.dart';
+import 'package:diaryschool/generated/i18n.dart';
+import 'package:diaryschool/models/subject.dart';
+import 'package:diaryschool/provider/SubjectProvider.dart';
+import 'package:diaryschool/provider/TeacherProvider.dart';
+import 'package:diaryschool/screens/subjects/subject_dialog.dart';
+import 'package:diaryschool/utilities/constants.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SubjectsScreen extends StatelessWidget {
@@ -75,10 +75,8 @@ class SubjectsScreen extends StatelessWidget {
                     style: Theme.of(context).textTheme.headline6,
                   ),
                   subtitle: Text(
-                   ( data.values[index].map != null
-                        ? '${data.values[index].map}, '
-                        : '')
-                            +'${Provider.of<TeacherProvider>(context).teacher(data.values[index].teacher).toString()}',
+                    '${data.values[index].map ?? ''}, '
+                    '${Provider.of<TeacherProvider>(context).teacher(data.values[index].teacher).toString()}',
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
                   trailing: IconButton(

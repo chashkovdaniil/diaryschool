@@ -1,12 +1,52 @@
 import 'dart:ui' show ImageFilter;
 
-import 'package:diaryschool/common_widgets/task_bottom_sheet.dart' show TaskBottomSheet;
+import 'package:diaryschool/common_widgets/task_bottom_sheet.dart'
+    show TaskBottomSheet;
 import 'package:diaryschool/generated/i18n.dart' show I18n;
 import 'package:diaryschool/models/homework.dart' show Homework;
-import 'package:diaryschool/provider/HomeworkProvider.dart' show HomeworkProvider;
+import 'package:diaryschool/provider/HomeworkProvider.dart'
+    show HomeworkProvider;
 import 'package:diaryschool/provider/SubjectProvider.dart' show SubjectProvider;
-import 'package:diaryschool/utilities/constants.dart' show kBorderRadius, kDefaultShadow;
-import 'package:flutter/material.dart' show BackdropFilter, BoxDecoration, BuildContext, ClipRRect, Colors, Column, Container, Divider, EdgeInsets, Expanded, Icon, IconData, Icons, Ink, InkWell, Key, ListTile, ListView, Matrix4, MediaQuery, NeverScrollableScrollPhysics, Padding, Positioned, RoundedRectangleBorder, Row, SizedBox, Stack, State, StatefulWidget, Text, TextOverflow, Theme, ValueKey, Widget, required, showModalBottomSheet;
+import 'package:diaryschool/utilities/constants.dart'
+    show kBorderRadius, kDefaultShadow;
+import 'package:flutter/material.dart'
+    show
+        BackdropFilter,
+        BoxDecoration,
+        BuildContext,
+        ClipRRect,
+        Colors,
+        Column,
+        Container,
+        Divider,
+        EdgeInsets,
+        Expanded,
+        Icon,
+        IconData,
+        Icons,
+        Ink,
+        InkWell,
+        Key,
+        ListTile,
+        ListView,
+        Matrix4,
+        MediaQuery,
+        NeverScrollableScrollPhysics,
+        Padding,
+        Positioned,
+        RoundedRectangleBorder,
+        Row,
+        SizedBox,
+        Stack,
+        State,
+        StatefulWidget,
+        Text,
+        TextOverflow,
+        Theme,
+        ValueKey,
+        Widget,
+        required,
+        showModalBottomSheet;
 import 'package:provider/provider.dart' show Provider;
 
 class CardWidget extends StatefulWidget {
@@ -89,15 +129,13 @@ class _CardWidgetState extends State<CardWidget> {
                                 .copyWith(
                                     color: Theme.of(context).primaryColor),
                           ),
-                    subtitle: widget.homework.content == null
-                        ? null
-                        : Text(
-                            widget.homework.content,
-                            maxLines: 5,
-                            softWrap: false,
-                            overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context).textTheme.bodyText2,
-                          ),
+                    subtitle: Text(
+                      widget.homework.content,
+                      maxLines: 5,
+                      softWrap: false,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.bodyText2,
+                    ),
                   ),
                   Container(
                     padding: EdgeInsets.only(

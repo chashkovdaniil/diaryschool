@@ -1,5 +1,5 @@
-import 'package:diaryschool/utilities/constants.dart' show kDefaultPadding;
-import 'package:flutter/material.dart' show AppBar, BuildContext, EdgeInsets, Icon, IconButton, Icons, Key, Padding, Scaffold, StatelessWidget, Text, Widget;
+import 'package:diaryschool/utilities/constants.dart';
+import 'package:flutter/material.dart';
 class ArticleScreen extends StatelessWidget {
   const ArticleScreen({Key key}) : super(key: key);
 

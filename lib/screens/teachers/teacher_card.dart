@@ -1,9 +1,9 @@
-import 'package:diaryschool/generated/i18n.dart' show I18n;
-import 'package:diaryschool/models/teacher.dart' show Teacher;
-import 'package:diaryschool/provider/TeacherProvider.dart' show TeacherProvider;
-import 'package:diaryschool/screens/teachers/teacher_dialog.dart' show TeacherDialog;
-import 'package:diaryschool/utilities/constants.dart' show kBorderRadius;
-import 'package:flutter/material.dart' show BoxDecoration, BuildContext, Colors, Container, Icon, IconButton, Icons, ListTile, StatelessWidget, Text, Theme, ValueKey, Widget, showDialog;
+import 'package:diaryschool/generated/i18n.dart';
+import 'package:diaryschool/models/teacher.dart';
+import 'package:diaryschool/provider/TeacherProvider.dart';
+import 'package:diaryschool/screens/teachers/teacher_dialog.dart';
+import 'package:diaryschool/utilities/constants.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class TeacherCard extends StatelessWidget {
