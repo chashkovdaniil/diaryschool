@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class FilterDialog extends StatefulWidget {
-  Map<String, bool> filter;
+  final Map<String, bool> filter;
   FilterDialog({
     Key key,
     @required this.filter,

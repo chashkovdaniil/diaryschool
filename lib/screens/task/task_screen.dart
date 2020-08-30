@@ -1,14 +1,17 @@
-import 'package:diaryschool/common_widgets/select_subject_dialog.dart';
+import 'dart:developer';
+
 import 'package:diaryschool/generated/i18n.dart';
 import 'package:diaryschool/models/homework.dart';
 import 'package:diaryschool/provider/HomeworkProvider.dart';
 import 'package:diaryschool/provider/SettingsProvider.dart';
-import 'package:diaryschool/provider/SubjectProvider.dart';
 import 'package:diaryschool/screens/task/widgets/grade_field.dart';
 import 'package:diaryschool/utilities/constants.dart';
+import 'package:diaryschool/utilities/TextStyles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
+import 'package:diaryschool/screens/task/widgets/SubjectField.dart';
+import 'package:diaryschool/utilities/Extensions.dart';
 
 class TaskScreen extends StatefulWidget {
   final Map<String, dynamic> homework;
@@ -30,6 +33,7 @@ class _TaskScreenState extends State<TaskScreen> {
   @override
   void initState() {
     _homework = Homework.fromMap(widget.homework);
+    log(_homework.subject.toString());
     super.initState();
   }
 
@@ -149,96 +153,55 @@ class _TaskScreenState extends State<TaskScreen> {
             ),
             BottomAppBar(
               elevation: 0,
-              child: Row(
-                children: <Widget>[
-                  // TODO: add files button
-                  // IconButton(
-                  //   icon: Icon(Icons.collections),
-                  //   onPressed: () {
-                  //     showDialog(
-                  //       context: context,
-                  //       builder: (ctx) => FilesTaskWindow(),
-                  //     );
-                  //   },
-                  // ),
-                  const Spacer(),
-                  IconButton(
-                    onPressed: () async {
-                      String _grade = await showDialog(
-                        context: context,
-                        builder: (ctx) => GradeField(grade: _homework.grade),
-                      );
-                      if (_grade == '0' || _grade == '') {
-                        _homework.grade = null;
-                      } else if (_grade != '0' &&
-                          _grade != '' &&
-                          _grade != null) {
-                        _homework.grade = _grade;
-                      }
-                      setState(() {});
-                    },
-                    icon: _homework.grade == null
-                        ? const Icon(Icons.star)
-                        : Text(
-                            _homework.grade,
-                            style:
-                                Theme.of(context).textTheme.subtitle1.copyWith(
-                                      color: Theme.of(context).primaryColor,
-                                    ),
-                          ),
-                  ),
-                  IconButton(
-                    onPressed: () async {
-                      _homework.deadline = await showDatePicker(
-                        context: context,
-                        lastDate: DateTime(2100),
-                        firstDate: DateTime(2010),
-                        initialDate: _homework.deadline ?? DateTime.now(),
-                      );
-                      setState(() {});
-                    },
-                    icon: Icon(
-                      Icons.timer,
-                      color: _homework.deadline == null
-                          ? null
-                          : Theme.of(context).primaryColor,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 50,
+                    child: ListView(
+                      padding: const EdgeInsets.only(left: 10),
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        buildGradeChip(context),
+                        const SizedBox(width: 10),
+                        buildDeadlineField(context),
+                        const SizedBox(width: 10),
+                        buildDoneChip(),
+                        const SizedBox(width: 10),
+                        // IconButton(
+                        //   onPressed: () => setState(() {
+                        //     _homework.isDone = !_homework.isDone;
+                        //   }),
+                        //   icon: Icon(
+                        //     Icons.done,
+                        //     color: _homework.isDone
+                        //         ? Theme.of(context).primaryColor
+                        //         : null,
+                        //   ),
+                        // ),
+                      ],
                     ),
                   ),
-                  IconButton(
-                    onPressed: () => setState(() {
-                      _homework.isDone = !_homework.isDone;
-                    }),
-                    icon: Icon(
-                      Icons.done,
-                      color: _homework.isDone
-                          ? Theme.of(context).primaryColor
-                          : null,
-                    ),
+                  const SizedBox(height: 8),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      const Spacer(),
+                      Button(
+                        I18n.of(context).save,
+                        onTap: () {
+                          if (_formKey.currentState.validate()) {
+                            Provider.of<HomeworkProvider>(
+                              context,
+                              listen: false,
+                            ).put(_homework);
+                            Navigator.of(context).pop();
+                          }
+                        },
+                      ),
+                      const SizedBox(width: 10),
+                    ],
                   ),
-                  FlatButton(
-                    onPressed: () {
-                      if (_formKey.currentState.validate()) {
-                        Provider.of<HomeworkProvider>(
-                          context,
-                          listen: false,
-                        ).put(_homework);
-                        Navigator.of(context).pop();
-                      }
-                    },
-                    child: Text(
-                      I18n.of(context).save,
-                      style: Theme.of(context).textTheme.button.copyWith(
-                            color: Theme.of(context).colorScheme.surface,
-                          ),
-                    ),
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  const SizedBox(width: 10),
-                  // TODO: add share button
-                  // IconButton(
-                  //   onPressed: () {},
-                  //   icon: Icon(Icons.share),
-                  // ),
                 ],
               ),
             ),
@@ -246,6 +209,102 @@ class _TaskScreenState extends State<TaskScreen> {
         ),
       ),
     );
+  }
+
+  FlatButton buildDoneChip() {
+    return !_homework.isDone
+        ? FlatButton(
+            onPressed: () => setState(() {
+              _homework.isDone = !_homework.isDone;
+            }),
+            child: Text('Задание выполнено').button(),
+          )
+        : FlatButton(
+            color: Theme.of(context).primaryColor,
+            child: Row(
+              children: [
+                Text('Задание выполнено').buttonReverse(),
+                const SizedBox(width: 8),
+                Icon(
+                  Icons.remove_circle,
+                  color: Theme.of(context).colorScheme.background,
+                ),
+              ],
+            ),
+            onPressed: () {
+              _homework.isDone = !_homework.isDone;
+              setState(() {});
+            },
+          );
+  }
+
+  FlatButton buildDeadlineField(BuildContext context) {
+    return _homework.deadline == null
+        ? FlatButton(
+            onPressed: () async {
+              _homework.deadline = await showDatePicker(
+                context: context,
+                lastDate: DateTime(2100),
+                firstDate: DateTime(2010),
+                initialDate: _homework.deadline ?? DateTime.now(),
+              );
+              setState(() {});
+            },
+            child: Text('Установить дедлайн').button(),
+          )
+        : FlatButton(
+            color: Theme.of(context).primaryColor,
+            child: Row(
+              children: [
+                Text('${_homework.deadline.dmyStr}').buttonReverse(),
+                const SizedBox(width: 8),
+                Icon(
+                  Icons.remove_circle,
+                  color: Theme.of(context).colorScheme.background,
+                ),
+              ],
+            ),
+            onPressed: () {
+              _homework.deadline = null;
+              setState(() {});
+            },
+          );
+  }
+
+  FlatButton buildGradeChip(BuildContext context) {
+    return _homework.grade == null
+        ? FlatButton(
+            onPressed: () async {
+              String _grade = await showDialog(
+                context: context,
+                builder: (ctx) => GradeField(grade: _homework.grade),
+              );
+              if (_grade == '0' || _grade == '') {
+                _homework.grade = null;
+              } else if (_grade != '0' && _grade != '' && _grade != null) {
+                _homework.grade = _grade;
+              }
+              setState(() {});
+            },
+            child: Text('Поставить оценку').button(),
+          )
+        : FlatButton(
+            color: Theme.of(context).primaryColor,
+            child: Row(
+              children: [
+                Text('Оценка ${_homework.grade}').buttonReverse(),
+                const SizedBox(width: 8),
+                Icon(
+                  Icons.remove_circle,
+                  color: Theme.of(context).colorScheme.background,
+                ),
+              ],
+            ),
+            onPressed: () {
+              _homework.grade = null;
+              setState(() {});
+            },
+          );
   }
 
   OverlayEntry firstRun(BuildContext context) {
@@ -340,91 +399,4 @@ class _TaskScreenState extends State<TaskScreen> {
       },
     );
   }
-}
-
-class SubjectField extends FormField<int> {
-  SubjectField({
-    Key key,
-    BuildContext context,
-    int initialValue,
-    FormFieldValidator validator,
-    @required Homework homework,
-  }) : super(
-          key: key,
-          validator: validator,
-          builder: (FormFieldState<int> state) {
-            return InkWell(
-              onTap: () async {
-                int _subject = await showDialog(
-                  context: context,
-                  builder: (context) => SelectSubjectDialog(
-                    context: context,
-                  ),
-                );
-
-                state.didChange(_subject);
-                if (_subject != null) {
-                  homework.subject = _subject;
-                }
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(kDefaultPadding / 2),
-                child: Column(
-                  children: [
-                    state.hasError
-                        ? Text(
-                            state.errorText,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText2
-                                .copyWith(color: Colors.red),
-                          )
-                        : const SizedBox.shrink(),
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          '${I18n.of(context).subject}:',
-                        ),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 5,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: kBorderRadius,
-                            ),
-                            child: Row(
-                              children: <Widget>[
-                                Expanded(
-                                  child: Text(
-                                    Provider.of<SubjectProvider>(context)
-                                            .values
-                                            .isEmpty
-                                        ? I18n.of(context).addSubject
-                                        : Provider.of<SubjectProvider>(context)
-                                            .values[homework.subject ?? 0]
-                                            .title,
-                                    style:
-                                        Theme.of(context).textTheme.headline6,
-                                    maxLines: 1,
-                                  ),
-                                ),
-                                Icon(
-                                  Icons.arrow_drop_down,
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            );
-          },
-        );
 }

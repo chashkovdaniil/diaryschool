@@ -126,7 +126,9 @@ class DiaryschoolApp extends StatelessWidget {
           initialRoute: MainScreen.id,
           builder: (context, child) {
             return MediaQuery(
-              data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+              data: MediaQuery.of(context).copyWith(
+                textScaleFactor: 1.0,
+              ),
               child: child,
             );
           },
@@ -161,7 +163,7 @@ class DiaryschoolApp extends StatelessWidget {
             ),
             secondaryHeaderColor: kColorRed.shade700,
             dialogBackgroundColor: const Color(0xff424242),
-            fontFamily: GoogleFonts.getFont('Open Sans').fontFamily,
+            fontFamily: GoogleFonts.getFont('Raleway').fontFamily,
             iconTheme: const IconThemeData(
               color: Color(0xffE0E0E0),
             ),
@@ -282,7 +284,7 @@ class DiaryschoolApp extends StatelessWidget {
             buttonTheme: ButtonThemeData(
               splashColor: kColorRed.shade100,
               highlightColor: Colors.transparent,
-              shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
+              shape: RoundedRectangleBorder(borderRadius: kBorderRadiusButton),
             ),
             scaffoldBackgroundColor: Colors.white,
             iconTheme: const IconThemeData(
@@ -291,7 +293,7 @@ class DiaryschoolApp extends StatelessWidget {
             primarySwatch: kColorRed,
             secondaryHeaderColor: kColorRed.shade700,
             primaryColor: kColorRed.shade700,
-            fontFamily: GoogleFonts.getFont('Open Sans').fontFamily,
+            fontFamily: GoogleFonts.getFont('Raleway').fontFamily,
             textTheme: TextTheme(
               headline6: TextStyle(
                 fontSize: 20,
@@ -316,10 +318,10 @@ class DiaryschoolApp extends StatelessWidget {
                 fontWeight: FontWeight.normal,
                 letterSpacing: 0.15,
               ),
-              subtitle2: const TextStyle(
+              subtitle2: GoogleFonts.raleway(
                 color: kColorBlack,
                 fontSize: 14,
-                fontWeight: FontWeight.w200,
+                fontWeight: FontWeight.w300,
                 letterSpacing: 0.1,
               ),
               bodyText2: const TextStyle(

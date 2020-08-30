@@ -3,7 +3,7 @@ import 'package:diaryschool/generated/i18n.dart';
 import 'package:flutter/material.dart';
 
 class GradeField extends StatefulWidget {
-  String grade;
+  final String grade;
   GradeField({Key key, this.grade}) : super(key: key);
   @override
   _GradeFieldState createState() => _GradeFieldState();

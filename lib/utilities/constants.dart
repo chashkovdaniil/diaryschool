@@ -25,11 +25,12 @@ const kScaffoldBackgroundColor = Colors.white;
 const kCardWidgetBackgroundColor = Color(0xffffffff);
 
 BorderRadius kBorderRadius = BorderRadius.circular(15);
+BorderRadius kBorderRadiusButton = BorderRadius.circular(25);
 const kDefaultPadding = 20.0;
-const kDefaultShadow = [
-  BoxShadow(
-    offset: Offset(0, 4),
-    color: Colors.black12,
-    blurRadius: 8,
+const List<BoxShadow> kDefaultShadow = [
+   BoxShadow(
+    offset: Offset(3, 4),
+    color: Color.fromRGBO(0, 0, 0, 0.25),
+    blurRadius: 4,
   ),
 ];

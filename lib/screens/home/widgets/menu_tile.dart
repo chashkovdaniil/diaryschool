@@ -1,4 +1,5 @@
 import 'package:diaryschool/utilities/constants.dart';
+import 'package:diaryschool/utilities/TextStyles.dart';
 import 'package:flutter/material.dart';
 
 class MenuTile extends StatelessWidget {
@@ -36,7 +37,7 @@ class MenuTile extends StatelessWidget {
             Text(
               title,
               style: Theme.of(context).textTheme.headline6,
-            ),
+            ).button(),
           ],
         ),
       ),

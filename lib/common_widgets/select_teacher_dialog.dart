@@ -1,9 +1,10 @@
-import 'package:diaryschool/generated/i18n.dart' show I18n;
-import 'package:diaryschool/models/teacher.dart' show Teacher;
-import 'package:diaryschool/provider/TeacherProvider.dart' show TeacherProvider;
-import 'package:diaryschool/screens/teachers/teacher_dialog.dart' show TeacherDialog;
-import 'package:flutter/material.dart' show AlertDialog, BuildContext, FlatButton, Icon, IconButton, Icons, Key, ListTile, ListView, Navigator, Row, Spacer, StatelessWidget, Text, Theme, Widget, showDialog;
+import 'package:diaryschool/generated/i18n.dart';
+import 'package:diaryschool/models/teacher.dart';
+import 'package:diaryschool/provider/TeacherProvider.dart';
+import 'package:diaryschool/screens/teachers/teacher_dialog.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:diaryschool/utilities/TextStyles.dart';
 
 class SelectTeacherDialog extends StatelessWidget {
   final BuildContext context;
@@ -35,7 +36,7 @@ class SelectTeacherDialog extends StatelessWidget {
                 },
               );
             },
-            icon: const Icon(Icons.add),
+            icon: Icon(Icons.add, color: Theme.of(context).primaryColor),
           ),
         ],
       ),
@@ -56,7 +57,7 @@ class SelectTeacherDialog extends StatelessWidget {
       actions: <Widget>[
         FlatButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(I18n.of(context).close.toUpperCase()),
+          child: Text(I18n.of(context).close).button(),
         ),
       ],
     );

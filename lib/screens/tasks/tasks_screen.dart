@@ -3,6 +3,8 @@ import 'package:diaryschool/common_widgets/card_widget.dart';
 import 'package:diaryschool/generated/i18n.dart';
 import 'package:diaryschool/models/homework.dart';
 import 'package:diaryschool/models/subject.dart';
+import 'package:diaryschool/screens/tasks/provider/DateProvider.dart';
+import 'package:diaryschool/utilities/TextStyles.dart';
 import 'package:diaryschool/provider/HomeworkProvider.dart';
 import 'package:diaryschool/provider/SettingsProvider.dart';
 import 'package:diaryschool/provider/SubjectProvider.dart';
@@ -53,15 +55,6 @@ class _TasksScreenState extends State<TasksScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> daysOfWeek = [
-      I18n.of(context).mon,
-      I18n.of(context).tues,
-      I18n.of(context).wed,
-      I18n.of(context).thurs,
-      I18n.of(context).fri,
-      I18n.of(context).sat,
-      I18n.of(context).sun
-    ];
     List<Homework> _homeworks =
         context.watch<HomeworkProvider>().values.where((element) {
       if (element.date.year == currentDate.year &&
@@ -102,111 +95,70 @@ class _TasksScreenState extends State<TasksScreen> {
           ),
         ],
       ),
-      body: Column(
-        children: <Widget>[
-          const SizedBox(height: 10),
-          _homeworks.isNotEmpty && _homeworks != null
-              ? CarouselSlider.builder(
-                  itemCount: _homeworks.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return CardWidget(
-                      key: ValueKey(
-                        _homeworks[index].date.millisecondsSinceEpoch,
+      body: ChangeNotifierProvider<DateProvider>(
+          create: (_) => DateProvider(),
+          builder: (context, _) {
+            DateTime _selectedDate =
+                Provider.of<DateProvider>(context).selectedDate;
+            return Column(
+              children: <Widget>[
+                const SizedBox(height: 10),
+                InkWell(
+                  onTap: () async {
+                    DateTime _date = await showDatePicker(
+                      context: context,
+                      initialDate: _selectedDate,
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime(2100),
+                    );
+                    if (_date != null) {
+                      Provider.of<DateProvider>(
+                        context,
+                        listen: false,
+                      ).selectedDate = _date;
+                      Provider.of<DateProvider>(
+                        context,
+                        listen: false,
+                      ).date = _date;
+                    }
+                  },
+                  child: Ink(
+                    width: MediaQuery.of(context).size.width,
+                    padding:
+                        const EdgeInsets.symmetric(vertical: kDefaultPadding),
+                    child: Center(
+                      child: Text(
+                        '${I18n.of(context).months[context.watch<DateProvider>().date.month - 1]}',
                       ),
-                      filter: _filter,
-                      homework: _homeworks[index],
-                      teacher: Provider.of<TeacherProvider>(context)
-                          .teacher(_homeworks[index].subject)
-                          .toString(),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                  child:
+                      DaysWeek(currentDate: context.watch<DateProvider>().date),
+                ),
+                const Spacer(),
+                FlatButton.icon(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => TaskScreen(
+                          Homework(
+                            date: currentDate,
+                            subject: defaultSubject(context),
+                          ).toMap(),
+                        ),
+                      ),
                     );
                   },
-                  options: CarouselOptions(
-                    height: 260,
-                    autoPlay: false,
-                    enlargeCenterPage: true,
-                    aspectRatio: 1.0,
-                    initialPage: 0,
-                    enableInfiniteScroll: false,
-                    disableCenter: false,
-                  ),
-                )
-              : Expanded(
-                  child: Center(
-                    child: Text(I18n.of(context).noTasks),
-                  ),
-                ),
-          const Spacer(),
-          FlatButton.icon(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => TaskScreen(
-                    Homework(
-                      date: currentDate,
-                      subject: defaultSubject(context),
-                    ).toMap(),
-                  ),
-                ),
-              );
-            },
-            icon: const Icon(Icons.add),
-            label: Text(I18n.of(context).add),
-          ),
-          Container(
-            color: Theme.of(context).colorScheme.background,
-            padding: const EdgeInsets.only(
-              left: kDefaultPadding / 2,
-              right: kDefaultPadding / 2,
-              top: kDefaultPadding + 10,
-              bottom: 5,
-            ),
-            child: Column(
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      '${daysOfWeek[currentDate.weekday - 1]} - ${currentDate.day}',
-                    ),
-                    IconButton(
-                      icon: Icon(
-                        Icons.calendar_today,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      onPressed: () async {
-                        DateTime _date = await showDatePicker(
-                          context: context,
-                          initialDate: currentDate,
-                          firstDate: DateTime(2000),
-                          lastDate: DateTime(2100),
-                        );
-                        if (_date != null) currentDate = _date;
-                        setState(() {});
-                      },
-                    ),
-                  ],
-                ),
-                Slider.adaptive(
-                  min: 1,
-                  max: 7,
-                  divisions: 6,
-                  label: daysOfWeek[currentDate.weekday - 1],
-                  value: currentDate.weekday + .0,
-                  onChanged: (value) {
-                    setState(() {
-                      currentDate = currentDate.add(
-                        Duration(
-                          days: -(currentDate.weekday - value.round()),
-                        ),
-                      );
-                    });
-                  },
+                  icon: Icon(Icons.add, color: Theme.of(context).primaryColor),
+                  label: Text(I18n.of(context).add).button(),
                 ),
               ],
-            ),
-          ),
-        ],
-      ),
+            );
+          }),
     );
   }
 
@@ -216,7 +168,7 @@ class _TasksScreenState extends State<TasksScreen> {
     if (subjects.isNotEmpty) {
       return 0;
     }
-    return subjects.length;
+    return null;
   }
 
   OverlayEntry firstRun(BuildContext context) {
@@ -280,3 +232,140 @@ class _TasksScreenState extends State<TasksScreen> {
     );
   }
 }
+
+class DaysWeek extends StatefulWidget {
+  DateTime currentDate;
+  DaysWeek({
+    Key key,
+    @required this.currentDate,
+  }) : super(key: key);
+
+  @override
+  _DaysWeekState createState() => _DaysWeekState();
+}
+
+class _DaysWeekState extends State<DaysWeek> {
+  @override
+  Widget build(BuildContext context) {
+    DateTime currentDate = widget.currentDate;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        InkWell(
+          onTap: () {
+            context.read<DateProvider>().date = widget.currentDate.subtract(
+              const Duration(days: 7),
+            );
+          },
+          child: Ink(
+            child: const Icon(Icons.arrow_back),
+          ),
+        ),
+        ...List.generate(
+          7,
+          (index) {
+            return Row(
+              children: [
+                buildDayWeek(
+                  context,
+                  currentDate.add(
+                    Duration(days: index + 1 - currentDate.weekday),
+                  ),
+                ),
+                const SizedBox(width: 2),
+              ],
+            );
+          },
+        ),
+        InkWell(
+          onTap: () {
+            context.read<DateProvider>().date = widget.currentDate.add(
+              const Duration(days: 7),
+            );
+          },
+          child: Ink(
+            child: const Icon(Icons.arrow_forward),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildDayWeek(
+    BuildContext context,
+    DateTime date,
+  ) {
+    return InkWell(
+      onTap: () {
+        context.read<DateProvider>().selectedDate = date;
+        setState(() {});
+      },
+      borderRadius: BorderRadius.circular(8),
+      child: Ink(
+        padding: const EdgeInsets.all(kDefaultPadding / 3),
+        decoration:
+            date.compareTo(context.watch<DateProvider>().selectedDate) == 0
+                ? BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Theme.of(context).primaryColor,
+                  )
+                : null,
+        child: Column(
+          children: [
+            Text(
+              I18n.of(context).shortDaysOfWeek[date.weekday - 1],
+              style: Theme.of(context).textTheme.subtitle2.copyWith(
+                    fontWeight: FontWeight.w100,
+                    color: date.compareTo(
+                                context.watch<DateProvider>().selectedDate) ==
+                            0
+                        ? Theme.of(context).colorScheme.background
+                        : null,
+                  ),
+            ),
+            Text(
+              '${date.day}',
+              style: Theme.of(context).textTheme.subtitle2.copyWith(
+                    color: date.compareTo(
+                                context.watch<DateProvider>().selectedDate) ==
+                            0
+                        ? Theme.of(context).colorScheme.background
+                        : Theme.of(context).primaryColor,
+                  ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+// _homeworks.isNotEmpty && _homeworks != null
+//     ? CarouselSlider.builder(
+//         itemCount: _homeworks.length,
+//         itemBuilder: (BuildContext context, int index) {
+//           return CardWidget(
+//             key: ValueKey(
+//               _homeworks[index].date.millisecondsSinceEpoch,
+//             ),
+//             filter: _filter,
+//             homework: _homeworks[index],
+//             teacher: Provider.of<TeacherProvider>(context)
+//                 .teacher(_homeworks[index].subject)
+//                 .toString(),
+//           );
+//         },
+//         options: CarouselOptions(
+//           height: 260,
+//           autoPlay: false,
+//           enlargeCenterPage: true,
+//           aspectRatio: 1.0,
+//           initialPage: 0,
+//           enableInfiniteScroll: false,
+//           disableCenter: false,
+//         ),
+//       )
+//     : Expanded(
+//   child: Center(
+//     child: Text(I18n.of(context).noTasks),
+//   ),
+// ),

@@ -66,7 +66,7 @@ class _MainScreenState extends State<MainScreen> {
         const AndroidInitializationSettings('app_icon');
     IOSInitializationSettings initializationSettingsIOS =
         IOSInitializationSettings(
-            onDidReceiveLocalNotification: (_, _1, _2, _3) async {});
+            onDidReceiveLocalNotification: (_, _q, _w, _e) async {});
     initializationSettings = InitializationSettings(
         initializationSettingsAndroid, initializationSettingsIOS);
 

@@ -106,34 +106,12 @@ class I18n implements WidgetsLocalizations {
   String get deadline => "Дедлайн";
   /// "Путь"
   String get path => "Путь";
-  /// "Понедельник"
-  String get monday => "Понедельник";
-  /// "Вторник"
-  String get tuesday => "Вторник";
-  /// "Среда"
-  String get wednesday => "Среда";
-  /// "Четверг"
-  String get thursday => "Четверг";
-  /// "Пятница"
-  String get friday => "Пятница";
-  /// "Суббота"
-  String get saturday => "Суббота";
-  /// "Воскресенье"
-  String get sunday => "Воскресенье";
-  /// "Пy"
-  String get mon => "Пy";
-  /// "Вт"
-  String get tues => "Вт";
-  /// "Ср"
-  String get wed => "Ср";
-  /// "Чт"
-  String get thurs => "Чт";
-  /// "Пт"
-  String get fri => "Пт";
-  /// "Сб"
-  String get sat => "Сб";
-  /// "Вс"
-  String get sun => "Вс";
+  /// ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"]
+  List<String> get daysOfWeek => ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"];
+  /// ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
+  List<String> get shortDaysOfWeek => ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+  /// ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"]
+  List<String> get months => ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
   /// "Начало урока"
   String get startLesson => "Начало урока";
   /// "Конец урока"
@@ -341,48 +319,6 @@ class _I18n_en_US extends I18n {
   /// "Path"
   @override
   String get path => "Path";
-  /// "Monday"
-  @override
-  String get monday => "Monday";
-  /// "Tuesday"
-  @override
-  String get tuesday => "Tuesday";
-  /// "Wednesday"
-  @override
-  String get wednesday => "Wednesday";
-  /// "Thursday"
-  @override
-  String get thursday => "Thursday";
-  /// "Friday"
-  @override
-  String get friday => "Friday";
-  /// "Saturday"
-  @override
-  String get saturday => "Saturday";
-  /// "Sunday"
-  @override
-  String get sunday => "Sunday";
-  /// "Mon"
-  @override
-  String get mon => "Mon";
-  /// "Tues"
-  @override
-  String get tues => "Tues";
-  /// "Wed"
-  @override
-  String get wed => "Wed";
-  /// "Thurs"
-  @override
-  String get thurs => "Thurs";
-  /// "Fri"
-  @override
-  String get fri => "Fri";
-  /// "Sat"
-  @override
-  String get sat => "Sat";
-  /// "Sun"
-  @override
-  String get sun => "Sun";
   /// "Lesson start"
   @override
   String get startLesson => "Lesson start";
@@ -628,48 +564,6 @@ class _I18n_ru_UA extends _I18n_ru_RU {
   /// "Шлях"
   @override
   String get path => "Шлях";
-  /// "Понеділок"
-  @override
-  String get monday => "Понеділок";
-  /// "Вівторок"
-  @override
-  String get tuesday => "Вівторок";
-  /// "Середа"
-  @override
-  String get wednesday => "Середа";
-  /// "Четвер"
-  @override
-  String get thursday => "Четвер";
-  /// "П'ятниця"
-  @override
-  String get friday => "П'ятниця";
-  /// "Субота"
-  @override
-  String get saturday => "Субота";
-  /// "Неділя"
-  @override
-  String get sunday => "Неділя";
-  /// "Пу"
-  @override
-  String get mon => "Пу";
-  /// "Вт"
-  @override
-  String get tues => "Вт";
-  /// "Ср"
-  @override
-  String get wed => "Ср";
-  /// "Чт"
-  @override
-  String get thurs => "Чт";
-  /// "Пт"
-  @override
-  String get fri => "Пт";
-  /// "Сб"
-  @override
-  String get sat => "Сб";
-  /// "Вс"
-  @override
-  String get sun => "Вс";
   /// "Початок уроку"
   @override
   String get startLesson => "Початок уроку";
@@ -915,48 +809,6 @@ class _I18n_en_GB extends _I18n_en_US {
   /// "Path"
   @override
   String get path => "Path";
-  /// "Monday"
-  @override
-  String get monday => "Monday";
-  /// "Tuesday"
-  @override
-  String get tuesday => "Tuesday";
-  /// "Wednesday"
-  @override
-  String get wednesday => "Wednesday";
-  /// "Thursday"
-  @override
-  String get thursday => "Thursday";
-  /// "Friday"
-  @override
-  String get friday => "Friday";
-  /// "Saturday"
-  @override
-  String get saturday => "Saturday";
-  /// "Sunday"
-  @override
-  String get sunday => "Sunday";
-  /// "Mon"
-  @override
-  String get mon => "Mon";
-  /// "Tues"
-  @override
-  String get tues => "Tues";
-  /// "Wed"
-  @override
-  String get wed => "Wed";
-  /// "Thurs"
-  @override
-  String get thurs => "Thurs";
-  /// "Fri"
-  @override
-  String get fri => "Fri";
-  /// "Sat"
-  @override
-  String get sat => "Sat";
-  /// "Sun"
-  @override
-  String get sun => "Sun";
   /// "Lesson start"
   @override
   String get startLesson => "Lesson start";

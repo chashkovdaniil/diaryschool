@@ -1,11 +1,12 @@
-import 'package:diaryschool/generated/i18n.dart' show I18n;
-import 'package:diaryschool/models/homework.dart' show Homework;
-import 'package:diaryschool/provider/HomeworkProvider.dart' show HomeworkProvider;
-import 'package:diaryschool/provider/SubjectProvider.dart' show SubjectProvider;
-import 'package:diaryschool/screens/task/task_screen.dart' show TaskScreen;
-import 'package:diaryschool/utilities/constants.dart' show kDefaultPadding;
-import 'package:flutter/material.dart' show BottomSheet, BuildContext, CloseButton, Column, Container, CrossAxisAlignment, EdgeInsets, Expanded, FlatButton, Form, FormState, GlobalKey, Icon, IconButton, Icons, InputDecoration, Key, MaterialPageRoute, MediaQuery, Navigator, Row, SingleChildScrollView, SizedBox, State, StatefulWidget, Text, TextFormField, Theme, Widget;
+import 'package:diaryschool/generated/i18n.dart';
+import 'package:diaryschool/models/homework.dart';
+import 'package:diaryschool/provider/HomeworkProvider.dart';
+import 'package:diaryschool/provider/SubjectProvider.dart';
+import 'package:diaryschool/screens/task/task_screen.dart';
+import 'package:diaryschool/utilities/constants.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:diaryschool/utilities/TextStyles.dart';
 
 class TaskBottomSheet extends StatefulWidget {
   final Map<String, dynamic> homework;
@@ -47,7 +48,7 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                       Expanded(
                         child: Text(
                           Provider.of<SubjectProvider>(context)
-                              .values[_homework.subject]
+                              .subject(_homework.subject)
                               .title,
                           maxLines: 1,
                           style: Theme.of(context).textTheme.headline6,
@@ -55,7 +56,10 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                       ),
                       // const Spacer(),
                       IconButton(
-                        icon: const Icon(Icons.keyboard_arrow_up),
+                        icon: Icon(
+                          Icons.keyboard_arrow_up,
+                          color: Theme.of(context).primaryColor,
+                        ),
                         onPressed: () {
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
@@ -90,10 +94,7 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                     style: Theme.of(context).textTheme.subtitle2,
                   ),
                   FlatButton(
-                    child: Text(
-                      I18n.of(context).save.toUpperCase(),
-                      style: Theme.of(context).textTheme.button,
-                    ),
+                    child: Text(I18n.of(context).save).button(),
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
                         context.read<HomeworkProvider>().put(_homework);

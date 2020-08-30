@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SubjectDialog extends StatefulWidget {
-  Subject subject;
-  int index;
+  final Subject subject;
+  final int index;
   SubjectDialog({
     Key key,
     this.subject,

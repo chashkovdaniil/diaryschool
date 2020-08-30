@@ -1,53 +1,13 @@
-import 'dart:ui' show ImageFilter;
+import 'dart:ui';
 
-import 'package:diaryschool/common_widgets/task_bottom_sheet.dart'
-    show TaskBottomSheet;
-import 'package:diaryschool/generated/i18n.dart' show I18n;
-import 'package:diaryschool/models/homework.dart' show Homework;
-import 'package:diaryschool/provider/HomeworkProvider.dart'
-    show HomeworkProvider;
-import 'package:diaryschool/provider/SubjectProvider.dart' show SubjectProvider;
-import 'package:diaryschool/utilities/constants.dart'
-    show kBorderRadius, kDefaultShadow;
-import 'package:flutter/material.dart'
-    show
-        BackdropFilter,
-        BoxDecoration,
-        BuildContext,
-        ClipRRect,
-        Colors,
-        Column,
-        Container,
-        Divider,
-        EdgeInsets,
-        Expanded,
-        Icon,
-        IconData,
-        Icons,
-        Ink,
-        InkWell,
-        Key,
-        ListTile,
-        ListView,
-        Matrix4,
-        MediaQuery,
-        NeverScrollableScrollPhysics,
-        Padding,
-        Positioned,
-        RoundedRectangleBorder,
-        Row,
-        SizedBox,
-        Stack,
-        State,
-        StatefulWidget,
-        Text,
-        TextOverflow,
-        Theme,
-        ValueKey,
-        Widget,
-        required,
-        showModalBottomSheet;
-import 'package:provider/provider.dart' show Provider;
+import 'package:diaryschool/common_widgets/task_bottom_sheet.dart';
+import 'package:diaryschool/generated/i18n.dart';
+import 'package:diaryschool/models/homework.dart';
+import 'package:diaryschool/provider/HomeworkProvider.dart';
+import 'package:diaryschool/provider/SubjectProvider.dart';
+import 'package:diaryschool/utilities/constants.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CardWidget extends StatefulWidget {
   final Homework homework;
@@ -76,16 +36,14 @@ class _CardWidgetState extends State<CardWidget> {
     bool showDeadline = widget.filter['deadline'];
 
     return InkWell(
-      onTap: () {
-        showModalBottomSheet(
-          context: context,
-          backgroundColor: Theme.of(context).colorScheme.surface,
-          shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
-          builder: (_context) => TaskBottomSheet(
-            widget.homework.toMap(),
-          ),
-        );
-      },
+      onTap: () => showModalBottomSheet(
+        context: context,
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
+        builder: (_context) => TaskBottomSheet(
+          widget.homework.toMap(),
+        ),
+      ),
       onDoubleTap: () async {
         widget.homework.isDone = !widget.homework.isDone;
         await Provider.of<HomeworkProvider>(
@@ -111,7 +69,7 @@ class _CardWidgetState extends State<CardWidget> {
                   ListTile(
                     title: Text(
                       Provider.of<SubjectProvider>(context)
-                          .values[widget.homework.subject]
+                          .subject(widget.homework.subject)
                           .title, // widget.homework.subject делаем запрос в базу, чтобы получить название предмета
                       maxLines: 1,
                       style: Theme.of(context)

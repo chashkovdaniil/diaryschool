@@ -33,15 +33,6 @@ class _TimetablePageState extends State<TimetablePage> {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> daysOfWeek = [
-      I18n.of(context).monday,
-      I18n.of(context).tuesday,
-      I18n.of(context).wednesday,
-      I18n.of(context).thursday,
-      I18n.of(context).friday,
-      I18n.of(context).saturday,
-      I18n.of(context).sunday,
-    ];
     List<TimetableRow> _timetable =
         context.watch<TimetableProvider>().values.where((element) {
       if (element.dayOfWeek == _currentDay) {
@@ -56,7 +47,7 @@ class _TimetablePageState extends State<TimetablePage> {
       body: Column(
         children: [
           Text(
-            daysOfWeek[_currentDay.round() - 1],
+            I18n.of(context).daysOfWeek[_currentDay.round() - 1],
             style: Theme.of(context).textTheme.headline6,
           ),
           _timetable.isEmpty
@@ -152,7 +143,7 @@ class _TimetablePageState extends State<TimetablePage> {
               min: 1,
               max: 7,
               divisions: 6,
-              label: daysOfWeek[_currentDay.round() - 1],
+              label: I18n.of(context).daysOfWeek[_currentDay.round() - 1],
             ),
           ),
         ],

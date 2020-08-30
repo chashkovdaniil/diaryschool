@@ -7,8 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class TimetableDialog extends StatefulWidget {
-  TimetableRow timetable = TimetableRow();
-  TimetableDialog({Key key, this.timetable}) : super(key: key);
+  final TimetableRow timetable;
+  TimetableDialog({Key key, TimetableRow timetable})
+      : timetable = timetable ?? TimetableRow(),
+        super(key: key);
 
   @override
   _TimetableDialogState createState() => _TimetableDialogState();

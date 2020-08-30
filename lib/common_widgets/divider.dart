@@ -1,13 +1,4 @@
-import 'package:flutter/material.dart'
-    show
-        BuildContext,
-        Divider,
-        EdgeInsetsGeometry,
-        Key,
-        Padding,
-        StatelessWidget,
-        Theme,
-        Widget;
+import 'package:flutter/material.dart';
 
 class CustomDivider extends StatelessWidget {
   final EdgeInsetsGeometry padding;

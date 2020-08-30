@@ -75,8 +75,10 @@ class SubjectsScreen extends StatelessWidget {
                     style: Theme.of(context).textTheme.headline6,
                   ),
                   subtitle: Text(
-                    '${data.values[index].map ?? ''}, '
-                    '${Provider.of<TeacherProvider>(context).teacher(data.values[index].teacher).toString()}',
+                    (data.values[index].map == null
+                            ? ''
+                            : '${data.values[index].map}, ') +
+                        '${Provider.of<TeacherProvider>(context).teacher(data.values[index].teacher).toString()}',
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
                   trailing: IconButton(
