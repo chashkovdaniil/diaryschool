@@ -35,6 +35,8 @@ class _CardWidgetState extends State<CardWidget> {
     bool showRoute = widget.filter['route'];
     bool showDeadline = widget.filter['deadline'];
 
+    Size size = MediaQuery.of(context).size;
+
     return InkWell(
       onTap: () => showModalBottomSheet(
         context: context,
@@ -54,137 +56,159 @@ class _CardWidgetState extends State<CardWidget> {
         // TODO: Показать диалог об ошибке, если есть
       },
       borderRadius: kBorderRadius,
-      child: Stack(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-            child: Ink(
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface,
-                borderRadius: kBorderRadius,
-                boxShadow: kDefaultShadow,
-              ),
-              child: Column(
-                children: <Widget>[
-                  ListTile(
-                    title: Text(
-                      Provider.of<SubjectProvider>(context)
-                          .subject(widget.homework.subject)
-                          .title, // widget.homework.subject делаем запрос в базу, чтобы получить название предмета
-                      maxLines: 1,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline5
-                          .copyWith(color: Theme.of(context).primaryColor),
-                    ),
-                    trailing: widget.homework.grade == null
-                        ? null
-                        : Text(
-                            '${widget.homework.grade}',
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline4
-                                .copyWith(
-                                    color: Theme.of(context).primaryColor),
-                          ),
-                    subtitle: Text(
-                      widget.homework.content,
-                      maxLines: 5,
-                      softWrap: false,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.bodyText2,
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(
-                      left: 10,
-                      right: 10,
-                      bottom: showTeacher ||
-                              showRoute ||
-                              (widget.homework.deadline != null &&
-                                  widget.homework.isDone == false &&
-                                  widget.homework.content != null &&
-                                  showDeadline)
-                          ? 15
-                          : 0,
-                    ),
-                    child: ListView(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      children: <Widget>[
-                        showTeacher ||
-                                showRoute ||
-                                (widget.homework.deadline != null &&
+      child: Ink(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.surface,
+          borderRadius: kBorderRadius,
+          boxShadow: kDefaultShadow,
+        ),
+        child: IntrinsicHeight(
+          child: Row(
+            children: [
+              Expanded(
+                child: Container(
+                  width: (widget.homework.isDone)
+                      ? size.width - kDefaultPadding - 40
+                      : size.width - kDefaultPadding,
+                  child: Column(
+                    children: <Widget>[
+                      ListTile(
+                        title: Text(
+                          Provider.of<SubjectProvider>(context)
+                              .subject(widget.homework.subject)
+                              .title, // widget.homework.subject делаем запрос в базу, чтобы получить название предмета
+                          maxLines: 1,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline5
+                              .copyWith(color: Theme.of(context).primaryColor),
+                        ),
+                        trailing: widget.homework.grade == null
+                            ? null
+                            : Text(
+                                '${widget.homework.grade}',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline4
+                                    .copyWith(
+                                        color: Theme.of(context).primaryColor),
+                              ),
+                        subtitle: Text(
+                          widget.homework.content,
+                          maxLines: 5,
+                          softWrap: false,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(
+                          left: 10,
+                          right: 10,
+                          bottom: showTeacher ||
+                                  showRoute ||
+                                  (widget.homework.deadline != null &&
+                                      widget.homework.isDone == false &&
+                                      widget.homework.content != null &&
+                                      showDeadline)
+                              ? 15
+                              : 0,
+                        ),
+                        child: Column(
+                          children: <Widget>[
+                            showTeacher ||
+                                    showRoute ||
+                                    (widget.homework.deadline != null &&
+                                        widget.homework.isDone == false &&
+                                        widget.homework.content != null &&
+                                        showDeadline)
+                                ? Column(
+                                    children: <Widget>[
+                                      const Divider(height: 1),
+                                      const SizedBox(height: 15)
+                                    ],
+                                  )
+                                : const SizedBox.shrink(),
+                            showTeacher
+                                ? _buildCardInfoItem(
+                                    Icons.person,
+                                    widget.teacher,
+                                  )
+                                : const SizedBox.shrink(),
+                            showRoute
+                                ? _buildCardInfoItem(
+                                    Icons.place,
+                                    Provider.of<SubjectProvider>(context)
+                                        .subject(widget.homework.subject)
+                                        .map,
+                                  )
+                                : const SizedBox.shrink(),
+                            widget.homework.deadline != null &&
                                     widget.homework.isDone == false &&
                                     widget.homework.content != null &&
-                                    showDeadline)
-                            ? Column(
-                                children: <Widget>[
-                                  const Divider(height: 1),
-                                  const SizedBox(height: 15)
-                                ],
-                              )
-                            : const SizedBox.shrink(),
-                        showTeacher
-                            ? _buildCardInfoItem(
-                                Icons.person,
-                                widget.teacher,
-                              )
-                            : const SizedBox.shrink(),
-                        showRoute
-                            ? _buildCardInfoItem(
-                                Icons.place,
-                                Provider.of<SubjectProvider>(context)
-                                    .subject(widget.homework.subject)
-                                    .map,
-                              )
-                            : const SizedBox.shrink(),
-                        widget.homework.deadline != null &&
-                                widget.homework.isDone == false &&
-                                widget.homework.content != null &&
-                                showDeadline
-                            ? _buildCardInfoItem(
-                                Icons.timer,
-                                getDeadline(widget.homework.deadline),
-                              )
-                            : const SizedBox.shrink(),
-                      ],
+                                    showDeadline
+                                ? _buildCardInfoItem(
+                                    Icons.timer,
+                                    getDeadline(widget.homework.deadline),
+                                  )
+                                : const SizedBox.shrink(),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                width: 40,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                  borderRadius: kBorderRadius,
+                ),
+                child: Center(
+                  child: RotatedBox(
+                    quarterTurns: -1,
+                    child: Text(
+                      'Готово',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w200,
+                        color: Theme.of(context).colorScheme.background,
+                      ),
                     ),
                   ),
-                ],
+                ),
               ),
-            ),
+              // if (widget.homework.isDone)
+              //   Positioned(
+              //     right: 0,
+              //     bottom: 0,
+              //     top: 0,
+              //     child: Container(
+              //       width: 40,
+              //       decoration: BoxDecoration(
+              //         color: Theme.of(context).primaryColor,
+              //         borderRadius: kBorderRadius,
+              //       ),
+              //       child: Center(
+              //         child: RotatedBox(
+              //           quarterTurns: -1,
+              //           child: Text(
+              //             'Готово',
+              //             style: TextStyle(
+              //               fontSize: 18,
+              //               fontWeight: FontWeight.w200,
+              //               color: Theme.of(context).colorScheme.background,
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //   )
+            ],
           ),
-          if (widget.homework.isDone) ...[
-            Positioned.fill(
-              child: ClipRRect(
-                child: BackdropFilter(
-                  key: ValueKey(widget.homework.date.millisecondsSinceEpoch),
-                  filter: ImageFilter.blur(
-                    sigmaX: 5,
-                    sigmaY: 5,
-                  ),
-                  child: Container(
-                    key: ValueKey(widget.homework.date.millisecondsSinceEpoch),
-                    color: Colors.black.withOpacity(0),
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              top: 50,
-              left: MediaQuery.of(context).size.width / 6,
-              child: Container(
-                transform: Matrix4.rotationZ(0.5),
-                child: Text(
-                  '[ ${I18n.of(context).done} ]',
-                  textScaleFactor: 2,
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-              ),
-            ),
-          ],
-        ],
+        ),
       ),
     );
   }

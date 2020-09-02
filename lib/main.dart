@@ -176,41 +176,47 @@ class DiaryschoolApp extends StatelessWidget {
             ),
             dividerColor: const Color(0xffE0E0E0).withOpacity(0.2),
             textTheme: TextTheme(
-              headline6: TextStyle(
+              // headline6: TextStyle(
+              //   fontSize: 20,
+              //   color: kColorRed.shade700,
+              //   letterSpacing: 0.15,
+              // ),
+              headline6: GoogleFonts.raleway(
+                color: const Color(0xffE0E0E0),
                 fontSize: 20,
-                color: kColorRed.shade700,
+                fontWeight: FontWeight.w700,
                 letterSpacing: 0.15,
               ),
-              button: TextStyle(
+              button: GoogleFonts.raleway(
                 color: kColorRed.shade700,
                 fontSize: 14,
                 letterSpacing: 1.25,
                 fontWeight: FontWeight.w500,
               ),
-              overline: const TextStyle(
+              overline: GoogleFonts.raleway(
                 color: Color(0xffE0E0E0),
                 fontSize: 14,
                 letterSpacing: 1.25,
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.w200,
               ),
-              subtitle1: const TextStyle(
+              subtitle1: GoogleFonts.raleway(
                 color: Color(0xffE0E0E0),
                 fontSize: 16,
                 fontWeight: FontWeight.normal,
                 letterSpacing: 0.15,
               ),
-              subtitle2: const TextStyle(
-                color: Color(0xffE0E0E0),
+              subtitle2: GoogleFonts.raleway(
+                color: const Color(0xffE0E0E0),
                 fontSize: 14,
-                fontWeight: FontWeight.w200,
+                fontWeight: FontWeight.w300,
                 letterSpacing: 0.1,
               ),
-              bodyText1: const TextStyle(
+              bodyText1: GoogleFonts.raleway(
                 color: Color(0xffE0E0E0),
                 fontSize: 14,
                 fontWeight: FontWeight.normal,
               ),
-              bodyText2: const TextStyle(
+              bodyText2: GoogleFonts.raleway(
                 color: Color(0xffE0E0E0),
                 fontSize: 14,
                 fontWeight: FontWeight.normal,
@@ -295,24 +301,24 @@ class DiaryschoolApp extends StatelessWidget {
             primaryColor: kColorRed.shade700,
             fontFamily: GoogleFonts.getFont('Raleway').fontFamily,
             textTheme: TextTheme(
-              headline6: TextStyle(
+              headline6: GoogleFonts.raleway(
                 fontSize: 20,
                 color: kColorRed.shade700,
                 letterSpacing: 0.15,
               ),
-              button: TextStyle(
+              button: GoogleFonts.raleway(
                 color: kColorRed.shade700,
                 fontSize: 14,
                 letterSpacing: 1.25,
                 fontWeight: FontWeight.w500,
               ),
-              overline: const TextStyle(
+              overline: GoogleFonts.raleway(
                 color: kColorBlack,
                 fontSize: 14,
                 letterSpacing: 1.25,
                 fontWeight: FontWeight.w500,
               ),
-              subtitle1: const TextStyle(
+              subtitle1: GoogleFonts.raleway(
                 color: kColorBlack,
                 fontSize: 16,
                 fontWeight: FontWeight.normal,
@@ -324,7 +330,7 @@ class DiaryschoolApp extends StatelessWidget {
                 fontWeight: FontWeight.w300,
                 letterSpacing: 0.1,
               ),
-              bodyText2: const TextStyle(
+              bodyText2: GoogleFonts.raleway(
                 color: kColorBlack,
                 fontSize: 14,
                 fontWeight: FontWeight.normal,

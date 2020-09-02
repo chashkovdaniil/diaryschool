@@ -55,15 +55,6 @@ class _TasksScreenState extends State<TasksScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<Homework> _homeworks =
-        context.watch<HomeworkProvider>().values.where((element) {
-      if (element.date.year == currentDate.year &&
-          element.date.month == currentDate.month &&
-          element.date.day == currentDate.day) {
-        return true;
-      }
-      return false;
-    }).toList();
     _filter = Provider.of<SettingsProvider>(context).filter;
 
     return Scaffold(
@@ -100,9 +91,19 @@ class _TasksScreenState extends State<TasksScreen> {
           builder: (context, _) {
             DateTime _selectedDate =
                 Provider.of<DateProvider>(context).selectedDate;
+
+            List<Homework> _homeworks =
+                context.watch<HomeworkProvider>().values.where((element) {
+              if (element.date.year == _selectedDate.year &&
+                  element.date.month == _selectedDate.month &&
+                  element.date.day == _selectedDate.day) {
+                return true;
+              }
+              return false;
+            }).toList();
+
             return Column(
               children: <Widget>[
-                const SizedBox(height: 10),
                 InkWell(
                   onTap: () async {
                     DateTime _date = await showDatePicker(
@@ -139,14 +140,47 @@ class _TasksScreenState extends State<TasksScreen> {
                   child:
                       DaysWeek(currentDate: context.watch<DateProvider>().date),
                 ),
-                const Spacer(),
+                Expanded(
+                  child: _homeworks.isEmpty
+                      ? Center(
+                          child: Text(
+                            I18n.of(context).noTasks,
+                          ),
+                        )
+                      : Material(
+                          color: Theme.of(context).colorScheme.background,
+                          child: ListView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            padding: const EdgeInsets.only(
+                              top: kDefaultPadding / 2,
+                              left: kDefaultPadding / 2,
+                              right: kDefaultPadding / 2,
+                            ),
+                            itemCount: _homeworks.length,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.only(
+                                  bottom: kDefaultPadding / 2,
+                                ),
+                                child: CardWidget(
+                                  homework: _homeworks[index],
+                                  filter: _filter,
+                                  teacher: Provider.of<TeacherProvider>(context)
+                                      .teacher(_homeworks[index].subject)
+                                      .toString(),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                ),
                 FlatButton.icon(
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => TaskScreen(
                           Homework(
-                            date: currentDate,
+                            date: _selectedDate,
                             subject: defaultSubject(context),
                           ).toMap(),
                         ),

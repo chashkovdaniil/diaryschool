@@ -29,7 +29,7 @@ BorderRadius kBorderRadiusButton = BorderRadius.circular(25);
 const kDefaultPadding = 20.0;
 const List<BoxShadow> kDefaultShadow = [
    BoxShadow(
-    offset: Offset(3, 4),
+    offset: Offset(1, 3),
     color: Color.fromRGBO(0, 0, 0, 0.25),
     blurRadius: 4,
   ),
