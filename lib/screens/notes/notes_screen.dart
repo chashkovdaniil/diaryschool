@@ -1,8 +1,8 @@
-import 'package:diaryschool/generated/i18n.dart';
 import 'package:diaryschool/models/note.dart';
 import 'package:diaryschool/provider/NotesProvider.dart';
 import 'package:diaryschool/screens/notes/note_screen.dart';
 import 'package:diaryschool/utilities/constants.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,7 +14,7 @@ class NotesScreen extends StatelessWidget {
     List<Note> _notes = context.watch<NotesProvider>().notes;
     return Scaffold(
       appBar: AppBar(
-        title: Text(I18n.of(context).notes),
+        title: Text(tr('notes')),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -32,7 +32,7 @@ class NotesScreen extends StatelessWidget {
       body: _notes.isEmpty
           ? Center(
               child: Text(
-                I18n.of(context).emptyList,
+                tr('emptyList'),
                 style: Theme.of(context).textTheme.subtitle1,
               ),
             )

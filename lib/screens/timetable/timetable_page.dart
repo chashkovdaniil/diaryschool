@@ -1,9 +1,11 @@
-import 'package:diaryschool/generated/i18n.dart';
+import 'package:diaryschool/models/subject.dart';
 import 'package:diaryschool/models/timetable_row.dart';
 import 'package:diaryschool/provider/SettingsProvider.dart';
 import 'package:diaryschool/provider/SubjectProvider.dart';
 import 'package:diaryschool/provider/TimetableProvider.dart';
 import 'package:diaryschool/screens/timetable/timetable_dialog.dart';
+import 'package:diaryschool/utilities/constants.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
@@ -15,9 +17,17 @@ class TimetablePage extends StatefulWidget {
   _TimetablePageState createState() => _TimetablePageState();
 }
 
-class _TimetablePageState extends State<TimetablePage> {
-  double _currentDay = 1;
+class _TimetablePageState extends State<TimetablePage>
+    with SingleTickerProviderStateMixin {
   OverlayEntry _overlayEntry;
+  TabController daysController;
+
+  @override
+  void initState() {
+    daysController = TabController(
+        length: 7, vsync: this, initialIndex: DateTime.now().weekday - 1);
+    super.initState();
+  }
 
   @override
   void didChangeDependencies() {
@@ -35,24 +45,43 @@ class _TimetablePageState extends State<TimetablePage> {
   Widget build(BuildContext context) {
     List<TimetableRow> _timetable =
         context.watch<TimetableProvider>().values.where((element) {
-      if (element.dayOfWeek == _currentDay) {
+      if (element.dayOfWeek == daysController.index) {
         return true;
       }
       return false;
     }).toList();
     return Scaffold(
       appBar: AppBar(
-        title: Text(I18n.of(context).timetableNav),
+        title: Text(
+          tr('timetableNav'),
+        ),
       ),
       body: Column(
         children: [
-          Text(
-            I18n.of(context).daysOfWeek[_currentDay.round() - 1],
-            style: Theme.of(context).textTheme.headline6,
+          TabBar(
+            isScrollable: true,
+            indicatorSize: TabBarIndicatorSize.label,
+            controller: daysController,
+            labelColor: Theme.of(context).primaryColor,
+            labelStyle: Theme.of(context)
+                .textTheme
+                .headline6
+                .copyWith(color: Theme.of(context).primaryColor),
+            unselectedLabelStyle: Theme.of(context)
+                .textTheme
+                .headline6
+                .copyWith(fontWeight: FontWeight.w400),
+            onTap: (day) => setState(() {}),
+            tabs: List.generate(
+              7,
+              (index) => Tab(
+                text: tr(daysOfWeek[index]),
+              ),
+            ),
           ),
           _timetable.isEmpty
               ? Expanded(
-                  child: Center(child: Text(I18n.of(context).noTimetable)),
+                  child: Center(child: Text(tr('noTimetable'))),
                 )
               : Expanded(
                   child: ListView.builder(
@@ -79,36 +108,9 @@ class _TimetablePageState extends State<TimetablePage> {
                         color: _current
                             ? Theme.of(context).primaryColor.withOpacity(0.1)
                             : Theme.of(context).colorScheme.background,
-                        child: ListTile(
-                          leading: Text((index + 1).toString()),
-                          title: Text(
-                            Provider.of<SubjectProvider>(context)
-                                .values[_timetable[index].subject]
-                                .title,
-                          ),
-                          subtitle: Text('${_timetable[index].start.hour}'
-                              ':${_timetable[index].start.minute < 10 ? '0' + _timetable[index].start.minute.toString() : _timetable[index].start.minute}'
-                              ' - ${_timetable[index].end.hour}'
-                              ':${_timetable[index].end.minute < 10 ? '0' + _timetable[index].end.minute.toString() : _timetable[index].end.minute}'),
-                          trailing: IconButton(
-                            icon: const Icon(Icons.delete_outline),
-                            onPressed: () {
-                              context
-                                  .read<TimetableProvider>()
-                                  .delete(_timetable[index].uid);
-                              setState(() {});
-                            },
-                          ),
-                          onTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return TimetableDialog(
-                                    timetable: _timetable[index]);
-                              },
-                            );
-                            setState(() {});
-                          },
+                        child: TimetableTile(
+                          timetableRow: _timetable[index],
+                          index: index,
                         ),
                       );
                     },
@@ -122,28 +124,20 @@ class _TimetablePageState extends State<TimetablePage> {
                 builder: (context) {
                   return TimetableDialog(
                     timetable: TimetableRow(
-                      dayOfWeek: _currentDay.round(),
+                      dayOfWeek: daysController.index,
                     ),
                   );
                 },
               );
               setState(() {});
             },
-            icon: const Icon(Icons.add),
-            label: Text(I18n.of(context).add),
-          ),
-          Container(
-            child: Slider.adaptive(
-              value: _currentDay,
-              onChanged: (val) {
-                setState(() {
-                  _currentDay = val;
-                });
-              },
-              min: 1,
-              max: 7,
-              divisions: 6,
-              label: I18n.of(context).daysOfWeek[_currentDay.round() - 1],
+            icon: Icon(Icons.add, color: Theme.of(context).primaryColor),
+            label: Text(
+              tr('add').toUpperCase(),
+              style: Theme.of(context)
+                  .textTheme
+                  .button
+                  .copyWith(color: Theme.of(context).primaryColor),
             ),
           ),
         ],
@@ -168,7 +162,7 @@ class _TimetablePageState extends State<TimetablePage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    I18n.of(context).tipTimetable,
+                    tr('tipTimetable'),
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
@@ -181,7 +175,7 @@ class _TimetablePageState extends State<TimetablePage> {
                       _overlayEntry.remove();
                     },
                     child: Text(
-                      I18n.of(context).close,
+                      tr('close'),
                       style: Theme.of(context).textTheme.button,
                     ),
                   ),
@@ -189,6 +183,50 @@ class _TimetablePageState extends State<TimetablePage> {
               ),
             ),
           ),
+        );
+      },
+    );
+  }
+}
+
+class TimetableTile extends StatelessWidget {
+  const TimetableTile({
+    Key key,
+    @required int index,
+    @required TimetableRow timetableRow,
+  })  : _timetableRow = timetableRow,
+        _index = index,
+        super(key: key);
+
+  final int _index;
+  final TimetableRow _timetableRow;
+
+  @override
+  Widget build(BuildContext context) {
+    Subject subject =
+        Provider.of<SubjectProvider>(context).subject(_timetableRow.subject);
+
+    return ListTile(
+      leading: Text((_index + 1).toString()),
+      title: Text(
+        subject.title,
+      ),
+      subtitle: Text('${_timetableRow.start.hour}'
+          ':${_timetableRow.start.minute < 10 ? '0' + _timetableRow.start.minute.toString() : _timetableRow.start.minute}'
+          ' - ${_timetableRow.end.hour}'
+          ':${_timetableRow.end.minute < 10 ? '0' + _timetableRow.end.minute.toString() : _timetableRow.end.minute}'),
+      trailing: IconButton(
+        icon: const Icon(Icons.delete_outline),
+        onPressed: () {
+          context.read<TimetableProvider>().delete(_timetableRow.uid);
+        },
+      ),
+      onTap: () {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return TimetableDialog(timetable: _timetableRow);
+          },
         );
       },
     );

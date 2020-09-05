@@ -1,6 +1,5 @@
 import 'package:diaryschool/utilities/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 extension ButtonText on Text {
   Text button() {
@@ -8,11 +7,11 @@ extension ButtonText on Text {
       data.toUpperCase(),
       textAlign: TextAlign.center,
       style: (style ?? const TextStyle()).copyWith(
-        fontFamily: GoogleFonts.getFont('Raleway').fontFamily,
+        fontFamily: 'Raleway',
         color: kColorRed.shade700,
         fontSize: 14,
         letterSpacing: 0.4,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w600,
       ),
     );
   }
@@ -22,11 +21,11 @@ extension ButtonText on Text {
       data.toUpperCase(),
       textAlign: TextAlign.center,
       style: (style ?? const TextStyle()).copyWith(
-        fontFamily: GoogleFonts.getFont('Raleway').fontFamily,
+        fontFamily: 'Raleway',
         color: Colors.white,
         fontSize: 14,
         letterSpacing: 0.4,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w600,
       ),
     );
   }
@@ -63,19 +62,4 @@ class Button extends StatelessWidget {
       ),
     );
   }
-}
-
-class TextButton extends Text {
-  TextButton(String data, {Key key})
-      : super(
-          data.toUpperCase(),
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontFamily: GoogleFonts.getFont('Raleway').fontFamily,
-            color: kColorRed.shade700,
-            fontSize: 14,
-            letterSpacing: 0.4,
-            fontWeight: FontWeight.w500,
-          ),
-        );
 }

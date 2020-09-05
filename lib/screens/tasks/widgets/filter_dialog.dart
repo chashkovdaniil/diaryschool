@@ -1,5 +1,5 @@
-import 'package:diaryschool/generated/i18n.dart';
 import 'package:diaryschool/provider/SettingsProvider.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,12 +17,12 @@ class _FilterDialogState extends State<FilterDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(I18n.of(context).filter),
+      title: Text(tr('filter')),
       content: ListView(
         shrinkWrap: true,
         children: <Widget>[
           ListTile(
-            title: Text(I18n.of(context).teacher),
+            title: Text(tr('teacher')),
             trailing: Checkbox(
               value: widget.filter['teacher'],
               activeColor: Theme.of(context).primaryColor,
@@ -45,7 +45,7 @@ class _FilterDialogState extends State<FilterDialog> {
           //   ),
           // ),
           ListTile(
-            title: Text(I18n.of(context).deadline),
+            title: Text(tr('deadline')),
             trailing: Checkbox(
               value: widget.filter['deadline'],
               activeColor: Theme.of(context).primaryColor,
@@ -69,7 +69,7 @@ class _FilterDialogState extends State<FilterDialog> {
           //   ),
           // ),
           ListTile(
-            title: Text(I18n.of(context).path),
+            title: Text(tr('path')),
             trailing: Checkbox(
               value: widget.filter['route'],
               activeColor: Theme.of(context).primaryColor,
@@ -85,14 +85,14 @@ class _FilterDialogState extends State<FilterDialog> {
       actions: [
         FlatButton(
           onPressed: () => Navigator.pop(context),
-          child: Text(I18n.of(context).cancel),
+          child: Text(tr('cancel')),
         ),
         FlatButton(
           onPressed: () {
             context.read<SettingsProvider>().setFilter(widget.filter);
             Navigator.pop(context);
           },
-          child: Text(I18n.of(context).save),
+          child: Text(tr('save')),
         ),
       ],
     );

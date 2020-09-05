@@ -1,5 +1,5 @@
 
-import 'package:diaryschool/generated/i18n.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class GradeField extends StatefulWidget {
@@ -14,12 +14,12 @@ class _GradeFieldState extends State<GradeField> {
   Widget build(BuildContext context) {
     String grade;
     return AlertDialog(
-      title: Text(I18n.of(context).grade),
+      title: Text(tr('grade')),
       content: TextFormField(
         initialValue: widget.grade,
         maxLength: 2,
         decoration: InputDecoration(
-          hintText: I18n.of(context).rate,
+          hintText: tr('rate'),
         ),
         keyboardType: TextInputType.number,
         onChanged: (value) => grade = value.trim(),
@@ -27,11 +27,11 @@ class _GradeFieldState extends State<GradeField> {
       ),
       actions: <Widget>[
         FlatButton(
-          child: Text(I18n.of(context).close),
+          child: Text(tr('close')),
           onPressed: () => Navigator.of(context).pop(),
         ),
         FlatButton(
-          child: Text(I18n.of(context).done),
+          child: Text(tr('done')),
           onPressed: () => Navigator.of(context).pop(grade),
         ),
       ],

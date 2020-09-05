@@ -1,15 +1,16 @@
 import 'package:diaryschool/common_widgets/select_subject_dialog.dart';
-import 'package:diaryschool/generated/i18n.dart';
+import 'package:diaryschool/models/subject.dart';
 import 'package:diaryschool/models/timetable_row.dart';
 import 'package:diaryschool/provider/SubjectProvider.dart';
 import 'package:diaryschool/provider/TimetableProvider.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class TimetableDialog extends StatefulWidget {
   final TimetableRow timetable;
   TimetableDialog({Key key, TimetableRow timetable})
-      : timetable = timetable ?? TimetableRow(),
+      : timetable = TimetableRow.fromMap(timetable.toMap()) ?? TimetableRow(),
         super(key: key);
 
   @override
@@ -20,8 +21,10 @@ class _TimetableDialogState extends State<TimetableDialog> {
   final _formKey = GlobalKey<FormState>(debugLabel: 'timetableDialog');
   @override
   Widget build(BuildContext context) {
+    Subject subject = Provider.of<SubjectProvider>(context)
+                                  .subject(widget.timetable.subject);
     return AlertDialog(
-      title: Text(I18n.of(context).timetableNav),
+      title: Text(tr('timetableNav')),
       content: Form(
         key: _formKey,
         child: ListView(
@@ -30,7 +33,14 @@ class _TimetableDialogState extends State<TimetableDialog> {
             FormField<TimeOfDay>(
               initialValue: widget.timetable.start,
               validator: (value) {
-                return (value == null) ? I18n.of(context).fillField : null;
+                if (value == null) {
+                  return tr('fillField');
+                }
+                if (value.hour >= widget.timetable.end.hour && value.minute >= widget.timetable.end.minute) {
+                  // TODO: translate
+                  return 'Время начала должно быть раньше времени окончания';
+                }
+                return null;
               },
               builder: (state) {
                 return Column(
@@ -65,8 +75,8 @@ class _TimetableDialogState extends State<TimetableDialog> {
                         ),
                         child: Text(
                           widget.timetable.start == null
-                              ? I18n.of(context).startLesson
-                              : '${I18n.of(context).beginning} - ${widget.timetable.start.hour}:${widget.timetable.start.minute}',
+                              ? tr('startLesson')
+                              : '${tr('beginning')} - ${widget.timetable.start.hour}:${widget.timetable.start.minute}',
                           overflow: TextOverflow.fade,
                         ),
                       ),
@@ -90,7 +100,7 @@ class _TimetableDialogState extends State<TimetableDialog> {
             FormField<TimeOfDay>(
               initialValue: widget.timetable.end,
               validator: (value) {
-                return (value == null) ? I18n.of(context).fillField : null;
+                return (value == null) ? tr('fillField') : null;
               },
               builder: (state) {
                 return Column(
@@ -125,8 +135,8 @@ class _TimetableDialogState extends State<TimetableDialog> {
                         ),
                         child: Text(
                           widget.timetable.end == null
-                              ? I18n.of(context).endLesson
-                              : '${I18n.of(context).end} - ${widget.timetable.end.hour}:${widget.timetable.end.minute}',
+                              ? tr('endLesson')
+                              : '${tr('end')} - ${widget.timetable.end.hour}:${widget.timetable.end.minute}',
                           overflow: TextOverflow.fade,
                         ),
                       ),
@@ -150,7 +160,7 @@ class _TimetableDialogState extends State<TimetableDialog> {
             FormField<int>(
               initialValue: widget.timetable.subject,
               validator: (int value) {
-                return (value == null) ? I18n.of(context).selectSubject : null;
+                return (value == null) ? tr('selectSubject') : null;
               },
               builder: (state) {
                 return Column(
@@ -187,9 +197,8 @@ class _TimetableDialogState extends State<TimetableDialog> {
                         ),
                         child: Text(
                           widget.timetable.subject == null
-                              ? I18n.of(context).selectSubject
-                              : Provider.of<SubjectProvider>(context)
-                                  .values[widget.timetable.subject]
+                              ? tr('selectSubject')
+                              : subject
                                   .title,
                           overflow: TextOverflow.fade,
                         ),
@@ -217,7 +226,7 @@ class _TimetableDialogState extends State<TimetableDialog> {
       actions: [
         FlatButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(I18n.of(context).cancel.toUpperCase()),
+          child: Text(tr('cancel').toUpperCase()),
         ),
         FlatButton(
           onPressed: () {
@@ -233,7 +242,7 @@ class _TimetableDialogState extends State<TimetableDialog> {
               return Navigator.of(context).pop();
             }
           },
-          child: Text(I18n.of(context).save.toUpperCase()),
+          child: Text(tr('save').toUpperCase()),
         ),
       ],
     );

@@ -1,8 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:diaryschool/common_widgets/card_widget.dart';
-import 'package:diaryschool/generated/i18n.dart';
 import 'package:diaryschool/models/homework.dart';
 import 'package:diaryschool/models/subject.dart';
+import 'package:diaryschool/models/teacher.dart';
 import 'package:diaryschool/screens/tasks/provider/DateProvider.dart';
 import 'package:diaryschool/utilities/TextStyles.dart';
 import 'package:diaryschool/provider/HomeworkProvider.dart';
@@ -13,6 +13,7 @@ import 'package:diaryschool/screens/failure/failure_screen.dart';
 import 'package:diaryschool/screens/task/task_screen.dart';
 import 'package:diaryschool/screens/tasks/widgets/filter_dialog.dart';
 import 'package:diaryschool/utilities/constants.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart' show CupertinoPageRoute;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -29,7 +30,6 @@ class TasksScreen extends StatefulWidget {
 class _TasksScreenState extends State<TasksScreen> {
   final DateTime firstDayOfCurrentDate =
       DateTime.now().add(Duration(days: -DateTime.now().weekday + 1));
-  Map<String, bool> _filter;
   DateTime currentDate = DateTime.now();
   int currentWeekday;
 
@@ -55,11 +55,13 @@ class _TasksScreenState extends State<TasksScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _filter = Provider.of<SettingsProvider>(context).filter;
+    Map<String, bool> _filter = Provider.of<SettingsProvider>(context).filter;
+    List<Subject> subjects = context.watch<SubjectProvider>().values;
+    List<Teacher> teachers = context.watch<TeacherProvider>().values;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(I18n.of(context).tasksNav),
+        title: Text(tr('tasksNav')),
         actions: <Widget>[
           IconButton(
             onPressed: () {
@@ -104,75 +106,88 @@ class _TasksScreenState extends State<TasksScreen> {
 
             return Column(
               children: <Widget>[
-                InkWell(
-                  onTap: () async {
-                    DateTime _date = await showDatePicker(
-                      context: context,
-                      initialDate: _selectedDate,
-                      firstDate: DateTime(2000),
-                      lastDate: DateTime(2100),
-                    );
-                    if (_date != null) {
-                      Provider.of<DateProvider>(
-                        context,
-                        listen: false,
-                      ).selectedDate = _date;
-                      Provider.of<DateProvider>(
-                        context,
-                        listen: false,
-                      ).date = _date;
-                    }
-                  },
-                  child: Ink(
-                    width: MediaQuery.of(context).size.width,
-                    padding:
-                        const EdgeInsets.symmetric(vertical: kDefaultPadding),
-                    child: Center(
-                      child: Text(
-                        '${I18n.of(context).months[context.watch<DateProvider>().date.month - 1]}',
+                Expanded(
+                  child: Material(
+                    color: Theme.of(context).colorScheme.background,
+                    child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      child: Column(
+                        children: [
+                          InkWell(
+                            onTap: () async {
+                              DateTime _date = await showDatePicker(
+                                context: context,
+                                initialDate: _selectedDate,
+                                firstDate: DateTime(2000),
+                                lastDate: DateTime(2100),
+                              );
+                              if (_date != null) {
+                                Provider.of<DateProvider>(
+                                  context,
+                                  listen: false,
+                                ).selectedDate = _date;
+                                Provider.of<DateProvider>(
+                                  context,
+                                  listen: false,
+                                ).date = _date;
+                              }
+                            },
+                            child: Ink(
+                              width: MediaQuery.of(context).size.width,
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: kDefaultPadding),
+                              child: Center(
+                                child: Text(
+                                  '${tr(months[context.watch<DateProvider>().date.month - 1])}',
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: kDefaultPadding/2),
+                            child: DaysWeek(
+                                currentDate:
+                                    context.watch<DateProvider>().date),
+                          ),
+                          _homeworks.isEmpty
+                              ? Padding(
+                                padding: const EdgeInsets.only(top: 30.0),
+                                child: Center(
+                                    child: Text(
+                                      tr('noTasks'),
+                                    ),
+                                  ),
+                              )
+                              : Padding(
+                                  padding: const EdgeInsets.only(
+                                    top: kDefaultPadding / 2,
+                                    left: kDefaultPadding / 2,
+                                    right: kDefaultPadding / 2,
+                                  ),
+                                  child: Column(
+                                    children: List.generate(
+                                      _homeworks.length,
+                                      (index) {
+                                        return Padding(
+                                          padding: const EdgeInsets.only(
+                                            bottom: kDefaultPadding / 2,
+                                          ),
+                                          child: CardWidget(
+                                            homework: _homeworks[index],
+                                            filter: _filter,
+                                            teacher: teachers[subjects[_homeworks[index].subject].teacher]
+                                                .toString(),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
+                        ],
                       ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: kDefaultPadding),
-                  child:
-                      DaysWeek(currentDate: context.watch<DateProvider>().date),
-                ),
-                Expanded(
-                  child: _homeworks.isEmpty
-                      ? Center(
-                          child: Text(
-                            I18n.of(context).noTasks,
-                          ),
-                        )
-                      : Material(
-                          color: Theme.of(context).colorScheme.background,
-                          child: ListView.builder(
-                            physics: const BouncingScrollPhysics(),
-                            padding: const EdgeInsets.only(
-                              top: kDefaultPadding / 2,
-                              left: kDefaultPadding / 2,
-                              right: kDefaultPadding / 2,
-                            ),
-                            itemCount: _homeworks.length,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.only(
-                                  bottom: kDefaultPadding / 2,
-                                ),
-                                child: CardWidget(
-                                  homework: _homeworks[index],
-                                  filter: _filter,
-                                  teacher: Provider.of<TeacherProvider>(context)
-                                      .teacher(_homeworks[index].subject)
-                                      .toString(),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
                 ),
                 FlatButton.icon(
                   onPressed: () {
@@ -188,7 +203,7 @@ class _TasksScreenState extends State<TasksScreen> {
                     );
                   },
                   icon: Icon(Icons.add, color: Theme.of(context).primaryColor),
-                  label: Text(I18n.of(context).add).button(),
+                  label: Text(tr('add')).button(),
                 ),
               ],
             );
@@ -209,11 +224,11 @@ class _TasksScreenState extends State<TasksScreen> {
     return OverlayEntry(
       builder: (context) {
         final List<String> tips = [
-          I18n.of(context).tipTasks1,
-          I18n.of(context).tipTasks2,
-          I18n.of(context).tipTasks3,
-          I18n.of(context).tipTasks4,
-          I18n.of(context).tipTasks5,
+          tr('tipTasks1'),
+          tr('tipTasks2'),
+          tr('tipTasks3'),
+          tr('tipTasks4'),
+          tr('tipTasks5'),
         ];
         int currentTip = 0;
         return StatefulBuilder(builder: (context, setState) {
@@ -251,8 +266,8 @@ class _TasksScreenState extends State<TasksScreen> {
                       },
                       child: Text(
                         (currentTip == tips.length - 1)
-                            ? I18n.of(context).close
-                            : I18n.of(context).next,
+                            ? tr('close')
+                            : tr('next'),
                         style: Theme.of(context).textTheme.button,
                       ),
                     ),
@@ -342,12 +357,13 @@ class _DaysWeekState extends State<DaysWeek> {
                 ? BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     color: Theme.of(context).primaryColor,
+                    boxShadow: kDefaultShadow,
                   )
                 : null,
         child: Column(
           children: [
             Text(
-              I18n.of(context).shortDaysOfWeek[date.weekday - 1],
+              tr(shortDaysOfWeek[date.weekday - 1]),
               style: Theme.of(context).textTheme.subtitle2.copyWith(
                     fontWeight: FontWeight.w100,
                     color: date.compareTo(
@@ -400,6 +416,6 @@ class _DaysWeekState extends State<DaysWeek> {
 //       )
 //     : Expanded(
 //   child: Center(
-//     child: Text(I18n.of(context).noTasks),
+//     child: Text(tr('noTasks),
 //   ),
 // ),

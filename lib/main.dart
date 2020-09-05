@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:diaryschool/generated/i18n.dart';
 import 'package:diaryschool/models/homework.dart';
 import 'package:diaryschool/models/note.dart';
 import 'package:diaryschool/models/subject.dart';
@@ -24,10 +23,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -56,13 +55,18 @@ Future<void> main() async {
   // await timetable.clear();
   final Box settings = await Hive.openBox('settings');
   InAppPurchaseConnection.enablePendingPurchases();
-  runApp(DiaryschoolApp(
-    teachers: teachers,
-    subjects: subjects,
-    homeworks: homeworks,
-    settings: settings,
-    timetable: timetable,
-    notes: notes,
+  runApp(EasyLocalization(
+    supportedLocales: [Locale('en', 'US'), Locale('ru', 'RU'), Locale('ru', 'UA'), Locale('ru', 'CV')],
+    path: 'assets/translations', 
+    fallbackLocale: Locale('en', 'US'),
+    child: DiaryschoolApp(
+      teachers: teachers,
+      subjects: subjects,
+      homeworks: homeworks,
+      settings: settings,
+      timetable: timetable,
+      notes: notes,
+    ),
   ));
 }
 
@@ -86,7 +90,6 @@ class DiaryschoolApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final i18n = I18n.delegate;
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<TeacherProvider>(
@@ -110,18 +113,10 @@ class DiaryschoolApp extends StatelessWidget {
       ],
       builder: (context, child) {
         return MaterialApp(
-          localizationsDelegates: [
-            i18n,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
           locale: Provider.of<SettingsProvider>(context).getLanguage,
-          supportedLocales: i18n.supportedLocales,
-          localeResolutionCallback: i18n.resolution(
-            fallback: Provider.of<SettingsProvider>(context).getLanguage,
-          ),
-          title: 'Дневник',
+          title: 'Edum',
           debugShowCheckedModeBanner: false,
           initialRoute: MainScreen.id,
           builder: (context, child) {
@@ -141,6 +136,7 @@ class DiaryschoolApp extends StatelessWidget {
             TasksScreen.id: (context) => TasksScreen(),
           },
           darkTheme: ThemeData(
+            fontFamily: 'Raleway',
             scaffoldBackgroundColor: const Color(0xff424242),
             bottomAppBarColor: const Color(0xff424242),
             primarySwatch: kColorRed,
@@ -163,7 +159,6 @@ class DiaryschoolApp extends StatelessWidget {
             ),
             secondaryHeaderColor: kColorRed.shade700,
             dialogBackgroundColor: const Color(0xff424242),
-            fontFamily: GoogleFonts.getFont('Raleway').fontFamily,
             iconTheme: const IconThemeData(
               color: Color(0xffE0E0E0),
             ),
@@ -181,45 +176,45 @@ class DiaryschoolApp extends StatelessWidget {
               //   color: kColorRed.shade700,
               //   letterSpacing: 0.15,
               // ),
-              headline6: GoogleFonts.raleway(
+              headline6: TextStyle(
                 color: const Color(0xffE0E0E0),
                 fontSize: 20,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 0.15,
               ),
-              button: GoogleFonts.raleway(
+              button: TextStyle(
                 color: kColorRed.shade700,
                 fontSize: 14,
                 letterSpacing: 1.25,
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.w600,
               ),
-              overline: GoogleFonts.raleway(
+              overline: TextStyle(
                 color: Color(0xffE0E0E0),
                 fontSize: 14,
                 letterSpacing: 1.25,
                 fontWeight: FontWeight.w200,
               ),
-              subtitle1: GoogleFonts.raleway(
+              subtitle1: TextStyle(
                 color: Color(0xffE0E0E0),
                 fontSize: 16,
-                fontWeight: FontWeight.normal,
+                fontWeight: FontWeight.w600,
                 letterSpacing: 0.15,
               ),
-              subtitle2: GoogleFonts.raleway(
+              subtitle2: TextStyle(
                 color: const Color(0xffE0E0E0),
                 fontSize: 14,
-                fontWeight: FontWeight.w300,
+                fontWeight: FontWeight.w600,
                 letterSpacing: 0.1,
               ),
-              bodyText1: GoogleFonts.raleway(
+              bodyText1: TextStyle(
                 color: Color(0xffE0E0E0),
                 fontSize: 14,
-                fontWeight: FontWeight.normal,
+                fontWeight: FontWeight.w600,
               ),
-              bodyText2: GoogleFonts.raleway(
+              bodyText2: TextStyle(
                 color: Color(0xffE0E0E0),
                 fontSize: 14,
-                fontWeight: FontWeight.normal,
+                fontWeight: FontWeight.w600,
               ),
             ),
             colorScheme: ColorScheme(
@@ -259,6 +254,7 @@ class DiaryschoolApp extends StatelessWidget {
             ),
           ),
           theme: ThemeData(
+            fontFamily: 'Raleway',
             sliderTheme: SliderThemeData(
               valueIndicatorColor: kColorRed.shade100,
             ),
@@ -275,10 +271,11 @@ class DiaryschoolApp extends StatelessWidget {
               iconTheme: IconThemeData(color: kColorRed.shade700),
               textTheme: TextTheme(
                 headline6: TextStyle(
+                  fontFamily: 'Raleway',
                   fontSize: 25,
                   color: kColorRed.shade700,
                   letterSpacing: 0.15,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w900,
                 ),
               ),
             ),
@@ -299,41 +296,41 @@ class DiaryschoolApp extends StatelessWidget {
             primarySwatch: kColorRed,
             secondaryHeaderColor: kColorRed.shade700,
             primaryColor: kColorRed.shade700,
-            fontFamily: GoogleFonts.getFont('Raleway').fontFamily,
             textTheme: TextTheme(
-              headline6: GoogleFonts.raleway(
+              headline6: TextStyle(
                 fontSize: 20,
                 color: kColorRed.shade700,
                 letterSpacing: 0.15,
+                fontWeight: FontWeight.w600,
               ),
-              button: GoogleFonts.raleway(
+              button: TextStyle(
                 color: kColorRed.shade700,
                 fontSize: 14,
                 letterSpacing: 1.25,
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.w600,
               ),
-              overline: GoogleFonts.raleway(
+              overline: TextStyle(
                 color: kColorBlack,
                 fontSize: 14,
                 letterSpacing: 1.25,
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.w600,
               ),
-              subtitle1: GoogleFonts.raleway(
+              subtitle1: TextStyle(
                 color: kColorBlack,
                 fontSize: 16,
-                fontWeight: FontWeight.normal,
+                fontWeight: FontWeight.w600,
                 letterSpacing: 0.15,
               ),
-              subtitle2: GoogleFonts.raleway(
+              subtitle2: TextStyle(
                 color: kColorBlack,
                 fontSize: 14,
-                fontWeight: FontWeight.w300,
+                fontWeight: FontWeight.w600,
                 letterSpacing: 0.1,
               ),
-              bodyText2: GoogleFonts.raleway(
+              bodyText2: TextStyle(
                 color: kColorBlack,
                 fontSize: 14,
-                fontWeight: FontWeight.normal,
+                fontWeight: FontWeight.w600,
               ),
             ),
             colorScheme: ColorScheme(

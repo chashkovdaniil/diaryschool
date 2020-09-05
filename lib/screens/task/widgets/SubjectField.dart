@@ -1,5 +1,6 @@
-import 'package:diaryschool/generated/i18n.dart';
 import 'package:diaryschool/models/homework.dart';
+import 'package:diaryschool/models/subject.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
 import 'package:diaryschool/utilities/constants.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,10 @@ class SubjectField extends FormField<int> {
           key: key,
           validator: validator,
           builder: (FormFieldState<int> state) {
+            List<Subject> subjects =
+                Provider.of<SubjectProvider>(context).values;
+            ThemeData theme = Theme.of(context);
+            
             return InkWell(
               onTap: () async {
                 int _subject = await showDialog(
@@ -38,16 +43,14 @@ class SubjectField extends FormField<int> {
                     state.hasError
                         ? Text(
                             state.errorText,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText2
+                            style: theme.textTheme.bodyText2
                                 .copyWith(color: Colors.red),
                           )
                         : const SizedBox.shrink(),
                     Row(
                       children: <Widget>[
                         Text(
-                          '${I18n.of(context).subject}:',
+                          '${tr('subject')}:',
                         ),
                         const SizedBox(width: 10),
                         Expanded(
@@ -63,21 +66,16 @@ class SubjectField extends FormField<int> {
                               children: <Widget>[
                                 Expanded(
                                   child: Text(
-                                    Provider.of<SubjectProvider>(context)
-                                            .values
-                                            .isEmpty
-                                        ? I18n.of(context).addSubject
-                                        : Provider.of<SubjectProvider>(context)
-                                            .values[homework.subject ?? 0]
-                                            .title,
-                                    style:
-                                        Theme.of(context).textTheme.headline6,
+                                    subjects.isEmpty
+                                        ? tr('addSubject')
+                                        : subjects[homework.subject ?? 0].title,
+                                    style: theme.textTheme.headline6,
                                     maxLines: 1,
                                   ),
                                 ),
                                 Icon(
                                   Icons.arrow_drop_down,
-                                  color: Theme.of(context).primaryColor,
+                                  color: theme.primaryColor,
                                 ),
                               ],
                             ),

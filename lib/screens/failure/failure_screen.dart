@@ -1,10 +1,10 @@
-import 'package:diaryschool/generated/i18n.dart';
 import 'package:diaryschool/models/homework.dart';
 import 'package:diaryschool/provider/HomeworkProvider.dart';
 import 'package:diaryschool/provider/SubjectProvider.dart';
 import 'package:diaryschool/screens/task/task_screen.dart';
 import 'package:diaryschool/screens/tasks/tasks_screen.dart';
 import 'package:diaryschool/utilities/constants.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart' show CupertinoPageRoute;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +27,7 @@ class _FailureScreenState extends State<FailureScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(I18n.of(context).failure),
+        title: Text(tr('failure')),
         actions: <Widget>[
           IconButton(
             onPressed: () => Navigator.of(context).pushReplacement(
@@ -36,7 +36,7 @@ class _FailureScreenState extends State<FailureScreen> {
               ),
             ),
             icon: const Icon(Icons.swap_horiz),
-            tooltip: I18n.of(context).tasksNav,
+            tooltip: tr('tasksNav'),
           ),
           IconButton(
             icon: const Icon(Icons.calendar_today),
@@ -46,7 +46,7 @@ class _FailureScreenState extends State<FailureScreen> {
       ),
       body: _failedTasks.isEmpty
           ? Center(
-            child: Text(I18n.of(context).noTasks),
+            child: Text(tr('noTasks')),
           )
           : ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),

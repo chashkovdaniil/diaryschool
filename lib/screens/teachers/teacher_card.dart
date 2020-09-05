@@ -1,8 +1,8 @@
-import 'package:diaryschool/generated/i18n.dart';
 import 'package:diaryschool/models/teacher.dart';
 import 'package:diaryschool/provider/TeacherProvider.dart';
 import 'package:diaryschool/screens/teachers/teacher_dialog.dart';
 import 'package:diaryschool/utilities/constants.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -41,7 +41,7 @@ class TeacherCard extends StatelessWidget {
         style: Theme.of(context).textTheme.subtitle1,
       ),
       subtitle: Text(
-        I18n.of(context).edit.toUpperCase(),
+        tr('edit').toUpperCase(),
         style: Theme.of(context).textTheme.button,
       ),
       trailing: IconButton(

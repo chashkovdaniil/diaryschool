@@ -19,23 +19,23 @@ dependencies:
   flutter_local_notifications: ^1.4.4+3
   url_launcher: ^5.4.1
   flutter_svg: ^0.18.0
-  google_fonts: ^1.1.0
 
   ext_storage: ^1.0.3
   permission_handler: ^5.0.0+hotfix.3
 
   path_provider: ^1.6.5
-  
+
   equatable: ^1.1.1
   flutter_bloc: ^4.0.0
-  
+
   hive: ^1.4.1+1
   hive_flutter: ^0.3.0+2
 
   carousel_slider: ^2.2.1
-  
+
   # Firebase
   firebase_core: "0.5.0"
+  easy_localization: ^2.3.3
 
 dev_dependencies:
   flutter_test:
@@ -54,5 +54,13 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
+    - assets/svg/
+    - assets/translations/
     - res/images/ic_launcher.png
     - res/images/logo1024x512.png
+  fonts:
+    - family: Raleway
+      fonts:
+        - asset: assets/fonts/Raleway-VariableFont_wght.ttf
+        - asset: assets/fonts/Raleway-Italic-VariableFont_wght.ttf
+          style: italic

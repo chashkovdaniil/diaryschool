@@ -28,9 +28,43 @@ BorderRadius kBorderRadius = BorderRadius.circular(15);
 BorderRadius kBorderRadiusButton = BorderRadius.circular(25);
 const kDefaultPadding = 20.0;
 const List<BoxShadow> kDefaultShadow = [
-   BoxShadow(
-    offset: Offset(1, 3),
+  BoxShadow(
+    offset: Offset(2, 2),
     color: Color.fromRGBO(0, 0, 0, 0.25),
-    blurRadius: 4,
+    blurRadius: 10,
   ),
+];
+
+const List<String> daysOfWeek = [
+  'monday',
+  'tuesday',
+  'wednesday',
+  'thursday',
+  'friday',
+  'saturday',
+  'sunday'
+];
+const List<String> shortDaysOfWeek = [
+  'mon',
+  'tue',
+  'wed',
+  'thu',
+  'fri',
+  'sat',
+  'sun'
+];
+
+const List<String> months = [
+  'january',
+  'february',
+  'march',
+  'april',
+  'may',
+  'june',
+  'July',
+  'august',
+  'september',
+  'october',
+  'november',
+  'december',
 ];

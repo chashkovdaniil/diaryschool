@@ -1,8 +1,9 @@
 import 'package:diaryschool/common_widgets/select_teacher_dialog.dart';
-import 'package:diaryschool/generated/i18n.dart';
 import 'package:diaryschool/models/subject.dart';
+import 'package:diaryschool/models/teacher.dart';
 import 'package:diaryschool/provider/SubjectProvider.dart';
 import 'package:diaryschool/provider/TeacherProvider.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,8 +24,10 @@ class _SubjectDialogState extends State<SubjectDialog> {
   final _formKey = GlobalKey<FormState>(debugLabel: 'subjectDialog');
   @override
   Widget build(BuildContext context) {
+    List<Teacher> teachers = context.watch<TeacherProvider>().values;
+
     return AlertDialog(
-      title: Text(I18n.of(context).subject),
+      title: Text(tr('subject')),
       content: Form(
         key: _formKey,
         child: ListView(
@@ -32,17 +35,17 @@ class _SubjectDialogState extends State<SubjectDialog> {
           children: <Widget>[
             TextFormField(
               validator: (value) {
-                return value.isEmpty ? I18n.of(context).enterTitle : null;
+                return value.isEmpty ? tr('enterTitle') : null;
               },
               initialValue: widget.subject.title,
-              decoration: InputDecoration(hintText: I18n.of(context).subject),
+              decoration: InputDecoration(hintText: tr('subject')),
               onChanged: (value) {
                 widget.subject.title = value;
               },
             ),
             TextFormField(
               initialValue: widget.subject.map,
-              decoration: InputDecoration(hintText: I18n.of(context).cabinet),
+              decoration: InputDecoration(hintText: tr('cabinet')),
               onChanged: (value) {
                 setState(() {
                   widget.subject.map = value;
@@ -51,7 +54,7 @@ class _SubjectDialogState extends State<SubjectDialog> {
             ),
             FormField<int>(
               validator: (int value) {
-                return value == null ? I18n.of(context).enterTeacher : null;
+                return value == null ? tr('enterTeacher') : null;
               },
               initialValue: widget.subject.teacher,
               builder: (state) {
@@ -88,10 +91,8 @@ class _SubjectDialogState extends State<SubjectDialog> {
                         ),
                         child: Text(
                           widget.subject.teacher == null
-                              ? I18n.of(context).teacher
-                              : Provider.of<TeacherProvider>(context)
-                                  .teacher(widget.subject.teacher)
-                                  .toString(),
+                              ? tr('teacher')
+                              : teachers[widget.subject.teacher].toString(),
                           overflow: TextOverflow.fade,
                           // style: Theme.of(context).textTheme,
                         ),
@@ -119,7 +120,7 @@ class _SubjectDialogState extends State<SubjectDialog> {
       actions: <Widget>[
         FlatButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(I18n.of(context).cancel.toUpperCase()),
+          child: Text(tr('cancel').toUpperCase()),
         ),
         FlatButton(
           onPressed: () {
@@ -133,7 +134,7 @@ class _SubjectDialogState extends State<SubjectDialog> {
               return Navigator.of(context).pop();
             }
           },
-          child: Text(I18n.of(context).save.toUpperCase()),
+          child: Text(tr('save').toUpperCase()),
         ),
       ],
     );

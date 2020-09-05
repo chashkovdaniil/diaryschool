@@ -1,11 +1,12 @@
 import 'dart:ui';
 
 import 'package:diaryschool/common_widgets/task_bottom_sheet.dart';
-import 'package:diaryschool/generated/i18n.dart';
 import 'package:diaryschool/models/homework.dart';
+import 'package:diaryschool/models/subject.dart';
 import 'package:diaryschool/provider/HomeworkProvider.dart';
 import 'package:diaryschool/provider/SubjectProvider.dart';
 import 'package:diaryschool/utilities/constants.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -35,7 +36,9 @@ class _CardWidgetState extends State<CardWidget> {
     bool showRoute = widget.filter['route'];
     bool showDeadline = widget.filter['deadline'];
 
-    Size size = MediaQuery.of(context).size;
+    TextTheme textTheme = Theme.of(context).textTheme;
+    Subject subject =
+        Provider.of<SubjectProvider>(context).subject(widget.homework.subject);
 
     return InkWell(
       onTap: () => showModalBottomSheet(
@@ -52,8 +55,6 @@ class _CardWidgetState extends State<CardWidget> {
           context,
           listen: false,
         ).put(widget.homework);
-        // setState(() {});
-        // TODO: Показать диалог об ошибке, если есть
       },
       borderRadius: kBorderRadius,
       child: Ink(
@@ -68,144 +69,101 @@ class _CardWidgetState extends State<CardWidget> {
             children: [
               Expanded(
                 child: Container(
-                  width: (widget.homework.isDone)
-                      ? size.width - kDefaultPadding - 40
-                      : size.width - kDefaultPadding,
+                  padding: const EdgeInsets.only(
+                    left: 15,
+                    right: 15,
+                    top: 5,
+                    bottom: 15,
+                  ),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      ListTile(
-                        title: Text(
-                          Provider.of<SubjectProvider>(context)
-                              .subject(widget.homework.subject)
-                              .title, // widget.homework.subject делаем запрос в базу, чтобы получить название предмета
-                          maxLines: 1,
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline5
-                              .copyWith(color: Theme.of(context).primaryColor),
-                        ),
-                        trailing: widget.homework.grade == null
-                            ? null
-                            : Text(
-                                '${widget.homework.grade}',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline4
-                                    .copyWith(
-                                        color: Theme.of(context).primaryColor),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            subject
+                                .title, // widget.homework.subject делаем запрос в базу, чтобы получить название предмета
+                            maxLines: 1,
+                            style: textTheme.headline6.copyWith(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                          if (widget.homework.grade != null)
+                            Text(
+                              '${widget.homework.grade}',
+                              style: textTheme.headline4.copyWith(
+                                color: Theme.of(context).primaryColor,
                               ),
-                        subtitle: Text(
-                          widget.homework.content,
-                          maxLines: 5,
-                          softWrap: false,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.bodyText2,
-                        ),
+                            )
+                        ],
                       ),
-                      Container(
-                        padding: EdgeInsets.only(
-                          left: 10,
-                          right: 10,
-                          bottom: showTeacher ||
-                                  showRoute ||
-                                  (widget.homework.deadline != null &&
-                                      widget.homework.isDone == false &&
-                                      widget.homework.content != null &&
-                                      showDeadline)
-                              ? 15
-                              : 0,
-                        ),
-                        child: Column(
-                          children: <Widget>[
-                            showTeacher ||
-                                    showRoute ||
-                                    (widget.homework.deadline != null &&
-                                        widget.homework.isDone == false &&
-                                        widget.homework.content != null &&
-                                        showDeadline)
-                                ? Column(
-                                    children: <Widget>[
-                                      const Divider(height: 1),
-                                      const SizedBox(height: 15)
-                                    ],
-                                  )
-                                : const SizedBox.shrink(),
-                            showTeacher
-                                ? _buildCardInfoItem(
-                                    Icons.person,
-                                    widget.teacher,
-                                  )
-                                : const SizedBox.shrink(),
-                            showRoute
-                                ? _buildCardInfoItem(
-                                    Icons.place,
-                                    Provider.of<SubjectProvider>(context)
-                                        .subject(widget.homework.subject)
-                                        .map,
-                                  )
-                                : const SizedBox.shrink(),
-                            widget.homework.deadline != null &&
-                                    widget.homework.isDone == false &&
-                                    widget.homework.content != null &&
-                                    showDeadline
-                                ? _buildCardInfoItem(
-                                    Icons.timer,
-                                    getDeadline(widget.homework.deadline),
-                                  )
-                                : const SizedBox.shrink(),
+                      Text(
+                        widget.homework.content,
+                        maxLines: 5,
+                        softWrap: true,
+                        overflow: TextOverflow.ellipsis,
+                        style: textTheme.bodyText2,
+                      ),
+                      Column(
+                        children: <Widget>[
+                          if (showTeacher ||
+                              showRoute ||
+                              (widget.homework.deadline != null &&
+                                  widget.homework.isDone == false &&
+                                  showDeadline)) ...[
+                            const SizedBox(height: 10),
+                            const Divider(height: 1),
+                            const SizedBox(height: 10)
                           ],
-                        ),
+                          if (showTeacher)
+                            _buildCardInfoItem(
+                              Icons.person,
+                              widget.teacher,
+                            ),
+                          if (showRoute)
+                            _buildCardInfoItem(
+                              Icons.place,
+                              subject.map,
+                            ),
+                          if (widget.homework.deadline != null &&
+                              widget.homework.isDone == false &&
+                              showDeadline)
+                            _buildCardInfoItem(
+                              Icons.timer,
+                              getDeadline(widget.homework.deadline),
+                            ),
+                        ],
                       ),
                     ],
                   ),
                 ),
               ),
-              Container(
-                width: 40,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  borderRadius: kBorderRadius,
-                ),
-                child: Center(
-                  child: RotatedBox(
-                    quarterTurns: -1,
-                    child: Text(
-                      'Готово',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w200,
-                        color: Theme.of(context).colorScheme.background,
+              if (widget.homework.isDone)
+                Container(
+                  width: 40,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    borderRadius: const BorderRadius.only(
+                      topRight: Radius.circular(15),
+                      bottomRight: Radius.circular(15),
+                    ),
+                    boxShadow: kDefaultShadow,
+                  ),
+                  child: Center(
+                    child: RotatedBox(
+                      quarterTurns: -1,
+                      child: Text(
+                        tr('done'),
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w200,
+                          color: Theme.of(context).colorScheme.background,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              // if (widget.homework.isDone)
-              //   Positioned(
-              //     right: 0,
-              //     bottom: 0,
-              //     top: 0,
-              //     child: Container(
-              //       width: 40,
-              //       decoration: BoxDecoration(
-              //         color: Theme.of(context).primaryColor,
-              //         borderRadius: kBorderRadius,
-              //       ),
-              //       child: Center(
-              //         child: RotatedBox(
-              //           quarterTurns: -1,
-              //           child: Text(
-              //             'Готово',
-              //             style: TextStyle(
-              //               fontSize: 18,
-              //               fontWeight: FontWeight.w200,
-              //               color: Theme.of(context).colorScheme.background,
-              //             ),
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //   )
             ],
           ),
         ),
@@ -240,14 +198,14 @@ class _CardWidgetState extends State<CardWidget> {
     DateTime _currentDate = DateTime.now();
     Duration _rest = deadline.difference(_currentDate);
 
+    if (_rest.inDays < 0) return tr('expired');
     if (_rest.inDays == 0) {
       DateTime added =
           _currentDate.add(Duration(milliseconds: _rest.inMilliseconds + 1));
 
-      if (added.day == _currentDate.day) return I18n.of(context).today;
-      return I18n.of(context).tomorrow;
+      if (added.day == _currentDate.day) return tr('today');
+      return tr('tomorrow');
     }
-    if (_rest.inDays < 0) return I18n.of(context).expired;
-    return '${I18n.of(context).left}: ${_rest.inDays} ${I18n.of(context).days}';
+    return '${tr('left')}: ${_rest.inDays} ${tr('days')}';
   }
 }

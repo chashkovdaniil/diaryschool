@@ -1,7 +1,7 @@
-import 'package:diaryschool/generated/i18n.dart';
 import 'package:diaryschool/models/note.dart';
 import 'package:diaryschool/provider/NotesProvider.dart';
 import 'package:diaryschool/utilities/constants.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:diaryschool/utilities/Extensions.dart';
@@ -22,7 +22,7 @@ class _NoteScreenState extends State<NoteScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(I18n.of(context).note),
+        title: Text(tr('note')),
       ),
       body: Form(
         key: _formKey,
@@ -33,7 +33,7 @@ class _NoteScreenState extends State<NoteScreen> {
                 DateTime newDate = await showDatePicker(
                   context: context,
                   initialDate: DateTime.now(),
-                  firstDate: DateTime(2020),
+                  firstDate: DateTime(2010),
                   lastDate: DateTime(2030),
                 );
                 widget.note.date =
@@ -44,7 +44,7 @@ class _NoteScreenState extends State<NoteScreen> {
                 child: Row(
                   children: [
                     Text(
-                      I18n.of(context).date + ': ',
+                      tr('date') + ': ',
                       style: Theme.of(context).textTheme.subtitle1.copyWith(
                             color: Theme.of(context).primaryColor,
                           ),
@@ -66,14 +66,14 @@ class _NoteScreenState extends State<NoteScreen> {
                   widget.note.title = val;
                 },
                 validator: (val) {
-                  return val.isEmpty ? I18n.of(context).fillField : null;
+                  return val.isEmpty ? tr('fillField') : null;
                 },
                 maxLines: 1,
                 maxLength: 30,
                 decoration: InputDecoration(
                   isDense: true,
                   counter: const SizedBox.shrink(),
-                  hintText: I18n.of(context).enterTitle,
+                  hintText: tr('enterTitle'),
                   enabledBorder: InputBorder.none,
                   focusedBorder: InputBorder.none,
                   border: InputBorder.none,
@@ -92,10 +92,10 @@ class _NoteScreenState extends State<NoteScreen> {
                     widget.note.content = val;
                   },
                   validator: (val) {
-                    return val.isEmpty ? I18n.of(context).fillField : null;
+                    return val.isEmpty ? tr('fillField') : null;
                   },
                   decoration: InputDecoration(
-                    hintText: I18n.of(context).enterText,
+                    hintText: tr('enterText'),
                     enabledBorder: InputBorder.none,
                     focusedBorder: InputBorder.none,
                     border: InputBorder.none,
@@ -124,7 +124,7 @@ class _NoteScreenState extends State<NoteScreen> {
                         }
                       },
                       child: Text(
-                        I18n.of(context).save,
+                        tr('save'),
                         style: Theme.of(context).textTheme.button.copyWith(
                               color: Theme.of(context).colorScheme.surface,
                             ),

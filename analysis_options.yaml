@@ -44,7 +44,7 @@ linter:
     unnecessary_lambdas: true
     prefer_if_null_operators: true
     prefer_initializing_formals: true
-    type_annotate_public_apis: true
+    type_annotate_public_apis: false #sasffffffffffffffffffffffffff
     avoid_equals_and_hash_code_on_mutable_classes: true
     prefer_mixin: true
     unnecessary_const: true

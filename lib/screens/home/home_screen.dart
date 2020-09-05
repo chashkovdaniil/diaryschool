@@ -1,10 +1,10 @@
-import 'package:diaryschool/generated/i18n.dart';
 import 'package:diaryschool/screens/home/widgets/menu_tile.dart';
 import 'package:diaryschool/screens/notes/notes_screen.dart';
 import 'package:diaryschool/screens/settings/settings_screen.dart';
 import 'package:diaryschool/screens/subjects/subjects_screen.dart';
 import 'package:diaryschool/screens/teachers/teachers_screen.dart';
 import 'package:diaryschool/utilities/constants.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +15,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(I18n.of(context).home),
+        title: Text(tr('home')),
         actions: <Widget>[
           // TODO: сделать поиск
           // IconButton(
@@ -32,10 +32,7 @@ class HomeScreen extends StatelessWidget {
           //   },
           // ),
           IconButton(
-            icon: const Icon(
-              Icons.sort,
-              textDirection: TextDirection.rtl,
-            ),
+            icon: const Icon(Icons.settings),
             onPressed: () {
               return Navigator.of(context).push(
                 CupertinoPageRoute(
@@ -75,7 +72,7 @@ class HomeScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(kDefaultPadding - 5),
             child: Text(
-              I18n.of(context).menu,
+              tr('menu'),
               style: Theme.of(context).textTheme.overline,
             ),
           ),
@@ -95,7 +92,7 @@ class HomeScreen extends StatelessWidget {
                   TeachersScreen.id,
                 ),
                 icon: Icons.people,
-                title: I18n.of(context).teachers,
+                title: tr('teachers'),
               ),
               MenuTile(
                 onTap: () => Navigator.pushNamed(
@@ -103,7 +100,7 @@ class HomeScreen extends StatelessWidget {
                   SubjectsScreen.id,
                 ),
                 icon: Icons.list,
-                title: I18n.of(context).subjects,
+                title: tr('subjects'),
               ),
               MenuTile(
                 onTap: () => Navigator.push(
@@ -113,7 +110,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 icon: Icons.note,
-                title: I18n.of(context).notes,
+                title: tr('notes'),
               ),
               // MenuTile(
               // onTap: () => Navigator.pushNamed(

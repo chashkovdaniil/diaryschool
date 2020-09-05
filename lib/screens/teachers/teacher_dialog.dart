@@ -1,6 +1,6 @@
-import 'package:diaryschool/generated/i18n.dart';
 import 'package:diaryschool/models/teacher.dart';
 import 'package:diaryschool/provider/TeacherProvider.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,7 +23,7 @@ class _TeacherDialogState extends State<TeacherDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(I18n.of(context).teacher),
+      title: Text(tr('teacher')),
       content: Form(
         key: _formKey,
         child: ListView(
@@ -31,19 +31,19 @@ class _TeacherDialogState extends State<TeacherDialog> {
           children: <Widget>[
             TextFormField(
               initialValue: widget.teacher.name,
-              decoration: InputDecoration(hintText: I18n.of(context).firstName),
+              decoration: InputDecoration(hintText: tr('firstName')),
               onChanged: (value) {
                 setState(() {
                   widget.teacher.name = value;
                 });
               },
               validator: (value) {
-                return (value.isEmpty) ? I18n.of(context).fillField : null;
+                return (value.isEmpty) ? tr('fillField') : null;
               },
             ),
             TextFormField(
               initialValue: widget.teacher.surname,
-              decoration: InputDecoration(hintText: I18n.of(context).lastName),
+              decoration: InputDecoration(hintText: tr('lastName')),
               onChanged: (value) {
                 setState(() {
                   widget.teacher.surname = value;
@@ -53,7 +53,7 @@ class _TeacherDialogState extends State<TeacherDialog> {
             TextFormField(
               initialValue: widget.teacher.middleName,
               decoration:
-                  InputDecoration(hintText: I18n.of(context).middleName),
+                  InputDecoration(hintText: tr('middleName')),
               onChanged: (value) {
                 setState(() {
                   widget.teacher.middleName = value;
@@ -61,7 +61,7 @@ class _TeacherDialogState extends State<TeacherDialog> {
               },
               validator: (value) {
                 if (value.isEmpty) {
-                  return I18n.of(context).fillField;
+                  return tr('fillField');
                 }
                 return null;
               },
@@ -69,7 +69,7 @@ class _TeacherDialogState extends State<TeacherDialog> {
             TextFormField(
               initialValue: widget.teacher.email,
               keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(hintText: I18n.of(context).email),
+              decoration: InputDecoration(hintText: tr('email')),
               onChanged: (value) {
                 setState(() {
                   widget.teacher.email = value;
@@ -81,7 +81,7 @@ class _TeacherDialogState extends State<TeacherDialog> {
                   ? ''
                   : widget.teacher.phone.toString(),
               keyboardType: TextInputType.phone,
-              decoration: InputDecoration(hintText: I18n.of(context).phone),
+              decoration: InputDecoration(hintText: tr('phone')),
               onChanged: (value) {
                 setState(() {
                   widget.teacher.phone = int.parse(value);
@@ -94,7 +94,7 @@ class _TeacherDialogState extends State<TeacherDialog> {
       actions: <Widget>[
         FlatButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(I18n.of(context).cancel.toUpperCase()),
+          child: Text(tr('cancel').toUpperCase()),
         ),
         FlatButton(
           onPressed: () {
@@ -104,7 +104,7 @@ class _TeacherDialogState extends State<TeacherDialog> {
               return Navigator.of(context).pop();
             }
           },
-          child: Text(I18n.of(context).save.toUpperCase()),
+          child: Text(tr('save').toUpperCase()),
         ),
       ],
     );

@@ -23,4 +23,20 @@ class TimetableRow {
     this.start,
     this.end,
   });
+
+  TimetableRow.fromMap(Map<String, dynamic> map) {
+    uid = map['uid'] as int;
+    subject = map['subject'] as int;
+    dayOfWeek = map['dayOfWeek'] as int;
+    start = map['start'] as TimeOfDay;
+    end = map['end'] as TimeOfDay;
+  }
+
+  Map<String, dynamic> toMap() => {
+        'uid': uid,
+        'subject': subject,
+        'dayOfWeek': dayOfWeek,
+        'start': start,
+        'end': end,
+      };
 }

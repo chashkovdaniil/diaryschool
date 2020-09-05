@@ -1,9 +1,9 @@
-import 'package:diaryschool/generated/i18n.dart';
 import 'package:diaryschool/models/homework.dart';
 import 'package:diaryschool/provider/HomeworkProvider.dart';
 import 'package:diaryschool/provider/SubjectProvider.dart';
 import 'package:diaryschool/screens/task/task_screen.dart';
 import 'package:diaryschool/utilities/constants.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:diaryschool/utilities/TextStyles.dart';
@@ -80,21 +80,21 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                     maxLines: 5,
                     initialValue: _homework.content,
                     decoration: InputDecoration(
-                      labelText: I18n.of(context).enterTask,
+                      labelText: tr('enterTask'),
                     ),
                     onChanged: (val) {
                       _homework.content = val;
                     },
                     validator: (value) {
                       if (value.isEmpty) {
-                        return I18n.of(context).fillField;
+                        return tr('fillField');
                       }
                       return null;
                     },
                     style: Theme.of(context).textTheme.subtitle2,
                   ),
                   FlatButton(
-                    child: Text(I18n.of(context).save).button(),
+                    child: Text(tr('save')).button(),
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
                         context.read<HomeworkProvider>().put(_homework);

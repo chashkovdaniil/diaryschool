@@ -1,12 +1,12 @@
 import 'dart:async';
 
-import 'package:diaryschool/generated/i18n.dart';
 import 'package:diaryschool/provider/SettingsProvider.dart';
 import 'package:diaryschool/screens/grades/grades_screen.dart';
 import 'package:diaryschool/screens/home/home_screen.dart';
 import 'package:diaryschool/screens/tasks/tasks_screen.dart';
 import 'package:diaryschool/screens/timetable/timetable_page.dart';
 import 'package:diaryschool/utilities/constants.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -41,7 +41,7 @@ class _MainScreenState extends State<MainScreen> {
       WillPopScope(
         child: child,
         onWillPop: () async {
-          if (_navigatorKeys[index].currentState.canPop()) {
+          if (_navigatorKeys[index].currentState != null && _navigatorKeys[index].currentState.canPop()) {
             _navigatorKeys[index].currentState.pop();
             return false;
           }
@@ -113,22 +113,22 @@ class _MainScreenState extends State<MainScreen> {
     final List<BottomNavigationBarItem> bottomNavigationBarItems = [
       BottomNavigationBarItem(
         icon: const Icon(Icons.home),
-        title: Text(I18n.of(context).homeNav),
+        title: Text(tr('homeNav')),
       ),
       BottomNavigationBarItem(
         icon: const Icon(
           Icons.trending_up,
           size: 24,
         ),
-        title: Text(I18n.of(context).gradesNav),
+        title: Text(tr('gradesNav')),
       ),
       BottomNavigationBarItem(
         icon: const Icon(Icons.format_list_bulleted),
-        title: Text(I18n.of(context).tasksNav),
+        title: Text(tr('tasksNav')),
       ),
       BottomNavigationBarItem(
         icon: const Icon(Icons.calendar_today),
-        title: Text(I18n.of(context).timetableNav),
+        title: Text(tr('timetableNav')),
       ),
     ];
     return StreamProvider(
@@ -143,7 +143,7 @@ class _MainScreenState extends State<MainScreen> {
             ),
           ),
           bottomNavigationBar: BottomNavigationBar(
-            showSelectedLabels: true,
+            showSelectedLabels: false,
             showUnselectedLabels: false,
             elevation: 0,
             type: BottomNavigationBarType.fixed,

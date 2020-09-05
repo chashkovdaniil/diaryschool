@@ -1,10 +1,10 @@
 import 'package:diaryschool/common_widgets/divider.dart';
-import 'package:diaryschool/generated/i18n.dart';
 import 'package:diaryschool/models/teacher.dart';
 import 'package:diaryschool/provider/TeacherProvider.dart';
 import 'package:diaryschool/screens/teachers/teacher_card.dart';
 import 'package:diaryschool/screens/teachers/teacher_dialog.dart';
 import 'package:diaryschool/utilities/constants.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
@@ -26,7 +26,7 @@ class _TeachersScreenState extends State<TeachersScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(I18n.of(context).teachers),
+        title: Text(tr('teachers')),
       ),
       body: ListView(
         children: <Widget>[
@@ -46,7 +46,7 @@ class _TeachersScreenState extends State<TeachersScreen> {
                 color: Theme.of(context).primaryColor,
               ),
               label: Text(
-                I18n.of(context).add.toUpperCase(),
+                tr('add').toUpperCase(),
                 style: Theme.of(context).textTheme.button,
               ),
             ),
@@ -56,7 +56,7 @@ class _TeachersScreenState extends State<TeachersScreen> {
             builder: (context, provider, child) {
               if (provider.values.isEmpty) {
                 return Center(
-                  child: Text(I18n.of(context).noTeachers),
+                  child: Text(tr('noTeachers')),
                 );
               }
               return ListView.separated(

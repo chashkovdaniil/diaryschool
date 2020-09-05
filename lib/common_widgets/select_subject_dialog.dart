@@ -1,7 +1,7 @@
-import 'package:diaryschool/generated/i18n.dart';
 import 'package:diaryschool/models/subject.dart';
 import 'package:diaryschool/provider/SubjectProvider.dart';
 import 'package:diaryschool/screens/subjects/subject_dialog.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:diaryschool/utilities/TextStyles.dart';
@@ -20,7 +20,7 @@ class SelectSubjectDialog extends StatelessWidget {
       title: Row(
         children: <Widget>[
           Text(
-            I18n.of(context).selectSubject,
+            tr('selectSubject'),
             style: Theme.of(context)
                 .textTheme
                 .subtitle1
@@ -41,7 +41,7 @@ class SelectSubjectDialog extends StatelessWidget {
         ],
       ),
       content: _list.isEmpty
-          ? Text(I18n.of(context).emptyList)
+          ? Text(tr('emptyList'))
           : ListView.builder(
               shrinkWrap: true,
               itemBuilder: (context, index) => ListTile(
@@ -57,7 +57,7 @@ class SelectSubjectDialog extends StatelessWidget {
       actions: <Widget>[
         FlatButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(I18n.of(context).close).button(),
+          child: Text(tr('close')).button(),
         ),
       ],
     );

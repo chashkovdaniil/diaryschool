@@ -1,4 +1,3 @@
-import 'package:diaryschool/generated/i18n.dart';
 import 'package:diaryschool/models/homework.dart';
 import 'package:diaryschool/models/subject.dart';
 import 'package:diaryschool/provider/HomeworkProvider.dart';
@@ -6,6 +5,7 @@ import 'package:diaryschool/provider/SettingsProvider.dart';
 import 'package:diaryschool/provider/SubjectProvider.dart';
 import 'package:diaryschool/screens/grades/widgets/card_grades.dart';
 import 'package:diaryschool/utilities/constants.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
@@ -69,7 +69,7 @@ class _GradesScreenState extends State<GradesScreen> {
     }).toList();
     return Scaffold(
       appBar: AppBar(
-        title: Text(I18n.of(context).gradesNav),
+        title: Text(tr('gradesNav')),
         actions: <Widget>[
           IconButton(
             key: calendarKey,
@@ -103,7 +103,7 @@ class _GradesScreenState extends State<GradesScreen> {
               ),
             ),
           ),
-          if (subjects.isEmpty) Center(child: Text(I18n.of(context).noGrades)),
+          if (subjects.isEmpty) Center(child: Text(tr('noGrades'))),
           ...subjects.map((e) {
             return CardGrades(
               subject: e.title,
@@ -133,7 +133,7 @@ class _GradesScreenState extends State<GradesScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    I18n.of(context).tipGrades1,
+                    tr('tipGrades1'),
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
@@ -144,7 +144,7 @@ class _GradesScreenState extends State<GradesScreen> {
                       Overlay.of(context).insert(_overlayEntry);
                     },
                     child: Text(
-                      I18n.of(context).next,
+                      tr('next'),
                       style: Theme.of(context).textTheme.button,
                     ),
                   ),
@@ -184,7 +184,7 @@ class _GradesScreenState extends State<GradesScreen> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                    I18n.of(context).tipGrades2,
+                    tr('tipGrades2'),
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.subtitle1,
                       ),
@@ -197,7 +197,7 @@ class _GradesScreenState extends State<GradesScreen> {
                           _overlayEntry.remove();
                         },
                         child: Text(
-                          I18n.of(context).close,
+                          tr('close'),
                           style: Theme.of(context).textTheme.button,
                         ),
                       ),

@@ -1,4 +1,4 @@
-import 'package:diaryschool/generated/i18n.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class CardGrades extends StatelessWidget {
@@ -19,7 +19,7 @@ class CardGrades extends StatelessWidget {
             style: Theme.of(context).textTheme.headline6,
           ),
           subtitle: Text(
-            grades.isEmpty ? I18n.of(context).noGrades : grades.join(' '),
+            grades.isEmpty ? tr('noGrades') : grades.join(' '),
             style: Theme.of(context).textTheme.subtitle2,
           ),
           trailing: Text((score ?? 0).toStringAsFixed(1),

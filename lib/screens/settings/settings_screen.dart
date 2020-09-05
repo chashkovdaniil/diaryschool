@@ -1,6 +1,6 @@
-import 'package:diaryschool/generated/i18n.dart';
 import 'package:diaryschool/provider/SettingsProvider.dart';
 import 'package:diaryschool/utilities/constants.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_svg/svg.dart';
@@ -15,10 +15,10 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<String> _pages = [
-      I18n.of(context).homeNav,
-      I18n.of(context).gradesNav,
-      I18n.of(context).tasksNav,
-      I18n.of(context).timetableNav,
+      tr('homeNav'),
+      tr('gradesNav'),
+      tr('tasksNav'),
+      tr('timetableNav'),
     ];
     final List<Map<String, String>> languages = [
       {
@@ -31,20 +31,24 @@ class SettingsScreen extends StatelessWidget {
       },
       {
         'locale': 'ru-UA',
-        'lang': 'Украинский',
+        'lang': 'Український',
+      },
+      {
+        'locale': 'ru-CV',
+        'lang': 'Чӑвашла',
       },
     ];
     TimeOfDay _timeNofitications =
         Provider.of<SettingsProvider>(context).timeNotification();
     return Scaffold(
       appBar: AppBar(
-        title: Text(I18n.of(context).settings),
+        title: Text(tr('settings')),
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
         children: <Widget>[
           ListTile(
-            title: Text(I18n.of(context).notification),
+            title: Text(tr('notification')),
             trailing: Switch(
               activeColor: kColorRed,
               value: Provider.of<SettingsProvider>(context).turnNotification(),
@@ -68,7 +72,7 @@ class SettingsScreen extends StatelessWidget {
           ),
           Provider.of<SettingsProvider>(context).turnNotification()
               ? ListTile(
-                  title: Text(I18n.of(context).timeNotification),
+                  title: Text(tr('timeNotification')),
                   trailing: Text(
                     '${Provider.of<SettingsProvider>(context).timeNotification().hour}'
                     ':'
@@ -100,68 +104,8 @@ class SettingsScreen extends StatelessWidget {
                   },
                 )
               : const SizedBox.shrink(),
-          // TODO: сделать смену цветовой гаммы
-          // ListTile(
-          //   onTap: () {
-          //     showDialog(
-          //       context: context,
-          //       builder: (ctx) => AlertDialog(
-          //         title: Text('Тема'),
-          //         content: GridView.count(
-          //           shrinkWrap: true,
-          //           crossAxisCount: 5,
-          //           crossAxisSpacing: 10,
-          //           mainAxisSpacing: 10,
-          //           children: <Widget>[
-          //             ColorTile(color: Colors.red),
-          //             ColorTile(color: Colors.green),
-          //             ColorTile(color: Colors.grey),
-          //             ColorTile(color: Colors.indigo),
-          //             ColorTile(color: Colors.yellow),
-          //             ColorTile(color: Colors.lime),
-          //             ColorTile(color: Colors.orange),
-          //             ColorTile(color: Colors.pink),
-          //             ColorTile(color: Colors.teal),
-          //             ColorTile(color: Colors.black),
-          //             ColorTile(color: Colors.cyan),
-          //             ColorTile(color: Colors.blue),
-          //             ColorTile(color: Colors.green),
-          //             ColorTile(color: Colors.green),
-          //             ColorTile(color: Colors.green),
-          //             ColorTile(color: Colors.green),
-          //             ColorTile(color: Colors.green),
-          //             ColorTile(color: Colors.green),
-          //           ],
-          //         ),
-          //         actions: <Widget>[
-          //           FlatButton(
-          //             child: Text('Закрыть'),
-          //             onPressed: () => Navigator.of(context).pop(),
-          //           ),
-          //         ],
-          //       ),
-          //     );
-          //   },
-          //   title: Text('Сменить тему'),
-          //   trailing: Container(
-          //     width: 30,
-          //     height: 30,
-          //     decoration: BoxDecoration(
-          //       color: Theme.of(context).primaryColor,
-          //       borderRadius: kBorderRadius,
-          //     ),
-          //   ),
-          // ),
-          // TODO: сделать смену режима
-          // ListTile(
-          //   title: Text('Темный режим'),
-          //   trailing: Container(
-          //     child: Text('Авто.'),
-          //   ),
-          // ),
-          // TODO: сделать смену начального экрана
           ListTile(
-            title: Text(I18n.of(context).startScreen),
+            title: Text(tr('startScreen')),
             trailing: Container(
               child: Text(
                 _pages[Provider.of<SettingsProvider>(context).getStartPage],
@@ -173,7 +117,7 @@ class SettingsScreen extends StatelessWidget {
                 barrierDismissible: false,
                 builder: (context) {
                   return AlertDialog(
-                    title: Text(I18n.of(context).selectPage),
+                    title: Text(tr('selectPage')),
                     content: ListView.builder(
                       shrinkWrap: true,
                       itemCount: _pages.length,
@@ -194,22 +138,16 @@ class SettingsScreen extends StatelessWidget {
                   .setStartPage(_page);
             },
           ),
-          // TODO: сделать кнопку "Оставить отзыв"
-          // ListTile(
-          //   title: Text('Оставить отзыв'),
-          // ),
-          // TODO: сделать получение данных о приложении (версия, номер сборки)
           ListTile(
-            title: Text(I18n.of(context).language),
-            trailing: Text(Provider.of<SettingsProvider>(context)
-                .getLanguage
-                .languageCode),
+            title: Text(tr('language')),
+            trailing: Text(
+                Provider.of<SettingsProvider>(context).getLanguage.countryCode),
             onTap: () {
               showDialog(
                 context: context,
                 builder: (context) {
                   return AlertDialog(
-                    title: Text(I18n.of(context).language),
+                    title: Text(tr('language')),
                     content: ListView.builder(
                       shrinkWrap: true,
                       itemCount: languages.length,
@@ -226,7 +164,7 @@ class SettingsScreen extends StatelessWidget {
                               context,
                               listen: false,
                             ).setLanguage(_locale);
-                            I18n.locale = _locale;
+                            context.locale = _locale;
                             Navigator.of(context).pop();
                           },
                         );
@@ -234,7 +172,7 @@ class SettingsScreen extends StatelessWidget {
                     ),
                     actions: [
                       FlatButton(
-                        child: Text(I18n.of(context).close),
+                        child: Text(tr('close')),
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
@@ -246,7 +184,7 @@ class SettingsScreen extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text(I18n.of(context).aboutApp),
+            title: Text(tr('aboutApp')),
             onTap: () {
               showDialog(
                 context: context,
@@ -275,8 +213,8 @@ class SettingsScreen extends StatelessWidget {
     AndroidNotificationDetails androidPlatformChannelSpecifics =
         AndroidNotificationDetails(
       '0',
-      I18n.of(context).packingBag,
-      I18n.of(context).notification,
+      tr('packingBag'),
+      tr('notification'),
       enableVibration: true,
       enableLights: true,
       playSound: true,
@@ -289,10 +227,76 @@ class SettingsScreen extends StatelessWidget {
 
     await flutterLocalNotificationsPlugin.showDailyAtTime(
       0,
-      I18n.of(context).timePackBag,
-      I18n.of(context).packBag,
+      tr('timePackBag'),
+      tr('packBag'),
       time,
       platformChannelSpecifics,
     );
   }
 }
+
+// TODO: сделать смену цветовой гаммы
+// ListTile(
+//   onTap: () {
+//     showDialog(
+//       context: context,
+//       builder: (ctx) => AlertDialog(
+//         title: Text('Тема'),
+//         content: GridView.count(
+//           shrinkWrap: true,
+//           crossAxisCount: 5,
+//           crossAxisSpacing: 10,
+//           mainAxisSpacing: 10,
+//           children: <Widget>[
+//             ColorTile(color: Colors.red),
+//             ColorTile(color: Colors.green),
+//             ColorTile(color: Colors.grey),
+//             ColorTile(color: Colors.indigo),
+//             ColorTile(color: Colors.yellow),
+//             ColorTile(color: Colors.lime),
+//             ColorTile(color: Colors.orange),
+//             ColorTile(color: Colors.pink),
+//             ColorTile(color: Colors.teal),
+//             ColorTile(color: Colors.black),
+//             ColorTile(color: Colors.cyan),
+//             ColorTile(color: Colors.blue),
+//             ColorTile(color: Colors.green),
+//             ColorTile(color: Colors.green),
+//             ColorTile(color: Colors.green),
+//             ColorTile(color: Colors.green),
+//             ColorTile(color: Colors.green),
+//             ColorTile(color: Colors.green),
+//           ],
+//         ),
+//         actions: <Widget>[
+//           FlatButton(
+//             child: Text('Закрыть'),
+//             onPressed: () => Navigator.of(context).pop(),
+//           ),
+//         ],
+//       ),
+//     );
+//   },
+//   title: Text('Сменить тему'),
+//   trailing: Container(
+//     width: 30,
+//     height: 30,
+//     decoration: BoxDecoration(
+//       color: Theme.of(context).primaryColor,
+//       borderRadius: kBorderRadius,
+//     ),
+//   ),
+// ),
+// TODO: сделать смену режима
+// ListTile(
+//   title: Text('Темный режим'),
+//   trailing: Container(
+//     child: Text('Авто.'),
+//   ),
+// ),
+// TODO: сделать смену начального экрана
+// TODO: сделать кнопку "Оставить отзыв"
+// ListTile(
+//   title: Text('Оставить отзыв'),
+// ),
+// TODO: сделать получение данных о приложении (версия, номер сборки)
