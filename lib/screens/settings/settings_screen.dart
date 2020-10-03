@@ -40,6 +40,13 @@ class SettingsScreen extends StatelessWidget {
     ];
     TimeOfDay _timeNofitications =
         Provider.of<SettingsProvider>(context).timeNotification();
+
+    Locale getLanguage = Provider.of<SettingsProvider>(context).getLanguage;
+    int getStartPage = Provider.of<SettingsProvider>(context).getStartPage;
+    bool turnNotification =
+        Provider.of<SettingsProvider>(context).turnNotification();
+    TimeOfDay timeNotification =
+        Provider.of<SettingsProvider>(context).timeNotification();
     return Scaffold(
       appBar: AppBar(
         title: Text(tr('settings')),
@@ -51,7 +58,7 @@ class SettingsScreen extends StatelessWidget {
             title: Text(tr('notification')),
             trailing: Switch(
               activeColor: kColorRed,
-              value: Provider.of<SettingsProvider>(context).turnNotification(),
+              value: turnNotification,
               onChanged: (val) async {
                 if (val == true) {
                   await enableNotification(
@@ -70,13 +77,13 @@ class SettingsScreen extends StatelessWidget {
               },
             ),
           ),
-          Provider.of<SettingsProvider>(context).turnNotification()
+          turnNotification
               ? ListTile(
                   title: Text(tr('timeNotification')),
                   trailing: Text(
-                    '${Provider.of<SettingsProvider>(context).timeNotification().hour}'
+                    '${timeNotification.hour}'
                     ':'
-                    '${Provider.of<SettingsProvider>(context).timeNotification().minute}',
+                    '${timeNotification.minute}',
                   ),
                   onTap: () async {
                     TimeOfDay _time = await showTimePicker(
@@ -108,7 +115,7 @@ class SettingsScreen extends StatelessWidget {
             title: Text(tr('startScreen')),
             trailing: Container(
               child: Text(
-                _pages[Provider.of<SettingsProvider>(context).getStartPage],
+                _pages[getStartPage],
               ),
             ),
             onTap: () async {
@@ -140,8 +147,7 @@ class SettingsScreen extends StatelessWidget {
           ),
           ListTile(
             title: Text(tr('language')),
-            trailing: Text(
-                Provider.of<SettingsProvider>(context).getLanguage.countryCode),
+            trailing: Text(getLanguage.countryCode),
             onTap: () {
               showDialog(
                 context: context,

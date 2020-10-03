@@ -32,11 +32,9 @@ extension ButtonText on Text {
 }
 
 class Button extends StatelessWidget {
-  @override
-  Key key;
-  String title;
-  VoidCallback onTap;
-  Button(this.title, {this.key, this.onTap});
+  final String title;
+  final VoidCallback onTap;
+  Button(this.title, {Key key, this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

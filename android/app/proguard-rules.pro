@@ -14,6 +14,7 @@
 
 # For using GSON @Expose annotation
 -keepattributes *Annotation*
+-keepattributes EnclosingMethod
 
 # Gson specific classes
 -dontwarn sun.misc.**

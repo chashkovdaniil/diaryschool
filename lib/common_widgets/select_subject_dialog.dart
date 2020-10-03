@@ -15,16 +15,18 @@ class SelectSubjectDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+    TextTheme textTheme = theme.textTheme;
+
     List<Subject> _list = context.watch<SubjectProvider>().values;
     return AlertDialog(
       title: Row(
         children: <Widget>[
           Text(
             tr('selectSubject'),
-            style: Theme.of(context)
-                .textTheme
+            style: textTheme
                 .subtitle1
-                .copyWith(color: Theme.of(context).primaryColor),
+                .copyWith(color: theme.primaryColor),
           ),
           const Spacer(),
           IconButton(
@@ -36,7 +38,7 @@ class SelectSubjectDialog extends StatelessWidget {
                 },
               );
             },
-            icon: Icon(Icons.add, color: Theme.of(context).primaryColor),
+            icon: Icon(Icons.add, color: theme.primaryColor),
           ),
         ],
       ),
@@ -49,7 +51,7 @@ class SelectSubjectDialog extends StatelessWidget {
                 onTap: () => Navigator.of(context).pop(index),
                 title: Text(
                   _list[index].title,
-                  style: Theme.of(context).textTheme.subtitle1,
+                  style: textTheme.subtitle1,
                 ),
               ),
               itemCount: _list.length,

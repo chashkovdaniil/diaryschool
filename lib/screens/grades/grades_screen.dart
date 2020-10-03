@@ -46,6 +46,8 @@ class _GradesScreenState extends State<GradesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+    TextTheme textTheme = theme.textTheme;
     List<Homework> homeworks =
         context.watch<HomeworkProvider>().values.where((e) {
       if (e.date.millisecondsSinceEpoch <=
@@ -99,7 +101,7 @@ class _GradesScreenState extends State<GradesScreen> {
                 '${rangeDate[0].day}.${rangeDate[0].month}.${rangeDate[0].year}'
                 ' - '
                 '${rangeDate[1].day}.${rangeDate[1].month}.${rangeDate[1].year}',
-                style: Theme.of(context).textTheme.headline6,
+                style: textTheme.headline6,
               ),
             ),
           ),
@@ -119,6 +121,8 @@ class _GradesScreenState extends State<GradesScreen> {
   OverlayEntry firstRunStep1(BuildContext context) {
     return OverlayEntry(
       builder: (context) {
+    ThemeData theme = Theme.of(context);
+    TextTheme textTheme = theme.textTheme;
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 30),
           color: Colors.black.withOpacity(0.3),
@@ -126,7 +130,7 @@ class _GradesScreenState extends State<GradesScreen> {
             child: Container(
               padding: const EdgeInsets.fromLTRB(10, 15, 10, 10),
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface,
+                color: theme.colorScheme.surface,
                 borderRadius: BorderRadius.circular(15),
               ),
               child: Column(
@@ -135,7 +139,7 @@ class _GradesScreenState extends State<GradesScreen> {
                   Text(
                     tr('tipGrades1'),
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.subtitle1,
+                    style: textTheme.subtitle1,
                   ),
                   FlatButton(
                     onPressed: () {
@@ -145,7 +149,7 @@ class _GradesScreenState extends State<GradesScreen> {
                     },
                     child: Text(
                       tr('next'),
-                      style: Theme.of(context).textTheme.button,
+                      style: textTheme.button,
                     ),
                   ),
                 ],
@@ -184,7 +188,7 @@ class _GradesScreenState extends State<GradesScreen> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                    tr('tipGrades2'),
+                        tr('tipGrades2'),
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.subtitle1,
                       ),

@@ -37,7 +37,7 @@
   "deadline": "Юлашки вӑхӑт",
   "path": "Путь",
   "monday": "Тунти кун",
-  "thuesday": "Ытлари кун",
+  "tuesday": "Ытлари кун",
   "wednesday": "Юн кун",
   "thursday": "Кӗҫнерни кун",
   "friday": "Эрне кун",
@@ -56,7 +56,7 @@
   "april": "Ака",
   "may": "Ҫу",
   "june": "Ҫӗртме",
-  "jule": "Утӑ",
+  "july": "Утӑ",
   "august": "Ҫурла",
   "september": "Авӑн",
   "october": "Юпа",
@@ -103,5 +103,9 @@
   "failure": "Парӑмсем",
   "task": "Хушнӑ ӗҫ",
   "rate": "Хакла",
-  "doesNotExist": "Ҫук"
+  "doesNotExist": "Ҫук",
+  "taskСompleted": "Пурнӑҫланӑ",
+  "toRate": "хак Хур",
+  "setDeadline": "Дедлайн Кӑтартма.",
+  "errorTimeRange": "Вӑхӑт вӗҫленнӗ вӑхӑтран маларах пулмалла"
 }

@@ -17,6 +17,7 @@ class TeacherCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
     return ListTile(
       onTap: () {
         showDialog(
@@ -38,11 +39,11 @@ class TeacherCard extends StatelessWidget {
       ),
       title: Text(
         teacher.toString(),
-        style: Theme.of(context).textTheme.subtitle1,
+        style: theme.textTheme.subtitle1,
       ),
       subtitle: Text(
         tr('edit').toUpperCase(),
-        style: Theme.of(context).textTheme.button,
+        style: theme.textTheme.button,
       ),
       trailing: IconButton(
         icon: const Icon(Icons.delete_outline),

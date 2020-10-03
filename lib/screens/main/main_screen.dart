@@ -110,6 +110,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
     final List<BottomNavigationBarItem> bottomNavigationBarItems = [
       BottomNavigationBarItem(
         icon: const Icon(Icons.home),
@@ -148,7 +149,7 @@ class _MainScreenState extends State<MainScreen> {
             elevation: 0,
             type: BottomNavigationBarType.fixed,
             selectedItemColor: kPrimaryColor,
-            unselectedItemColor: Theme.of(context).colorScheme.onSurface,
+            unselectedItemColor: theme.colorScheme.onSurface,
             backgroundColor: Colors.transparent,
             currentIndex: Provider.of<int>(context),
             onTap: (int value) {

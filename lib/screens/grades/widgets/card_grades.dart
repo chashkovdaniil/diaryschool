@@ -11,43 +11,24 @@ class CardGrades extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+    TextTheme textTheme = theme.textTheme;
     return Column(
       children: <Widget>[
         ListTile(
           title: Text(
             subject,
-            style: Theme.of(context).textTheme.headline6,
+            style: textTheme.headline6,
           ),
           subtitle: Text(
             grades.isEmpty ? tr('noGrades') : grades.join(' '),
-            style: Theme.of(context).textTheme.subtitle2,
+            style: textTheme.subtitle2,
           ),
           trailing: Text((score ?? 0).toStringAsFixed(1),
-              style: Theme.of(context)
-                  .textTheme
+              style: textTheme
                   .headline6
-                  .copyWith(color: Theme.of(context).colorScheme.onBackground)),
+                  .copyWith(color: theme.colorScheme.onBackground)),
         ),
-        // Container(
-        //   padding: EdgeInsets.all(kDefaultPadding),
-        //   // margin: EdgeInsets.only(bottom: kDefaultPadding),
-        //   decoration: BoxDecoration(
-        //     color: Theme.of(context).colorScheme.surface,
-        //     // border: Border(bottom: BorderSide(width: 1, color: Colors.black12))
-        //     // borderRadius: kBorderRadius,
-        //     // boxShadow: kDefaultShadow,
-        //   ),
-        //   child: Column(
-        //     crossAxisAlignment: CrossAxisAlignment.start,
-        //     children: <Widget>[
-        //       Text(
-        //         subject,
-        //         style: Theme.of(context).textTheme.headline6,
-        //       ),
-        //       Text(grades.join(' ')),
-        //     ],
-        //   ),
-        // ),
         const Divider()
       ],
     );

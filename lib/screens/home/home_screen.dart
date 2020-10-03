@@ -13,6 +13,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(tr('home')),
@@ -45,35 +46,11 @@ class HomeScreen extends StatelessWidget {
       ),
       body: ListView(
         children: <Widget>[
-          // Padding(
-          //   padding: const EdgeInsets.only(
-          //     left: kDefaultPadding - 5,
-          //     bottom: kDefaultPadding - 5,
-          //   ),
-          //   child: Text(
-          //     'Дедлайны (5)',
-          //     style: Theme.of(context).textTheme.overline,
-          //   ),
-          // ),
-          // Container(
-          //   padding: const EdgeInsets.only(left: 15),
-          //   height: 150,
-          //   child: ListView.builder(
-          //       itemCount: 8,
-          //       scrollDirection: Axis.horizontal,
-          //       itemBuilder: (_, __) {
-          //         return DeadlineTile(
-          //           onTap: () {},
-          //           title: 'Математика',
-          //           deadline: DateTime(2020, 10, 10),
-          //         );
-          //       }),
-          // ),
           Padding(
             padding: const EdgeInsets.all(kDefaultPadding - 5),
             child: Text(
               tr('menu'),
-              style: Theme.of(context).textTheme.overline,
+              style: theme.textTheme.overline,
             ),
           ),
           GridView(

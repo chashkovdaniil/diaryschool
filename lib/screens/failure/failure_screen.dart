@@ -21,6 +21,8 @@ class _FailureScreenState extends State<FailureScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+    TextTheme textTheme = theme.textTheme;
     _failedTasks = context.watch<HomeworkProvider>().values.where((element) {
       return !element.isDone ? true : false;
     }).toList();
@@ -46,17 +48,17 @@ class _FailureScreenState extends State<FailureScreen> {
       ),
       body: _failedTasks.isEmpty
           ? Center(
-            child: Text(tr('noTasks')),
-          )
+              child: Text(tr('noTasks')),
+            )
           : ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+              padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding, vertical: kDefaultPadding / 2),
               itemCount: _failedTasks.length,
               itemBuilder: (context, index) {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 10.0),
                   child: Ink(
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.surface,
+                      color: theme.colorScheme.surface,
                       boxShadow: kDefaultShadow,
                       borderRadius: kBorderRadius,
                     ),
@@ -75,9 +77,9 @@ class _FailureScreenState extends State<FailureScreen> {
                         '${_failedTasks[index].date.month}.'
                         '${_failedTasks[index].date.year} - '
                         '${context.watch<SubjectProvider>().subject(_failedTasks[index].subject).title}',
-                        style: Theme.of(context).textTheme.subtitle1.copyWith(
-                              color: Theme.of(context).primaryColor,
-                            ),
+                        style: textTheme.subtitle1.copyWith(
+                          color: theme.primaryColor,
+                        ),
                       ),
                       subtitle: Text(
                         '${_failedTasks[index].content}',

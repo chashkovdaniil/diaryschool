@@ -11,6 +11,7 @@ class NotesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
     List<Note> _notes = context.watch<NotesProvider>().notes;
     return Scaffold(
       appBar: AppBar(
@@ -26,14 +27,14 @@ class NotesScreen extends StatelessWidget {
         },
         child: Icon(
           Icons.add,
-          color: Theme.of(context).colorScheme.onPrimary,
+          color: theme.colorScheme.onPrimary,
         ),
       ),
       body: _notes.isEmpty
           ? Center(
               child: Text(
                 tr('emptyList'),
-                style: Theme.of(context).textTheme.subtitle1,
+                style: theme.textTheme.subtitle1,
               ),
             )
           : ListView.builder(
@@ -56,8 +57,8 @@ class NotesScreen extends StatelessWidget {
                     },
                     title: Text(
                       _notes[index].title,
-                      style: Theme.of(context).textTheme.subtitle1.copyWith(
-                            color: Theme.of(context).primaryColor,
+                      style: theme.textTheme.subtitle1.copyWith(
+                            color: theme.primaryColor,
                           ),
                     ),
                     trailing: IconButton(

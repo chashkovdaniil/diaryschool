@@ -22,7 +22,6 @@ import 'package:diaryschool/utilities/constants.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -56,9 +55,9 @@ Future<void> main() async {
   final Box settings = await Hive.openBox('settings');
   InAppPurchaseConnection.enablePendingPurchases();
   runApp(EasyLocalization(
-    supportedLocales: [Locale('en', 'US'), Locale('ru', 'RU'), Locale('ru', 'UA'), Locale('ru', 'CV')],
+    supportedLocales: [const Locale('en', 'US'), const Locale('ru', 'RU'), const Locale('ru', 'UA'), const Locale('ru', 'CV')],
     path: 'assets/translations', 
-    fallbackLocale: Locale('en', 'US'),
+    fallbackLocale: const Locale('en', 'US'),
     child: DiaryschoolApp(
       teachers: teachers,
       subjects: subjects,
@@ -176,8 +175,8 @@ class DiaryschoolApp extends StatelessWidget {
               //   color: kColorRed.shade700,
               //   letterSpacing: 0.15,
               // ),
-              headline6: TextStyle(
-                color: const Color(0xffE0E0E0),
+              headline6: const TextStyle(
+                color: Color(0xffE0E0E0),
                 fontSize: 20,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 0.15,
@@ -188,30 +187,30 @@ class DiaryschoolApp extends StatelessWidget {
                 letterSpacing: 1.25,
                 fontWeight: FontWeight.w600,
               ),
-              overline: TextStyle(
+              overline: const TextStyle(
                 color: Color(0xffE0E0E0),
                 fontSize: 14,
                 letterSpacing: 1.25,
                 fontWeight: FontWeight.w200,
               ),
-              subtitle1: TextStyle(
+              subtitle1: const TextStyle(
                 color: Color(0xffE0E0E0),
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
                 letterSpacing: 0.15,
               ),
-              subtitle2: TextStyle(
-                color: const Color(0xffE0E0E0),
+              subtitle2: const TextStyle(
+                color: Color(0xffE0E0E0),
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
                 letterSpacing: 0.1,
               ),
-              bodyText1: TextStyle(
+              bodyText1: const TextStyle(
                 color: Color(0xffE0E0E0),
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
               ),
-              bodyText2: TextStyle(
+              bodyText2: const TextStyle(
                 color: Color(0xffE0E0E0),
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
@@ -309,25 +308,25 @@ class DiaryschoolApp extends StatelessWidget {
                 letterSpacing: 1.25,
                 fontWeight: FontWeight.w600,
               ),
-              overline: TextStyle(
+              overline: const TextStyle(
                 color: kColorBlack,
                 fontSize: 14,
                 letterSpacing: 1.25,
                 fontWeight: FontWeight.w600,
               ),
-              subtitle1: TextStyle(
+              subtitle1: const TextStyle(
                 color: kColorBlack,
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
                 letterSpacing: 0.15,
               ),
-              subtitle2: TextStyle(
+              subtitle2: const TextStyle(
                 color: kColorBlack,
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
                 letterSpacing: 0.1,
               ),
-              bodyText2: TextStyle(
+              bodyText2: const TextStyle(
                 color: kColorBlack,
                 fontSize: 14,
                 fontWeight: FontWeight.w600,

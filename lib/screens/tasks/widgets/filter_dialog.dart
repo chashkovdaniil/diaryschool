@@ -16,6 +16,7 @@ class FilterDialog extends StatefulWidget {
 class _FilterDialogState extends State<FilterDialog> {
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
     return AlertDialog(
       title: Text(tr('filter')),
       content: ListView(
@@ -25,30 +26,18 @@ class _FilterDialogState extends State<FilterDialog> {
             title: Text(tr('teacher')),
             trailing: Checkbox(
               value: widget.filter['teacher'],
-              activeColor: Theme.of(context).primaryColor,
+              activeColor: theme.primaryColor,
               onChanged: (val) {
                 widget.filter['teacher'] = val;
                 setState(() {});
               },
             ),
           ),
-          // ListTile(
-          //   title: const Text('Время'),
-          //   trailing: Checkbox(
-          //     value:  widget.filter['time'],
-          //     activeColor: Theme.of(context).primaryColor,
-          //     onChanged: (val) {
-          //       setState(() {
-          //          widget.filter['time'] = val;
-          //       });
-          //     },
-          //   ),
-          // ),
           ListTile(
             title: Text(tr('deadline')),
             trailing: Checkbox(
               value: widget.filter['deadline'],
-              activeColor: Theme.of(context).primaryColor,
+              activeColor: theme.primaryColor,
               onChanged: (val) {
                 setState(() {
                   widget.filter['deadline'] = val;
@@ -60,7 +49,7 @@ class _FilterDialogState extends State<FilterDialog> {
           //   title: const Text('Показывать только невыполненные'),
           //   trailing: Checkbox(
           //     value: widget.filter['deadline'],
-          //     activeColor: Theme.of(context).primaryColor,
+          //     activeColor: theme.primaryColor,
           //     onChanged: (val) {
           //       setState(() {
           //         widget.filter['deadline'] = val;
@@ -72,7 +61,7 @@ class _FilterDialogState extends State<FilterDialog> {
             title: Text(tr('path')),
             trailing: Checkbox(
               value: widget.filter['route'],
-              activeColor: Theme.of(context).primaryColor,
+              activeColor: theme.primaryColor,
               onChanged: (val) {
                 setState(() {
                   widget.filter['route'] = val;

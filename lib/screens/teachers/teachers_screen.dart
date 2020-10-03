@@ -24,6 +24,8 @@ class _TeachersScreenState extends State<TeachersScreen> {
 
   @override
   Widget build(BuildContext context) {
+    List<Teacher> teachers = context.watch<TeacherProvider>().values;
+    ThemeData theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(tr('teachers')),
@@ -43,39 +45,32 @@ class _TeachersScreenState extends State<TeachersScreen> {
               },
               icon: Icon(
                 Icons.add,
-                color: Theme.of(context).primaryColor,
+                color: theme.primaryColor,
               ),
               label: Text(
                 tr('add').toUpperCase(),
-                style: Theme.of(context).textTheme.button,
+                style: theme.textTheme.button,
               ),
             ),
           ),
           const SizedBox(height: 16),
-          Consumer<TeacherProvider>(
-            builder: (context, provider, child) {
-              if (provider.values.isEmpty) {
-                return Center(
-                  child: Text(tr('noTeachers')),
-                );
-              }
-              return ListView.separated(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                separatorBuilder: (context, index) => const CustomDivider(
-                  padding: EdgeInsets.only(left: kDefaultPadding * 4 - 10),
+          teachers.isEmpty
+              ? Center(child: Text(tr('noTeachers')))
+              : ListView.separated(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  separatorBuilder: (context, index) => const CustomDivider(
+                    padding: EdgeInsets.only(left: kDefaultPadding * 4 - 10),
+                  ),
+                  cacheExtent: 60,
+                  itemCount: teachers.length,
+                  itemBuilder: (context, index) {
+                    return TeacherCard(
+                      key: ValueKey(index),
+                      teacher: teachers[index],
+                    );
+                  },
                 ),
-                cacheExtent: 60,
-                itemCount: provider.values.length,
-                itemBuilder: (context, index) {
-                  return TeacherCard(
-                    key: ValueKey(index),
-                    teacher: provider.values[index],
-                  );
-                },
-              );
-            },
-          ),
         ],
       ),
     );

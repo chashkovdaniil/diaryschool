@@ -20,6 +20,7 @@ class _NoteScreenState extends State<NoteScreen> {
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(tr('note')),
@@ -45,8 +46,8 @@ class _NoteScreenState extends State<NoteScreen> {
                   children: [
                     Text(
                       tr('date') + ': ',
-                      style: Theme.of(context).textTheme.subtitle1.copyWith(
-                            color: Theme.of(context).primaryColor,
+                      style: theme.textTheme.subtitle1.copyWith(
+                            color: theme.primaryColor,
                           ),
                     ),
                     const SizedBox(width: 8),
@@ -125,11 +126,11 @@ class _NoteScreenState extends State<NoteScreen> {
                       },
                       child: Text(
                         tr('save'),
-                        style: Theme.of(context).textTheme.button.copyWith(
-                              color: Theme.of(context).colorScheme.surface,
+                        style: theme.textTheme.button.copyWith(
+                              color: theme.colorScheme.surface,
                             ),
                       ),
-                      color: Theme.of(context).primaryColor,
+                      color: theme.primaryColor,
                     ),
                   ],
                 ),

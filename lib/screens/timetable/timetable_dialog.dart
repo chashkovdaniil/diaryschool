@@ -21,8 +21,9 @@ class _TimetableDialogState extends State<TimetableDialog> {
   final _formKey = GlobalKey<FormState>(debugLabel: 'timetableDialog');
   @override
   Widget build(BuildContext context) {
-    Subject subject = Provider.of<SubjectProvider>(context)
-                                  .subject(widget.timetable.subject);
+    Subject subject =
+        Provider.of<SubjectProvider>(context).subject(widget.timetable.subject);
+    ThemeData theme = Theme.of(context);
     return AlertDialog(
       title: Text(tr('timetableNav')),
       content: Form(
@@ -36,9 +37,9 @@ class _TimetableDialogState extends State<TimetableDialog> {
                 if (value == null) {
                   return tr('fillField');
                 }
-                if (value.hour >= widget.timetable.end.hour && value.minute >= widget.timetable.end.minute) {
-                  // TODO: translate
-                  return 'Время начала должно быть раньше времени окончания';
+                if (value.hour >= widget.timetable.end.hour &&
+                    value.minute >= widget.timetable.end.minute) {
+                  return tr('errorTimeRange');
                 }
                 return null;
               },
@@ -66,7 +67,7 @@ class _TimetableDialogState extends State<TimetableDialog> {
                         decoration: BoxDecoration(
                           border: Border(
                             bottom: BorderSide(
-                              color: Theme.of(context)
+                              color: theme
                                   .colorScheme
                                   .onBackground
                                   .withOpacity(0.5),
@@ -86,7 +87,7 @@ class _TimetableDialogState extends State<TimetableDialog> {
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
                             child: Text(
                               state.errorText,
-                              style: Theme.of(context)
+                              style: theme
                                   .textTheme
                                   .subtitle2
                                   .copyWith(color: Colors.red),
@@ -126,7 +127,7 @@ class _TimetableDialogState extends State<TimetableDialog> {
                         decoration: BoxDecoration(
                           border: Border(
                             bottom: BorderSide(
-                              color: Theme.of(context)
+                              color: theme
                                   .colorScheme
                                   .onBackground
                                   .withOpacity(0.5),
@@ -146,7 +147,7 @@ class _TimetableDialogState extends State<TimetableDialog> {
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
                             child: Text(
                               state.errorText,
-                              style: Theme.of(context)
+                              style: theme
                                   .textTheme
                                   .subtitle2
                                   .copyWith(color: Colors.red),
@@ -188,7 +189,7 @@ class _TimetableDialogState extends State<TimetableDialog> {
                         decoration: BoxDecoration(
                           border: Border(
                             bottom: BorderSide(
-                              color: Theme.of(context)
+                              color: theme
                                   .colorScheme
                                   .onBackground
                                   .withOpacity(0.5),
@@ -198,8 +199,7 @@ class _TimetableDialogState extends State<TimetableDialog> {
                         child: Text(
                           widget.timetable.subject == null
                               ? tr('selectSubject')
-                              : subject
-                                  .title,
+                              : subject.title,
                           overflow: TextOverflow.fade,
                         ),
                       ),
@@ -209,7 +209,7 @@ class _TimetableDialogState extends State<TimetableDialog> {
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
                             child: Text(
                               state.errorText,
-                              style: Theme.of(context)
+                              style: theme
                                   .textTheme
                                   .subtitle2
                                   .copyWith(color: Colors.red),

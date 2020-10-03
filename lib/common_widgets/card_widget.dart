@@ -36,14 +36,15 @@ class _CardWidgetState extends State<CardWidget> {
     bool showRoute = widget.filter['route'];
     bool showDeadline = widget.filter['deadline'];
 
-    TextTheme textTheme = Theme.of(context).textTheme;
+    ThemeData theme = Theme.of(context);
+    TextTheme textTheme = theme.textTheme;
     Subject subject =
         Provider.of<SubjectProvider>(context).subject(widget.homework.subject);
 
     return InkWell(
       onTap: () => showModalBottomSheet(
         context: context,
-        backgroundColor: Theme.of(context).colorScheme.surface,
+        backgroundColor: theme.colorScheme.surface,
         shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
         builder: (_context) => TaskBottomSheet(
           widget.homework.toMap(),
@@ -60,7 +61,7 @@ class _CardWidgetState extends State<CardWidget> {
       child: Ink(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
+          color: theme.colorScheme.surface,
           borderRadius: kBorderRadius,
           boxShadow: kDefaultShadow,
         ),
@@ -86,14 +87,14 @@ class _CardWidgetState extends State<CardWidget> {
                                 .title, // widget.homework.subject делаем запрос в базу, чтобы получить название предмета
                             maxLines: 1,
                             style: textTheme.headline6.copyWith(
-                              color: Theme.of(context).primaryColor,
+                              color: theme.primaryColor,
                             ),
                           ),
                           if (widget.homework.grade != null)
                             Text(
                               '${widget.homework.grade}',
                               style: textTheme.headline4.copyWith(
-                                color: Theme.of(context).primaryColor,
+                                color: theme.primaryColor,
                               ),
                             )
                         ],
@@ -143,7 +144,7 @@ class _CardWidgetState extends State<CardWidget> {
                 Container(
                   width: 40,
                   decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
+                    color: theme.primaryColor,
                     borderRadius: const BorderRadius.only(
                       topRight: Radius.circular(15),
                       bottomRight: Radius.circular(15),
@@ -158,7 +159,7 @@ class _CardWidgetState extends State<CardWidget> {
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w200,
-                          color: Theme.of(context).colorScheme.background,
+                          color: theme.colorScheme.background,
                         ),
                       ),
                     ),

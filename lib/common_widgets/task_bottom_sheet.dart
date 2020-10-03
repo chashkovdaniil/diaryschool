@@ -1,4 +1,5 @@
 import 'package:diaryschool/models/homework.dart';
+import 'package:diaryschool/models/subject.dart';
 import 'package:diaryschool/provider/HomeworkProvider.dart';
 import 'package:diaryschool/provider/SubjectProvider.dart';
 import 'package:diaryschool/screens/task/task_screen.dart';
@@ -29,11 +30,17 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+    TextTheme textTheme = theme.textTheme;
+
+    Subject subject =
+        context.watch<SubjectProvider>().subject(_homework.subject);
+
     return BottomSheet(
       onClosing: () {},
       builder: (ctx) {
         return Container(
-          color: Theme.of(context).colorScheme.surface,
+          color: theme.colorScheme.surface,
           margin:
               EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
@@ -47,18 +54,16 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                     children: <Widget>[
                       Expanded(
                         child: Text(
-                          Provider.of<SubjectProvider>(context)
-                              .subject(_homework.subject)
-                              .title,
+                          subject.title,
                           maxLines: 1,
-                          style: Theme.of(context).textTheme.headline6,
+                          style: textTheme.headline6,
                         ),
                       ),
                       // const Spacer(),
                       IconButton(
                         icon: Icon(
                           Icons.keyboard_arrow_up,
-                          color: Theme.of(context).primaryColor,
+                          color: theme.primaryColor,
                         ),
                         onPressed: () {
                           Navigator.of(context).pushReplacement(
@@ -91,7 +96,7 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                       }
                       return null;
                     },
-                    style: Theme.of(context).textTheme.subtitle2,
+                    style: textTheme.subtitle2,
                   ),
                   FlatButton(
                     child: Text(tr('save')).button(),

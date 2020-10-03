@@ -1,9 +1,9 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:diaryschool/common_widgets/card_widget.dart';
 import 'package:diaryschool/models/homework.dart';
 import 'package:diaryschool/models/subject.dart';
 import 'package:diaryschool/models/teacher.dart';
 import 'package:diaryschool/screens/tasks/provider/DateProvider.dart';
+import 'package:diaryschool/screens/tasks/widgets/DaysWeek.dart';
 import 'package:diaryschool/utilities/TextStyles.dart';
 import 'package:diaryschool/provider/HomeworkProvider.dart';
 import 'package:diaryschool/provider/SettingsProvider.dart';
@@ -58,6 +58,7 @@ class _TasksScreenState extends State<TasksScreen> {
     Map<String, bool> _filter = Provider.of<SettingsProvider>(context).filter;
     List<Subject> subjects = context.watch<SubjectProvider>().values;
     List<Teacher> teachers = context.watch<TeacherProvider>().values;
+    ThemeData theme = Theme.of(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -91,14 +92,13 @@ class _TasksScreenState extends State<TasksScreen> {
       body: ChangeNotifierProvider<DateProvider>(
           create: (_) => DateProvider(),
           builder: (context, _) {
-            DateTime _selectedDate =
-                Provider.of<DateProvider>(context).selectedDate;
+            DateProvider dateProvider = Provider.of<DateProvider>(context);
 
             List<Homework> _homeworks =
                 context.watch<HomeworkProvider>().values.where((element) {
-              if (element.date.year == _selectedDate.year &&
-                  element.date.month == _selectedDate.month &&
-                  element.date.day == _selectedDate.day) {
+              if (element.date.year == dateProvider.selectedDate.year &&
+                  element.date.month == dateProvider.selectedDate.month &&
+                  element.date.day == dateProvider.selectedDate.day) {
                 return true;
               }
               return false;
@@ -108,7 +108,7 @@ class _TasksScreenState extends State<TasksScreen> {
               children: <Widget>[
                 Expanded(
                   child: Material(
-                    color: Theme.of(context).colorScheme.background,
+                    color: theme.colorScheme.background,
                     child: SingleChildScrollView(
                       physics: const BouncingScrollPhysics(),
                       child: Column(
@@ -117,7 +117,7 @@ class _TasksScreenState extends State<TasksScreen> {
                             onTap: () async {
                               DateTime _date = await showDatePicker(
                                 context: context,
-                                initialDate: _selectedDate,
+                                initialDate: dateProvider.selectedDate,
                                 firstDate: DateTime(2000),
                                 lastDate: DateTime(2100),
                               );
@@ -138,27 +138,25 @@ class _TasksScreenState extends State<TasksScreen> {
                                   vertical: kDefaultPadding),
                               child: Center(
                                 child: Text(
-                                  '${tr(months[context.watch<DateProvider>().date.month - 1])}',
+                                  '${tr(months[dateProvider.date.month - 1])}',
                                 ),
                               ),
                             ),
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: kDefaultPadding/2),
-                            child: DaysWeek(
-                                currentDate:
-                                    context.watch<DateProvider>().date),
+                                horizontal: kDefaultPadding / 2),
+                            child: DaysWeek(currentDate: dateProvider.date),
                           ),
                           _homeworks.isEmpty
                               ? Padding(
-                                padding: const EdgeInsets.only(top: 30.0),
-                                child: Center(
+                                  padding: const EdgeInsets.only(top: 30.0),
+                                  child: Center(
                                     child: Text(
                                       tr('noTasks'),
                                     ),
                                   ),
-                              )
+                                )
                               : Padding(
                                   padding: const EdgeInsets.only(
                                     top: kDefaultPadding / 2,
@@ -176,7 +174,10 @@ class _TasksScreenState extends State<TasksScreen> {
                                           child: CardWidget(
                                             homework: _homeworks[index],
                                             filter: _filter,
-                                            teacher: teachers[subjects[_homeworks[index].subject].teacher]
+                                            teacher: teachers[subjects[
+                                                        _homeworks[index]
+                                                            .subject]
+                                                    .teacher]
                                                 .toString(),
                                           ),
                                         );
@@ -195,14 +196,14 @@ class _TasksScreenState extends State<TasksScreen> {
                       MaterialPageRoute(
                         builder: (context) => TaskScreen(
                           Homework(
-                            date: _selectedDate,
+                            date: dateProvider.selectedDate,
                             subject: defaultSubject(context),
                           ).toMap(),
                         ),
                       ),
                     );
                   },
-                  icon: Icon(Icons.add, color: Theme.of(context).primaryColor),
+                  icon: Icon(Icons.add, color: theme.primaryColor),
                   label: Text(tr('add')).button(),
                 ),
               ],
@@ -231,6 +232,7 @@ class _TasksScreenState extends State<TasksScreen> {
           tr('tipTasks5'),
         ];
         int currentTip = 0;
+        ThemeData theme = Theme.of(context);
         return StatefulBuilder(builder: (context, setState) {
           return Container(
             padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -239,7 +241,7 @@ class _TasksScreenState extends State<TasksScreen> {
               child: Container(
                 padding: const EdgeInsets.fromLTRB(10, 15, 10, 10),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surface,
+                  color: theme.colorScheme.surface,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: Column(
@@ -248,7 +250,7 @@ class _TasksScreenState extends State<TasksScreen> {
                     Text(
                       tips[currentTip],
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.subtitle1,
+                      style: theme.textTheme.subtitle1,
                     ),
                     FlatButton(
                       onPressed: () {
@@ -268,7 +270,7 @@ class _TasksScreenState extends State<TasksScreen> {
                         (currentTip == tips.length - 1)
                             ? tr('close')
                             : tr('next'),
-                        style: Theme.of(context).textTheme.button,
+                        style: theme.textTheme.button,
                       ),
                     ),
                   ],
@@ -281,141 +283,3 @@ class _TasksScreenState extends State<TasksScreen> {
     );
   }
 }
-
-class DaysWeek extends StatefulWidget {
-  DateTime currentDate;
-  DaysWeek({
-    Key key,
-    @required this.currentDate,
-  }) : super(key: key);
-
-  @override
-  _DaysWeekState createState() => _DaysWeekState();
-}
-
-class _DaysWeekState extends State<DaysWeek> {
-  @override
-  Widget build(BuildContext context) {
-    DateTime currentDate = widget.currentDate;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        InkWell(
-          onTap: () {
-            context.read<DateProvider>().date = widget.currentDate.subtract(
-              const Duration(days: 7),
-            );
-          },
-          child: Ink(
-            child: const Icon(Icons.arrow_back),
-          ),
-        ),
-        ...List.generate(
-          7,
-          (index) {
-            return Row(
-              children: [
-                buildDayWeek(
-                  context,
-                  currentDate.add(
-                    Duration(days: index + 1 - currentDate.weekday),
-                  ),
-                ),
-                const SizedBox(width: 2),
-              ],
-            );
-          },
-        ),
-        InkWell(
-          onTap: () {
-            context.read<DateProvider>().date = widget.currentDate.add(
-              const Duration(days: 7),
-            );
-          },
-          child: Ink(
-            child: const Icon(Icons.arrow_forward),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildDayWeek(
-    BuildContext context,
-    DateTime date,
-  ) {
-    return InkWell(
-      onTap: () {
-        context.read<DateProvider>().selectedDate = date;
-        setState(() {});
-      },
-      borderRadius: BorderRadius.circular(8),
-      child: Ink(
-        padding: const EdgeInsets.all(kDefaultPadding / 3),
-        decoration:
-            date.compareTo(context.watch<DateProvider>().selectedDate) == 0
-                ? BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: Theme.of(context).primaryColor,
-                    boxShadow: kDefaultShadow,
-                  )
-                : null,
-        child: Column(
-          children: [
-            Text(
-              tr(shortDaysOfWeek[date.weekday - 1]),
-              style: Theme.of(context).textTheme.subtitle2.copyWith(
-                    fontWeight: FontWeight.w100,
-                    color: date.compareTo(
-                                context.watch<DateProvider>().selectedDate) ==
-                            0
-                        ? Theme.of(context).colorScheme.background
-                        : null,
-                  ),
-            ),
-            Text(
-              '${date.day}',
-              style: Theme.of(context).textTheme.subtitle2.copyWith(
-                    color: date.compareTo(
-                                context.watch<DateProvider>().selectedDate) ==
-                            0
-                        ? Theme.of(context).colorScheme.background
-                        : Theme.of(context).primaryColor,
-                  ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-// _homeworks.isNotEmpty && _homeworks != null
-//     ? CarouselSlider.builder(
-//         itemCount: _homeworks.length,
-//         itemBuilder: (BuildContext context, int index) {
-//           return CardWidget(
-//             key: ValueKey(
-//               _homeworks[index].date.millisecondsSinceEpoch,
-//             ),
-//             filter: _filter,
-//             homework: _homeworks[index],
-//             teacher: Provider.of<TeacherProvider>(context)
-//                 .teacher(_homeworks[index].subject)
-//                 .toString(),
-//           );
-//         },
-//         options: CarouselOptions(
-//           height: 260,
-//           autoPlay: false,
-//           enlargeCenterPage: true,
-//           aspectRatio: 1.0,
-//           initialPage: 0,
-//           enableInfiniteScroll: false,
-//           disableCenter: false,
-//         ),
-//       )
-//     : Expanded(
-//   child: Center(
-//     child: Text(tr('noTasks),
-//   ),
-// ),

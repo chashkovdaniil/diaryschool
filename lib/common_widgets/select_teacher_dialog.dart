@@ -15,16 +15,17 @@ class SelectTeacherDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+    TextTheme textTheme = theme.textTheme;
     List<Teacher> _list = context.watch<TeacherProvider>().values;
     return AlertDialog(
       title: Row(
         children: <Widget>[
           Text(
             tr('selectTeacher'),
-            style: Theme.of(context)
-                .textTheme
+            style: textTheme
                 .subtitle1
-                .copyWith(color: Theme.of(context).primaryColor),
+                .copyWith(color: theme.primaryColor),
           ),
           const Spacer(),
           IconButton(
@@ -36,7 +37,7 @@ class SelectTeacherDialog extends StatelessWidget {
                 },
               );
             },
-            icon: Icon(Icons.add, color: Theme.of(context).primaryColor),
+            icon: Icon(Icons.add, color: theme.primaryColor),
           ),
         ],
       ),
@@ -49,7 +50,7 @@ class SelectTeacherDialog extends StatelessWidget {
                 onTap: () => Navigator.of(context).pop(index),
                 title: Text(
                   _list[index].toString(),
-                  style: Theme.of(context).textTheme.subtitle1,
+                  style: textTheme.subtitle1,
                 ),
               ),
               itemCount: _list.length,

@@ -17,6 +17,7 @@ class SubjectsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Subject> subjects = context.watch<SubjectProvider>().values;
     List<Teacher> teachers = context.watch<TeacherProvider>().values;
+    ThemeData theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(tr('subjects')),
@@ -36,11 +37,11 @@ class SubjectsScreen extends StatelessWidget {
               },
               icon: Icon(
                 Icons.add,
-                color: Theme.of(context).primaryColor,
+                color: theme.primaryColor,
               ),
               label: Text(
                 tr('add').toUpperCase(),
-                style: Theme.of(context).textTheme.button,
+                style: theme.textTheme.button,
               ),
             ),
           ),
@@ -73,14 +74,14 @@ class SubjectsScreen extends StatelessWidget {
                       ),
                       title: Text(
                         subjects[index].title.toString(),
-                        style: Theme.of(context).textTheme.headline6,
+                        style: theme.textTheme.headline6,
                       ),
                       subtitle: Text(
                         (subjects[index].map == null
                                 ? ''
                                 : '${subjects[index].map}, ') +
                             '${teachers[subjects[index].teacher].toString()}',
-                        style: Theme.of(context).textTheme.subtitle1,
+                        style: theme.textTheme.subtitle1,
                       ),
                       trailing: IconButton(
                         icon: const Icon(Icons.delete_outline),

@@ -25,6 +25,7 @@ class _SubjectDialogState extends State<SubjectDialog> {
   @override
   Widget build(BuildContext context) {
     List<Teacher> teachers = context.watch<TeacherProvider>().values;
+    ThemeData theme = Theme.of(context);
 
     return AlertDialog(
       title: Text(tr('subject')),
@@ -82,9 +83,7 @@ class _SubjectDialogState extends State<SubjectDialog> {
                         decoration: BoxDecoration(
                           border: Border(
                             bottom: BorderSide(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onBackground
+                              color: theme.colorScheme.onBackground
                                   .withOpacity(0.5),
                             ),
                           ),
@@ -103,7 +102,7 @@ class _SubjectDialogState extends State<SubjectDialog> {
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
                             child: Text(
                               state.errorText,
-                              style: Theme.of(context)
+                              style: theme
                                   .textTheme
                                   .subtitle2
                                   .copyWith(color: Colors.red),

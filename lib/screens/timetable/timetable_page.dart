@@ -50,6 +50,7 @@ class _TimetablePageState extends State<TimetablePage>
       }
       return false;
     }).toList();
+    ThemeData theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -62,15 +63,11 @@ class _TimetablePageState extends State<TimetablePage>
             isScrollable: true,
             indicatorSize: TabBarIndicatorSize.label,
             controller: daysController,
-            labelColor: Theme.of(context).primaryColor,
-            labelStyle: Theme.of(context)
-                .textTheme
-                .headline6
-                .copyWith(color: Theme.of(context).primaryColor),
-            unselectedLabelStyle: Theme.of(context)
-                .textTheme
-                .headline6
-                .copyWith(fontWeight: FontWeight.w400),
+            labelColor: theme.primaryColor,
+            labelStyle:
+                theme.textTheme.headline6.copyWith(color: theme.primaryColor),
+            unselectedLabelStyle:
+                theme.textTheme.headline6.copyWith(fontWeight: FontWeight.w400),
             onTap: (day) => setState(() {}),
             tabs: List.generate(
               7,
@@ -106,8 +103,8 @@ class _TimetablePageState extends State<TimetablePage>
                       }
                       return Material(
                         color: _current
-                            ? Theme.of(context).primaryColor.withOpacity(0.1)
-                            : Theme.of(context).colorScheme.background,
+                            ? theme.primaryColor.withOpacity(0.1)
+                            : theme.colorScheme.background,
                         child: TimetableTile(
                           timetableRow: _timetable[index],
                           index: index,
@@ -131,13 +128,10 @@ class _TimetablePageState extends State<TimetablePage>
               );
               setState(() {});
             },
-            icon: Icon(Icons.add, color: Theme.of(context).primaryColor),
+            icon: Icon(Icons.add, color: theme.primaryColor),
             label: Text(
               tr('add').toUpperCase(),
-              style: Theme.of(context)
-                  .textTheme
-                  .button
-                  .copyWith(color: Theme.of(context).primaryColor),
+              style: theme.textTheme.button.copyWith(color: theme.primaryColor),
             ),
           ),
         ],
@@ -148,6 +142,7 @@ class _TimetablePageState extends State<TimetablePage>
   OverlayEntry firstRun(BuildContext context) {
     return OverlayEntry(
       builder: (context) {
+        ThemeData theme = Theme.of(context);
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 30),
           color: Colors.black.withOpacity(0.3),
@@ -155,7 +150,7 @@ class _TimetablePageState extends State<TimetablePage>
             child: Container(
               padding: const EdgeInsets.fromLTRB(10, 15, 10, 10),
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface,
+                color: theme.colorScheme.surface,
                 borderRadius: BorderRadius.circular(15),
               ),
               child: Column(
@@ -164,7 +159,7 @@ class _TimetablePageState extends State<TimetablePage>
                   Text(
                     tr('tipTimetable'),
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.subtitle1,
+                    style: theme.textTheme.subtitle1,
                   ),
                   FlatButton(
                     onPressed: () {
@@ -176,7 +171,7 @@ class _TimetablePageState extends State<TimetablePage>
                     },
                     child: Text(
                       tr('close'),
-                      style: Theme.of(context).textTheme.button,
+                      style: theme.textTheme.button,
                     ),
                   ),
                 ],

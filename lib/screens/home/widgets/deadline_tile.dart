@@ -15,6 +15,7 @@ class DeadlineTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.only(right: kDefaultPadding),
       child: InkWell(
@@ -24,7 +25,7 @@ class DeadlineTile extends StatelessWidget {
           width: 150,
           height: 150,
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.surface,
+            color: theme.colorScheme.surface,
             borderRadius: kBorderRadius,
             boxShadow: kDefaultShadow,
           ),
@@ -35,7 +36,7 @@ class DeadlineTile extends StatelessWidget {
               children: <Widget>[
                 Text(
                   title,
-                  style: Theme.of(context).textTheme.headline6,
+                  style: theme.textTheme.headline6,
                 ),
                 Text(((deadline.millisecondsSinceEpoch -
                                 DateTime.now().millisecondsSinceEpoch) /

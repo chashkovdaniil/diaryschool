@@ -85,10 +85,6 @@
   "packBag": "Collect your briefcase!",
   "tipGrades1": "On this page, you can view the ratings for the interval you selected. by default, the current month is taken.",
   "tipGrades2": "there is a button in the Right corner. after clicking on it, you can select the period for which you want to show your grades.",
-  "tipTask1": "there is a panel at the Bottom of the screen.",
-  "tipTask2": "- click to set the rating",
-  "tipTask3": "- click to install deline,",
-  "tipTask4": "- click to mark the task as completed (the icon color will turn red).",
   "addSubject": "Add an item",
   "tipTasks1": "On this page you can view and add homework for the day",
   "tipTasks2": "there is a slider at the Bottom that you can move to select the day of the week.\nThe date selection button is also located next to the number.",
@@ -103,5 +99,9 @@
   "failure": "Failure",
   "task": "Task",
   "rate": "Give a rating",
-  "doesNotExist": "Does not exist"
+  "doesNotExist": "Does not exist",
+  "taskСompleted": "Completed",
+  "toRate": "Rate",
+  "setDeadline": "Set Deadline",
+  "errorTimeRange": "Start time must be earlier than end time"
 }
